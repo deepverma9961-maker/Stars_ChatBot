@@ -1614,6 +1614,79 @@
       </div>
     </div>
   </div>
+  <!-- AI ASSISTANT -->
+  <div id="pg-ai-assistant" class="page" style="display:none;flex-direction:column;padding:0;overflow:hidden">
+    <div class="ai-chat-container">
+      <div class="ai-sidebar">
+        <div class="ai-sidebar-header">
+          <h3>StarPulse AI</h3>
+          <button class="ai-new-chat-btn" onclick="aiNewChat()">+ New Chat</button>
+        </div>
+        <div class="ai-sidebar-search"><input type="text" placeholder="Search conversations..." oninput="aiFilterConvs(this.value)"></div>
+        <div class="ai-conv-list" id="ai-conv-list"></div>
+      </div>
+      <div class="ai-main">
+        <div class="ai-topbar">
+          <div class="ai-topbar-left">
+            <span class="ai-topbar-title">StarPulse AI Assistant</span>
+            <span class="ai-topbar-badge">Medicare Analytics</span>
+          </div>
+          <div class="ai-topbar-right">
+            <button class="ai-topbar-btn" onclick="aiToggleAnalytics()">Analytics</button>
+            <button class="ai-topbar-btn" onclick="aiToggleOrch()">Orchestration</button>
+            <span class="ai-topbar-model">Llama 3.3 70B</span>
+          </div>
+        </div>
+        <div class="ai-messages" id="ai-messages">
+          <div class="ai-welcome">
+            <h2>StarPulse AI Assistant</h2>
+            <p>Ask questions about star ratings, HEDIS measures, member gaps, CAHPS scores, and more.</p>
+            <div class="ai-welcome-cards">
+              <div class="ai-welcome-card" onclick="aiSendMessage('What are the top 5 plans by overall star rating in 2026?')">Top plans by star rating</div>
+              <div class="ai-welcome-card" onclick="aiSendMessage('Show me HEDIS measures with the most open gaps')">HEDIS gap analysis</div>
+              <div class="ai-welcome-card" onclick="aiSendMessage('What is the average CAHPS score across all contracts?')">CAHPS performance</div>
+              <div class="ai-welcome-card" onclick="aiSendMessage('Which contracts have critical alerts?')">Critical alerts</div>
+            </div>
+          </div>
+        </div>
+        <div class="ai-input-area">
+          <div class="ai-suggestions" id="ai-suggestions"></div>
+          <div class="ai-input-row">
+            <textarea id="ai-input" placeholder="Message StarPulse AI..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();aiSend()}"></textarea>
+            <button class="ai-send-btn" id="ai-send-btn" onclick="aiSend()">&#9654;</button>
+          </div>
+        </div>
+      </div>
+      <div class="ai-orch-panel" id="ai-orch-panel">
+        <div class="ai-orch-header">
+          <h4><span style="font-size:16px">&#9881;</span> Agent Orchestration</h4>
+          <button class="ai-topbar-btn" onclick="aiToggleOrch()" style="font-size:14px;padding:2px 8px">&times;</button>
+        </div>
+        <div class="ai-orch-body" id="ai-orch-body">
+          <p style="font-size:12px;color:#9ca3af;text-align:center;margin-top:40px">Send a message to see the agent pipeline</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Analytics Modal -->
+<div class="ai-analytics-modal" id="ai-analytics-modal">
+  <div class="ai-analytics-content">
+    <div class="ai-analytics-header">
+      <h3><span style="font-size:18px">&#128200;</span> Analytics</h3>
+      <button class="ai-analytics-close" onclick="aiToggleAnalytics()">&times;</button>
+    </div>
+    <div class="ai-stat-grid" id="ai-stats-grid"></div>
+    <div class="ai-analytics-section">
+      <h4>Agent Usage</h4>
+      <div id="ai-agent-usage"></div>
+    </div>
+    <div class="ai-analytics-section">
+      <h4>Cost Breakdown</h4>
+      <div id="ai-cost-breakdown"></div>
+    </div>
+  </div>
 </div>
 
 <!-- MEMBER PROFILE MODAL -->
@@ -1642,83 +1715,6 @@
   <div id="mp-content" style="flex:1;overflow-y:auto;background:#f5f6f8;padding:20px 24px"></div>
 </div>
 
-
-<!-- AI ASSISTANT -->
-<div id="pg-ai-assistant" class="page" style="display:none;flex-direction:column;padding:0;overflow:hidden">
-  <div class="ai-chat-container">
-    <!-- Sidebar -->
-    <div class="ai-sidebar">
-      <div class="ai-sidebar-header">
-        <h3>StarPulse AI</h3>
-        <button class="ai-new-chat-btn" onclick="aiNewChat()">+ New Chat</button>
-      </div>
-      <div class="ai-sidebar-search"><input type="text" placeholder="Search conversations..." oninput="aiFilterConvs(this.value)"></div>
-      <div class="ai-conv-list" id="ai-conv-list"></div>
-    </div>
-    <!-- Main Chat -->
-    <div class="ai-main">
-      <div class="ai-topbar">
-        <div class="ai-topbar-left">
-          <span class="ai-topbar-title">StarPulse AI Assistant</span>
-          <span class="ai-topbar-badge">Medicare Analytics</span>
-        </div>
-        <div class="ai-topbar-right">
-          <button class="ai-topbar-btn" onclick="aiToggleAnalytics()">Analytics</button>
-          <button class="ai-topbar-btn" onclick="aiToggleOrch()">Orchestration</button>
-          <span class="ai-topbar-model">Llama 3.3 70B</span>
-        </div>
-      </div>
-      <div class="ai-messages" id="ai-messages">
-        <div class="ai-welcome">
-          <h2>StarPulse AI Assistant</h2>
-          <p>Ask questions about star ratings, HEDIS measures, member gaps, CAHPS scores, and more.</p>
-          <div class="ai-welcome-cards">
-            <div class="ai-welcome-card" onclick="aiSendMessage('What are the top 5 plans by overall star rating in 2026?')">Top plans by star rating</div>
-            <div class="ai-welcome-card" onclick="aiSendMessage('Show me HEDIS measures with the most open gaps')">HEDIS gap analysis</div>
-            <div class="ai-welcome-card" onclick="aiSendMessage('What is the average CAHPS score across all contracts?')">CAHPS performance</div>
-            <div class="ai-welcome-card" onclick="aiSendMessage('Which contracts have critical alerts?')">Critical alerts</div>
-          </div>
-        </div>
-      </div>
-      <div class="ai-input-area">
-        <div class="ai-suggestions" id="ai-suggestions"></div>
-        <div class="ai-input-row">
-          <textarea id="ai-input" placeholder="Message StarPulse AI..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();aiSend()}"></textarea>
-          <button class="ai-send-btn" id="ai-send-btn" onclick="aiSend()">&#9654;</button>
-        </div>
-      </div>
-    </div>
-    <!-- Orchestration Panel -->
-    <div class="ai-orch-panel" id="ai-orch-panel">
-      <div class="ai-orch-header">
-        <h4><span style="font-size:16px">&#9881;</span> Agent Orchestration</h4>
-        <button class="ai-topbar-btn" onclick="aiToggleOrch()" style="font-size:14px;padding:2px 8px">&times;</button>
-      </div>
-      <div class="ai-orch-body" id="ai-orch-body">
-        <p style="font-size:12px;color:#9ca3af;text-align:center;margin-top:40px">Send a message to see the agent pipeline</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Analytics Modal -->
-<div class="ai-analytics-modal" id="ai-analytics-modal">
-  <div class="ai-analytics-content">
-    <div class="ai-analytics-header">
-      <h3><span style="font-size:18px">&#128200;</span> Analytics</h3>
-      <button class="ai-analytics-close" onclick="aiToggleAnalytics()">&times;</button>
-    </div>
-    <div class="ai-stat-grid" id="ai-stats-grid"></div>
-    <div class="ai-analytics-section">
-      <h4>Agent Usage</h4>
-      <div id="ai-agent-usage"></div>
-    </div>
-    <div class="ai-analytics-section">
-      <h4>Cost Breakdown</h4>
-      <div id="ai-cost-breakdown"></div>
-    </div>
-  </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
