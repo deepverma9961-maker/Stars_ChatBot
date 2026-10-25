@@ -1,0 +1,346 @@
+{
+  "job_id": 458716313619990,
+  "new_settings": {
+    "description": "StarPulse Medicare Stars - Bronze \u00c3\u00a2\u00e2\u20ac\u00a0\u00e2\u20ac\u2122 Silver \u00c3\u00a2\u00e2\u20ac\u00a0\u00e2\u20ac\u2122 Gold medallion pipeline",
+    "email_notifications": {
+      "on_failure": [
+        "deepverma9934@gmail.com"
+      ],
+      "on_success": [
+        "deepverma9934@gmail.com"
+      ]
+    },
+    "environments": [
+      {
+        "environment_key": "medallion_env",
+        "spec": {
+          "client": "2",
+          "dependencies": [
+            "faker==24.0.0",
+            "numpy==1.26.4"
+          ]
+        }
+      }
+    ],
+    "format": "MULTI_TASK",
+    "max_concurrent_runs": 1,
+    "name": "stars_medallion_pipeline",
+    "queue": {
+      "enabled": true
+    },
+    "schedule": {
+      "pause_status": "UNPAUSED",
+      "quartz_cron_expression": "0 0 6 * * ?",
+      "timezone_id": "America/New_York"
+    },
+    "tasks": [
+      {
+        "description": "Generate bronze_enrollment_raw (100k synthetic members)",
+        "email_notifications": {},
+        "environment_key": "medallion_env",
+        "max_retries": 1,
+        "min_retry_interval_millis": 60000,
+        "notebook_task": {
+          "base_parameters": {
+            "catalog": "aiagenticdemo",
+            "n_members": "100000",
+            "seed": "42"
+          },
+          "notebook_path": "/Workspace/stars-app/notebooks/bronze/01_bronze_enrollment",
+          "source": "WORKSPACE"
+        },
+        "retry_on_timeout": false,
+        "run_if": "ALL_SUCCESS",
+        "task_key": "bronze_enrollment",
+        "timeout_seconds": 1800
+      },
+      {
+        "description": "Generate bronze_claims_raw (1.8M claims)",
+        "email_notifications": {},
+        "environment_key": "medallion_env",
+        "max_retries": 1,
+        "min_retry_interval_millis": 60000,
+        "notebook_task": {
+          "base_parameters": {
+            "catalog": "aiagenticdemo",
+            "seed": "42"
+          },
+          "notebook_path": "/Workspace/stars-app/notebooks/bronze/02_bronze_claims",
+          "source": "WORKSPACE"
+        },
+        "retry_on_timeout": false,
+        "run_if": "ALL_SUCCESS",
+        "task_key": "bronze_claims",
+        "timeout_seconds": 3600
+      },
+      {
+        "description": "Generate bronze_pharmacy_raw (1.1M Rx fills)",
+        "email_notifications": {},
+        "environment_key": "medallion_env",
+        "max_retries": 1,
+        "min_retry_interval_millis": 0,
+        "notebook_task": {
+          "base_parameters": {
+            "catalog": "aiagenticdemo",
+            "seed": "42"
+          },
+          "notebook_path": "/Workspace/stars-app/notebooks/bronze/03_bronze_pharmacy",
+          "source": "WORKSPACE"
+        },
+        "retry_on_timeout": false,
+        "run_if": "ALL_SUCCESS",
+        "task_key": "bronze_pharmacy",
+        "timeout_seconds": 2400
+      },
+      {
+        "description": "Generate bronze_cahps_survey_raw (10k survey responses)",
+        "email_notifications": {},
+        "environment_key": "medallion_env",
+        "max_retries": 1,
+        "min_retry_interval_millis": 0,
+        "notebook_task": {
+          "base_parameters": {
+            "catalog": "aiagenticdemo",
+            "seed": "42"
+          },
+          "notebook_path": "/Workspace/stars-app/notebooks/bronze/04_bronze_cahps",
+          "source": "WORKSPACE"
+        },
+        "retry_on_timeout": false,
+        "run_if": "ALL_SUCCESS",
+        "task_key": "bronze_cahps",
+        "timeout_seconds": 900
+      },
+      {
+        "description": "Generate bronze_call_center_raw (375k calls)",
+        "email_notifications": {},
+        "environment_key": "medallion_env",
+        "max_retries": 1,
+        "min_retry_interval_millis": 0,
+        "notebook_task": {
+          "base_parameters": {
+            "catalog": "aiagenticdemo",
+            "seed": "42"
+          },
+          "notebook_path": "/Workspace/stars-app/notebooks/bronze/05_bronze_call_center",
+          "source": "WORKSPACE"
+        },
+        "retry_on_timeout": false,
+        "run_if": "ALL_SUCCESS",
+        "task_key": "bronze_call_center",
+        "timeout_seconds": 1800
+      },
+      {
+        "depends_on": [
+          {
+            "task_key": "bronze_enrollment"
+          }
+        ],
+        "description": "Build silver_member (100k) + silver_plan (28) + silver_provider (12k)",
+        "email_notifications": {},
+        "environment_key": "medallion_env",
+        "max_retries": 1,
+        "min_retry_interval_millis": 0,
+        "notebook_task": {
+          "base_parameters": {
+            "catalog": "aiagenticdemo"
+          },
+          "notebook_path": "/Workspace/stars-app/notebooks/silver/06_silver_member_plan",
+          "source": "WORKSPACE"
+        },
+        "retry_on_timeout": false,
+        "run_if": "ALL_SUCCESS",
+        "task_key": "silver_member_plan",
+        "timeout_seconds": 2400
+      },
+      {
+        "depends_on": [
+          {
+            "task_key": "bronze_cahps"
+          }
+        ],
+        "description": "Build silver_measure (45) + silver_cahps_response (12k)",
+        "email_notifications": {},
+        "environment_key": "medallion_env",
+        "max_retries": 1,
+        "min_retry_interval_millis": 0,
+        "notebook_task": {
+          "base_parameters": {
+            "catalog": "aiagenticdemo"
+          },
+          "notebook_path": "/Workspace/stars-app/notebooks/silver/07_silver_measure_cahps",
+          "source": "WORKSPACE"
+        },
+        "retry_on_timeout": false,
+        "run_if": "ALL_SUCCESS",
+        "task_key": "silver_measure_cahps",
+        "timeout_seconds": 1200
+      },
+      {
+        "depends_on": [
+          {
+            "task_key": "bronze_claims"
+          },
+          {
+            "task_key": "bronze_pharmacy"
+          },
+          {
+            "task_key": "bronze_call_center"
+          },
+          {
+            "task_key": "silver_member_plan"
+          }
+        ],
+        "description": "Build silver_claim + silver_pharmacy_fill + silver_outreach_event + silver_call_event",
+        "email_notifications": {},
+        "environment_key": "medallion_env",
+        "max_retries": 1,
+        "min_retry_interval_millis": 0,
+        "notebook_task": {
+          "base_parameters": {
+            "catalog": "aiagenticdemo"
+          },
+          "notebook_path": "/Workspace/stars-app/notebooks/silver/08_silver_clinical_events",
+          "source": "WORKSPACE"
+        },
+        "retry_on_timeout": false,
+        "run_if": "ALL_SUCCESS",
+        "task_key": "silver_clinical_events",
+        "timeout_seconds": 5400
+      },
+      {
+        "depends_on": [
+          {
+            "task_key": "silver_member_plan"
+          },
+          {
+            "task_key": "silver_measure_cahps"
+          }
+        ],
+        "description": "Build gold_star_rating_summary (28 rows)",
+        "email_notifications": {},
+        "environment_key": "medallion_env",
+        "max_retries": 1,
+        "min_retry_interval_millis": 0,
+        "notebook_task": {
+          "base_parameters": {
+            "catalog": "aiagenticdemo",
+            "measurement_year": "2025"
+          },
+          "notebook_path": "/Workspace/stars-app/notebooks/gold/09_gold_star_ratings",
+          "source": "WORKSPACE"
+        },
+        "retry_on_timeout": false,
+        "run_if": "ALL_SUCCESS",
+        "task_key": "gold_star_ratings",
+        "timeout_seconds": 900
+      },
+      {
+        "depends_on": [
+          {
+            "task_key": "silver_measure_cahps"
+          },
+          {
+            "task_key": "silver_clinical_events"
+          }
+        ],
+        "description": "Build gold_measure_scorecard (1,260 rows = 28 plans \u00c3\u0192\u00e2\u20ac\u201d 45 measures)",
+        "email_notifications": {},
+        "environment_key": "medallion_env",
+        "max_retries": 1,
+        "min_retry_interval_millis": 0,
+        "notebook_task": {
+          "base_parameters": {
+            "catalog": "aiagenticdemo"
+          },
+          "notebook_path": "/Workspace/stars-app/notebooks/gold/10_gold_measure_scorecard",
+          "source": "WORKSPACE"
+        },
+        "retry_on_timeout": false,
+        "run_if": "ALL_SUCCESS",
+        "task_key": "gold_measure_scorecard",
+        "timeout_seconds": 1800
+      },
+      {
+        "depends_on": [
+          {
+            "task_key": "gold_measure_scorecard"
+          },
+          {
+            "task_key": "silver_member_plan"
+          }
+        ],
+        "description": "Build gold_member_gap (~260k rows)",
+        "email_notifications": {},
+        "environment_key": "medallion_env",
+        "max_retries": 1,
+        "min_retry_interval_millis": 0,
+        "notebook_task": {
+          "base_parameters": {
+            "catalog": "aiagenticdemo"
+          },
+          "notebook_path": "/Workspace/stars-app/notebooks/gold/11_gold_member_gaps",
+          "source": "WORKSPACE"
+        },
+        "retry_on_timeout": false,
+        "run_if": "ALL_SUCCESS",
+        "task_key": "gold_member_gaps",
+        "timeout_seconds": 3600
+      },
+      {
+        "depends_on": [
+          {
+            "task_key": "silver_measure_cahps"
+          },
+          {
+            "task_key": "silver_member_plan"
+          }
+        ],
+        "description": "Build gold_cahps_overview (28 rows) + gold_team_view (6 rows)",
+        "email_notifications": {},
+        "environment_key": "medallion_env",
+        "max_retries": 1,
+        "min_retry_interval_millis": 0,
+        "notebook_task": {
+          "base_parameters": {
+            "catalog": "aiagenticdemo"
+          },
+          "notebook_path": "/Workspace/stars-app/notebooks/gold/12_gold_cahps_teamview",
+          "source": "WORKSPACE"
+        },
+        "retry_on_timeout": false,
+        "run_if": "ALL_SUCCESS",
+        "task_key": "gold_cahps_teamview",
+        "timeout_seconds": 1200
+      },
+      {
+        "depends_on": [
+          {
+            "task_key": "gold_measure_scorecard"
+          },
+          {
+            "task_key": "gold_member_gaps"
+          }
+        ],
+        "description": "Build gold_campaign_performance + gold_alert_priority + gold_intervention_hub",
+        "email_notifications": {},
+        "environment_key": "medallion_env",
+        "max_retries": 1,
+        "min_retry_interval_millis": 0,
+        "notebook_task": {
+          "base_parameters": {
+            "catalog": "aiagenticdemo"
+          },
+          "notebook_path": "/Workspace/stars-app/notebooks/gold/13_gold_campaigns_alerts",
+          "source": "WORKSPACE"
+        },
+        "retry_on_timeout": false,
+        "run_if": "ALL_SUCCESS",
+        "task_key": "gold_campaigns_alerts",
+        "timeout_seconds": 1800
+      }
+    ],
+    "timeout_seconds": 0,
+    "webhook_notifications": {}
+  }
+}

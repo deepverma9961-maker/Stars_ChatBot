@@ -1,0 +1,32 @@
+command: ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+env:
+  - name: DATABRICKS_HOST
+    value: "{{secrets/starpulse-secrets/DATABRICKS_HOST}}"
+  - name: DATABRICKS_HTTP_PATH
+    value: "{{secrets/starpulse-secrets/DATABRICKS_HTTP_PATH}}"
+  - name: DATABRICKS_TOKEN
+    value: "{{secrets/starpulse-secrets/DATABRICKS_TOKEN}}"
+  - name: CATALOG
+    value: "aiagenticdemo"
+  - name: SCHEMA_GOLD
+    value: "stars_gold"
+  - name: SCHEMA_SILVER
+    value: "stars_silver"
+  - name: SCHEMA_BRONZE
+    value: "stars_bronze"
+  - name: TWILIO_ACCOUNT_SID
+    value: "{{secrets/starpulse-secrets/TWILIO_ACCOUNT_SID}}"
+  - name: TWILIO_AUTH_TOKEN
+    value: "{{secrets/starpulse-secrets/TWILIO_AUTH_TOKEN}}"
+  - name: TWILIO_FROM_NUMBER
+    value: "+19123013065"
+  - name: SENDGRID_API_KEY
+    value: "{{secrets/starpulse-secrets/SENDGRID_API_KEY}}"
+  - name: SENDGRID_FROM_EMAIL
+    value: "deepverma9934@gmail.com"
+  - name: ANTHROPIC_API_KEY
+    value: "{{secrets/starpulse-secrets/ANTHROPIC_API_KEY}}"
+  - name: ANTHROPIC_MODEL
+    value: "claude-haiku-4-5"
+  - name: APP_BASE_URL
+    value: "{{secrets/starpulse-secrets/APP_BASE_URL}}"

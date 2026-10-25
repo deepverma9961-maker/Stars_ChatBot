@@ -1,0 +1,5 @@
+{
+  "statement": "ALTER TABLE aiagenticdemo.stars_silver.outreach_activity_log ADD COLUMNS (member_selection STRING COMMENT 'Final member choice: slot selected, AI outcome, no-action', interaction_log STRING COMMENT 'Timestamped audit trail of all call interactions')",
+  "warehouse_id": "ed9379559e19949b",
+  "wait_timeout": "30s"
+}

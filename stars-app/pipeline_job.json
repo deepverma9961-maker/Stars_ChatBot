@@ -1,0 +1,168 @@
+{
+  "name": "StarPulse Medicare Pipeline (Bronze > Silver > Gold)",
+  "tasks": [
+    {
+      "task_key": "bronze_01_enrollment",
+      "notebook_task": {
+        "notebook_path": "/Workspace/stars-app/notebooks/bronze/01_bronze_enrollment",
+        "base_parameters": {"catalog": "aiagenticdemo", "seed": "42", "n_members": "100000"},
+        "source": "WORKSPACE"
+      },
+      "environment_key": "Default",
+      "timeout_seconds": 1800
+    },
+    {
+      "task_key": "bronze_02_claims",
+      "depends_on": [{"task_key": "bronze_01_enrollment"}],
+      "notebook_task": {
+        "notebook_path": "/Workspace/stars-app/notebooks/bronze/02_bronze_claims",
+        "base_parameters": {"catalog": "aiagenticdemo", "seed": "42"},
+        "source": "WORKSPACE"
+      },
+      "environment_key": "Default",
+      "timeout_seconds": 1800
+    },
+    {
+      "task_key": "bronze_03_pharmacy",
+      "depends_on": [{"task_key": "bronze_01_enrollment"}],
+      "notebook_task": {
+        "notebook_path": "/Workspace/stars-app/notebooks/bronze/03_bronze_pharmacy",
+        "base_parameters": {"catalog": "aiagenticdemo", "seed": "42"},
+        "source": "WORKSPACE"
+      },
+      "environment_key": "Default",
+      "timeout_seconds": 1800
+    },
+    {
+      "task_key": "bronze_04_cahps",
+      "depends_on": [{"task_key": "bronze_01_enrollment"}],
+      "notebook_task": {
+        "notebook_path": "/Workspace/stars-app/notebooks/bronze/04_bronze_cahps",
+        "base_parameters": {"catalog": "aiagenticdemo", "seed": "42"},
+        "source": "WORKSPACE"
+      },
+      "environment_key": "Default",
+      "timeout_seconds": 1800
+    },
+    {
+      "task_key": "bronze_05_call_center",
+      "depends_on": [{"task_key": "bronze_01_enrollment"}],
+      "notebook_task": {
+        "notebook_path": "/Workspace/stars-app/notebooks/bronze/05_bronze_call_center",
+        "base_parameters": {"catalog": "aiagenticdemo", "seed": "42"},
+        "source": "WORKSPACE"
+      },
+      "environment_key": "Default",
+      "timeout_seconds": 1800
+    },
+    {
+      "task_key": "silver_06_member_plan",
+      "depends_on": [{"task_key": "bronze_01_enrollment"}, {"task_key": "bronze_02_claims"}, {"task_key": "bronze_03_pharmacy"}],
+      "notebook_task": {
+        "notebook_path": "/Workspace/stars-app/notebooks/silver/06_silver_member_plan",
+        "base_parameters": {"catalog": "aiagenticdemo"},
+        "source": "WORKSPACE"
+      },
+      "environment_key": "Default",
+      "timeout_seconds": 1800
+    },
+    {
+      "task_key": "silver_07_measure_cahps",
+      "depends_on": [{"task_key": "bronze_04_cahps"}, {"task_key": "bronze_05_call_center"}],
+      "notebook_task": {
+        "notebook_path": "/Workspace/stars-app/notebooks/silver/07_silver_measure_cahps",
+        "base_parameters": {"catalog": "aiagenticdemo"},
+        "source": "WORKSPACE"
+      },
+      "environment_key": "Default",
+      "timeout_seconds": 1800
+    },
+    {
+      "task_key": "silver_08_clinical_events",
+      "depends_on": [{"task_key": "bronze_02_claims"}, {"task_key": "bronze_03_pharmacy"}],
+      "notebook_task": {
+        "notebook_path": "/Workspace/stars-app/notebooks/silver/08_silver_clinical_events",
+        "base_parameters": {"catalog": "aiagenticdemo"},
+        "source": "WORKSPACE"
+      },
+      "environment_key": "Default",
+      "timeout_seconds": 1800
+    },
+    {
+      "task_key": "gold_09_star_ratings",
+      "depends_on": [{"task_key": "silver_06_member_plan"}, {"task_key": "silver_07_measure_cahps"}, {"task_key": "silver_08_clinical_events"}],
+      "notebook_task": {
+        "notebook_path": "/Workspace/stars-app/notebooks/gold/09_gold_star_ratings",
+        "base_parameters": {"catalog": "aiagenticdemo"},
+        "source": "WORKSPACE"
+      },
+      "environment_key": "Default",
+      "timeout_seconds": 1800
+    },
+    {
+      "task_key": "gold_10_measure_scorecard",
+      "depends_on": [{"task_key": "gold_09_star_ratings"}],
+      "notebook_task": {
+        "notebook_path": "/Workspace/stars-app/notebooks/gold/10_gold_measure_scorecard",
+        "base_parameters": {"catalog": "aiagenticdemo"},
+        "source": "WORKSPACE"
+      },
+      "environment_key": "Default",
+      "timeout_seconds": 1800
+    },
+    {
+      "task_key": "gold_11_member_gaps",
+      "depends_on": [{"task_key": "gold_10_measure_scorecard"}],
+      "notebook_task": {
+        "notebook_path": "/Workspace/stars-app/notebooks/gold/11_gold_member_gaps",
+        "base_parameters": {"catalog": "aiagenticdemo"},
+        "source": "WORKSPACE"
+      },
+      "environment_key": "Default",
+      "timeout_seconds": 1800
+    },
+    {
+      "task_key": "gold_12_cahps_teamview",
+      "depends_on": [{"task_key": "silver_07_measure_cahps"}],
+      "notebook_task": {
+        "notebook_path": "/Workspace/stars-app/notebooks/gold/12_gold_cahps_teamview",
+        "base_parameters": {"catalog": "aiagenticdemo"},
+        "source": "WORKSPACE"
+      },
+      "environment_key": "Default",
+      "timeout_seconds": 1800
+    },
+    {
+      "task_key": "gold_13_campaigns_alerts",
+      "depends_on": [{"task_key": "gold_11_member_gaps"}],
+      "notebook_task": {
+        "notebook_path": "/Workspace/stars-app/notebooks/gold/13_gold_campaigns_alerts",
+        "base_parameters": {"catalog": "aiagenticdemo"},
+        "source": "WORKSPACE"
+      },
+      "environment_key": "Default",
+      "timeout_seconds": 1800
+    },
+    {
+      "task_key": "gold_14_hos",
+      "depends_on": [{"task_key": "gold_11_member_gaps"}],
+      "notebook_task": {
+        "notebook_path": "/Workspace/stars-app/notebooks/gold/14_gold_hos",
+        "base_parameters": {"catalog": "aiagenticdemo"},
+        "source": "WORKSPACE"
+      },
+      "environment_key": "Default",
+      "timeout_seconds": 1800
+    }
+  ],
+  "environments": [
+    {
+      "environment_key": "Default",
+      "spec": {
+        "client": "1",
+        "dependencies": ["faker==24.0.0"]
+      }
+    }
+  ],
+  "max_concurrent_runs": 1
+}

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stars Platform Medallion Table List</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f6f8;
+      color: #1a1a2e;
+      line-height: 1.45;
+    }
+    header {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 22px 28px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      color: #6b7280;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+    main {
+      padding: 24px 28px 48px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #374151;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 7px 11px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    nav a:hover {
+      color: #c0392b;
+      border-color: #fecaca;
+      background: #fef2f2;
+    }
+    section {
+      margin-bottom: 30px;
+    }
+    .layer-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .layer-title h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      border-radius: 999px;
+      padding: 4px 9px;
+    }
+    .bronze { background: #fff7ed; color: #9a3412; }
+    .silver { background: #f3f4f6; color: #374151; }
+    .gold { background: #fffbeb; color: #92400e; }
+    .view { background: #eff6ff; color: #1d4ed8; }
+    .table-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .table-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 13px 16px;
+      border-bottom: 1px solid #e5e7eb;
+      background: #fafafa;
+    }
+    .table-name {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 800;
+      color: #c0392b;
+    }
+    .table-purpose {
+      font-size: 12px;
+      color: #6b7280;
+      text-align: right;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    th {
+      text-align: left;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: #9ca3af;
+      background: #fff;
+      padding: 8px 12px;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #f9fafb;
+      font-size: 12px;
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    .col-name {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-weight: 700;
+      color: #111827;
+    }
+    .col-type {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: #1d4ed8;
+      font-size: 11px;
+    }
+    .description { color: #4b5563; }
+    .compact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .view-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .view-card h3 {
+      margin: 0 0 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: #c0392b;
+      font-size: 13px;
+    }
+    .view-card p {
+      margin: 0;
+      color: #4b5563;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Stars Platform Medallion Table List</h1>
+    <div class="subtitle">Reference schema for moving static Stars, HEDIS, CAHPS, Team View, campaign, and alert data into a real data platform.</div>
+  </header>
+  <main>
+    <nav>
+      <a href="#bronze">Bronze Raw Tables</a>
+      <a href="#silver">Silver Clean Tables</a>
+      <a href="#gold">Gold Dashboard Tables</a>
+      <a href="#views">Dashboard Views</a>
+      <a href="#synthetic">Synthetic Data Sizing</a>
+    </nav>
+
+
+    <section id="synthetic">
+      <div class="layer-title"><span class="badge view">Sizing</span><h2>Synthetic Data Sizing for 100k Members</h2></div>
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">recommended_row_distribution</div><div class="table-purpose">Realistic row counts for frontend data preview</div></div>
+        <table><thead><tr><th style="width:34%">Table / Area</th><th style="width:18%">Suggested Rows</th><th>Reason</th></tr></thead><tbody>
+          <tr><td class="col-name">silver_member</td><td class="col-type">100,000</td><td class="description">One row per synthetic Medicare Advantage member.</td></tr>
+          <tr><td class="col-name">silver_member_enrollment</td><td class="col-type">115,000</td><td class="description">Most members have one enrollment span; some have plan switches or partial-year spans.</td></tr>
+          <tr><td class="col-name">silver_plan</td><td class="col-type">28</td><td class="description">Enough contracts and products for executive filters and plan comparison.</td></tr>
+          <tr><td class="col-name">silver_provider</td><td class="col-type">12,000</td><td class="description">PCPs, specialists, facilities, pharmacies, and provider groups.</td></tr>
+          <tr><td class="col-name">silver_measure</td><td class="col-type">35-55</td><td class="description">HEDIS, CAHPS, HOS, Part D, and operational measures.</td></tr>
+          <tr><td class="col-name">silver_claim</td><td class="col-type">1,800,000</td><td class="description">Roughly 18 medical claims per member per year with higher utilization among chronic members.</td></tr>
+          <tr><td class="col-name">silver_pharmacy_fill</td><td class="col-type">1,100,000</td><td class="description">Medication fills concentrated among chronic and adherence-measure members.</td></tr>
+          <tr><td class="col-name">gold_member_gap</td><td class="col-type">260,000</td><td class="description">Average 2.6 gaps per member across eligible HEDIS and Stars measures.</td></tr>
+          <tr><td class="col-name">silver_cahps_response</td><td class="col-type">12,000</td><td class="description">Official CAHPS sample, not full population.</td></tr>
+          <tr><td class="col-name">silver_pulse_response</td><td class="col-type">85,000</td><td class="description">Internal pulse responses across multiple waves and questions.</td></tr>
+          <tr><td class="col-name">silver_call_event</td><td class="col-type">375,000</td><td class="description">Call center interactions, skewed toward higher-risk and dissatisfied members.</td></tr>
+          <tr><td class="col-name">silver_prior_auth</td><td class="col-type">55,000</td><td class="description">Authorization requests used for CAHPS access and needed-care drivers.</td></tr>
+          <tr><td class="col-name">silver_referral</td><td class="col-type">95,000</td><td class="description">Specialist referrals, turnaround time, stalled referral tracking.</td></tr>
+          <tr><td class="col-name">silver_outreach_event</td><td class="col-type">550,000</td><td class="description">Calls, SMS, email, and portal touches across gap closure and CAHPS interventions.</td></tr>
+          <tr><td class="col-name">gold_campaign_performance</td><td class="col-type">180</td><td class="description">Campaign history and ROI examples.</td></tr>
+          <tr><td class="col-name">gold_intervention_hub</td><td class="col-type">250</td><td class="description">Process interventions mapped to measures, owners, and expected lift.</td></tr>
+          <tr><td class="col-name">gold_alert_priority</td><td class="col-type">750</td><td class="description">Generated critical, warning, and opportunity alerts.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">member_segment_mix</div><div class="table-purpose">Population distribution for realistic utilization patterns</div></div>
+        <table><thead><tr><th>Segment</th><th>Percent</th><th>Members</th><th>Description</th></tr></thead><tbody>
+          <tr><td class="col-name">Low utilization</td><td class="col-type">35%</td><td class="col-type">35,000</td><td class="description">Few claims, fewer gaps, lower outreach volume.</td></tr>
+          <tr><td class="col-name">Moderate utilization</td><td class="col-type">40%</td><td class="col-type">40,000</td><td class="description">Typical MA members with routine claims and preventive gaps.</td></tr>
+          <tr><td class="col-name">Chronic / high need</td><td class="col-type">20%</td><td class="col-type">20,000</td><td class="description">Higher claim volume, pharmacy fills, care gaps, and call center use.</td></tr>
+          <tr><td class="col-name">Very high risk</td><td class="col-type">5%</td><td class="col-type">5,000</td><td class="description">High utilization, multiple gaps, prior auths, referrals, and experience risk.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">gap_distribution</div><div class="table-purpose">Recommended HEDIS / Stars gap spread</div></div>
+        <table><thead><tr><th>Gap Count Per Member</th><th>Percent</th><th>Approx. Members</th><th>Notes</th></tr></thead><tbody>
+          <tr><td class="col-name">0 gaps</td><td class="col-type">25%</td><td class="col-type">25,000</td><td class="description">Members already compliant or not eligible for tracked measures.</td></tr>
+          <tr><td class="col-name">1 gap</td><td class="col-type">30%</td><td class="col-type">30,000</td><td class="description">Good for simple member-gap list examples.</td></tr>
+          <tr><td class="col-name">2 gaps</td><td class="col-type">25%</td><td class="col-type">25,000</td><td class="description">Common multi-measure outreach population.</td></tr>
+          <tr><td class="col-name">3-4 gaps</td><td class="col-type">15%</td><td class="col-type">15,000</td><td class="description">Higher-priority members for campaign bundling.</td></tr>
+          <tr><td class="col-name">5+ gaps</td><td class="col-type">5%</td><td class="col-type">5,000</td><td class="description">High-risk population for care management and alerting.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">cahps_sampling_distribution</div><div class="table-purpose">Survey volume assumptions</div></div>
+        <table><thead><tr><th>Survey Data</th><th>Suggested Rows</th><th>Notes</th></tr></thead><tbody>
+          <tr><td class="col-name">Official CAHPS sampled members</td><td class="col-type">8,000-12,000</td><td class="description">Official CAHPS should be sampled, not all 100k members.</td></tr>
+          <tr><td class="col-name">Official CAHPS question responses</td><td class="col-type">60,000-120,000</td><td class="description">Multiple question responses per sampled member.</td></tr>
+          <tr><td class="col-name">Pulse surveyed members</td><td class="col-type">25,000-40,000</td><td class="description">Internal pulse reaches more members than official CAHPS.</td></tr>
+          <tr><td class="col-name">Pulse question responses</td><td class="col-type">80,000-150,000</td><td class="description">Multiple waves and question-level responses.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">frontend_priority_tables</div><div class="table-purpose">Generate these first for best UI preview</div></div>
+        <table><thead><tr><th>Priority</th><th>Table</th><th>Why It Matters</th></tr></thead><tbody>
+          <tr><td class="col-type">1</td><td class="col-name">silver_member</td><td class="description">Needed for member profile and member gap list.</td></tr>
+          <tr><td class="col-type">2</td><td class="col-name">silver_plan</td><td class="description">Powers plan and contract filters.</td></tr>
+          <tr><td class="col-type">3</td><td class="col-name">gold_member_gap</td><td class="description">Powers HEDIS gaps, outreach, and member prioritization.</td></tr>
+          <tr><td class="col-type">4</td><td class="col-name">gold_measure_scorecard</td><td class="description">Powers HEDIS and measure drilldowns.</td></tr>
+          <tr><td class="col-type">5</td><td class="col-name">gold_cahps_overview</td><td class="description">Powers CAHPS star overview.</td></tr>
+          <tr><td class="col-type">6</td><td class="col-name">gold_cahps_composite_score</td><td class="description">Powers CAHPS composite status.</td></tr>
+          <tr><td class="col-type">7</td><td class="col-name">gold_team_view</td><td class="description">Powers team accountability and report generation.</td></tr>
+          <tr><td class="col-type">8</td><td class="col-name">gold_intervention_hub</td><td class="description">Powers interventions and process improvements.</td></tr>
+          <tr><td class="col-type">9</td><td class="col-name">gold_campaign_performance</td><td class="description">Powers campaign history and ROI.</td></tr>
+          <tr><td class="col-type">10</td><td class="col-name">gold_alert_priority</td><td class="description">Powers alerts and priorities.</td></tr>
+        </tbody></table>
+      </div>
+    </section>
+    <section id="bronze">
+      <div class="layer-title"><span class="badge bronze">Bronze</span><h2>Raw Ingestion Tables</h2></div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">bronze_claims_raw</div><div class="table-purpose">Raw medical claims feed</div></div>
+        <table><thead><tr><th style="width:26%">Column</th><th style="width:16%">Type</th><th>Description</th></tr></thead><tbody>
+          <tr><td class="col-name">source_file_id</td><td class="col-type">string</td><td class="description">Source batch or file identifier.</td></tr>
+          <tr><td class="col-name">claim_id</td><td class="col-type">string</td><td class="description">Raw claim ID from claims system.</td></tr>
+          <tr><td class="col-name">member_id</td><td class="col-type">string</td><td class="description">Source member identifier.</td></tr>
+          <tr><td class="col-name">provider_id</td><td class="col-type">string</td><td class="description">Source provider identifier.</td></tr>
+          <tr><td class="col-name">plan_id</td><td class="col-type">string</td><td class="description">Source plan identifier.</td></tr>
+          <tr><td class="col-name">contract_id</td><td class="col-type">string</td><td class="description">CMS contract ID.</td></tr>
+          <tr><td class="col-name">service_date</td><td class="col-type">date</td><td class="description">Date of service.</td></tr>
+          <tr><td class="col-name">paid_date</td><td class="col-type">date</td><td class="description">Claim paid date.</td></tr>
+          <tr><td class="col-name">diagnosis_code</td><td class="col-type">string</td><td class="description">ICD diagnosis code.</td></tr>
+          <tr><td class="col-name">procedure_code</td><td class="col-type">string</td><td class="description">CPT, HCPCS, or procedure code.</td></tr>
+          <tr><td class="col-name">claim_status</td><td class="col-type">string</td><td class="description">Paid, denied, adjusted, pending.</td></tr>
+          <tr><td class="col-name">paid_amount</td><td class="col-type">decimal</td><td class="description">Paid amount.</td></tr>
+          <tr><td class="col-name">raw_payload</td><td class="col-type">json</td><td class="description">Original source record for audit.</td></tr>
+          <tr><td class="col-name">ingested_at</td><td class="col-type">timestamp</td><td class="description">Ingestion timestamp.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">bronze_pharmacy_raw</div><div class="table-purpose">Raw pharmacy claims and fills</div></div>
+        <table><thead><tr><th style="width:26%">Column</th><th style="width:16%">Type</th><th>Description</th></tr></thead><tbody>
+          <tr><td class="col-name">source_file_id</td><td class="col-type">string</td><td class="description">Source batch or file identifier.</td></tr>
+          <tr><td class="col-name">rx_claim_id</td><td class="col-type">string</td><td class="description">Pharmacy claim ID.</td></tr>
+          <tr><td class="col-name">member_id</td><td class="col-type">string</td><td class="description">Source member identifier.</td></tr>
+          <tr><td class="col-name">plan_id</td><td class="col-type">string</td><td class="description">Plan identifier.</td></tr>
+          <tr><td class="col-name">contract_id</td><td class="col-type">string</td><td class="description">CMS contract ID.</td></tr>
+          <tr><td class="col-name">ndc_code</td><td class="col-type">string</td><td class="description">Drug NDC code.</td></tr>
+          <tr><td class="col-name">drug_name</td><td class="col-type">string</td><td class="description">Drug name from source.</td></tr>
+          <tr><td class="col-name">fill_date</td><td class="col-type">date</td><td class="description">Medication fill date.</td></tr>
+          <tr><td class="col-name">days_supply</td><td class="col-type">int</td><td class="description">Days supplied.</td></tr>
+          <tr><td class="col-name">quantity</td><td class="col-type">decimal</td><td class="description">Quantity dispensed.</td></tr>
+          <tr><td class="col-name">pharmacy_id</td><td class="col-type">string</td><td class="description">Source pharmacy identifier.</td></tr>
+          <tr><td class="col-name">prescriber_id</td><td class="col-type">string</td><td class="description">Source prescriber identifier.</td></tr>
+          <tr><td class="col-name">claim_status</td><td class="col-type">string</td><td class="description">Paid, reversed, rejected, denied.</td></tr>
+          <tr><td class="col-name">ingested_at</td><td class="col-type">timestamp</td><td class="description">Ingestion timestamp.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">bronze_enrollment_raw</div><div class="table-purpose">Raw eligibility and enrollment data</div></div>
+        <table><thead><tr><th style="width:26%">Column</th><th style="width:16%">Type</th><th>Description</th></tr></thead><tbody>
+          <tr><td class="col-name">member_id</td><td class="col-type">string</td><td class="description">Source member ID.</td></tr>
+          <tr><td class="col-name">plan_id</td><td class="col-type">string</td><td class="description">Plan ID.</td></tr>
+          <tr><td class="col-name">contract_id</td><td class="col-type">string</td><td class="description">CMS contract ID.</td></tr>
+          <tr><td class="col-name">effective_date</td><td class="col-type">date</td><td class="description">Coverage start date.</td></tr>
+          <tr><td class="col-name">termination_date</td><td class="col-type">date</td><td class="description">Coverage end date.</td></tr>
+          <tr><td class="col-name">product_type</td><td class="col-type">string</td><td class="description">HMO, PPO, D-SNP, HMO-POS.</td></tr>
+          <tr><td class="col-name">dual_status</td><td class="col-type">string</td><td class="description">Dual eligibility source value.</td></tr>
+          <tr><td class="col-name">lis_status</td><td class="col-type">string</td><td class="description">Low income subsidy source value.</td></tr>
+          <tr><td class="col-name">county</td><td class="col-type">string</td><td class="description">Member county.</td></tr>
+          <tr><td class="col-name">state</td><td class="col-type">string</td><td class="description">Member state.</td></tr>
+          <tr><td class="col-name">raw_payload</td><td class="col-type">json</td><td class="description">Original source record.</td></tr>
+          <tr><td class="col-name">ingested_at</td><td class="col-type">timestamp</td><td class="description">Ingestion timestamp.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">bronze_cahps_survey_raw</div><div class="table-purpose">Raw official CAHPS survey responses</div></div>
+        <table><thead><tr><th style="width:26%">Column</th><th style="width:16%">Type</th><th>Description</th></tr></thead><tbody>
+          <tr><td class="col-name">survey_response_id</td><td class="col-type">string</td><td class="description">Raw response ID.</td></tr>
+          <tr><td class="col-name">member_id</td><td class="col-type">string</td><td class="description">Member ID when available.</td></tr>
+          <tr><td class="col-name">contract_id</td><td class="col-type">string</td><td class="description">CMS contract ID.</td></tr>
+          <tr><td class="col-name">survey_year</td><td class="col-type">int</td><td class="description">CAHPS survey year.</td></tr>
+          <tr><td class="col-name">question_code</td><td class="col-type">string</td><td class="description">CAHPS question code.</td></tr>
+          <tr><td class="col-name">question_text</td><td class="col-type">string</td><td class="description">Question text.</td></tr>
+          <tr><td class="col-name">response_value</td><td class="col-type">string</td><td class="description">Raw response.</td></tr>
+          <tr><td class="col-name">response_date</td><td class="col-type">date</td><td class="description">Response date.</td></tr>
+          <tr><td class="col-name">survey_mode</td><td class="col-type">string</td><td class="description">Mail, phone, web.</td></tr>
+          <tr><td class="col-name">weight_value</td><td class="col-type">decimal</td><td class="description">Survey weight if available.</td></tr>
+          <tr><td class="col-name">raw_payload</td><td class="col-type">json</td><td class="description">Original response record.</td></tr>
+          <tr><td class="col-name">ingested_at</td><td class="col-type">timestamp</td><td class="description">Ingestion timestamp.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">bronze_call_center_raw</div><div class="table-purpose">Raw call logs and contact center telemetry</div></div>
+        <table><thead><tr><th style="width:26%">Column</th><th style="width:16%">Type</th><th>Description</th></tr></thead><tbody>
+          <tr><td class="col-name">call_id</td><td class="col-type">string</td><td class="description">Source call ID.</td></tr>
+          <tr><td class="col-name">member_id</td><td class="col-type">string</td><td class="description">Member identifier.</td></tr>
+          <tr><td class="col-name">agent_id</td><td class="col-type">string</td><td class="description">Agent identifier.</td></tr>
+          <tr><td class="col-name">call_start_time</td><td class="col-type">timestamp</td><td class="description">Call start time.</td></tr>
+          <tr><td class="col-name">call_end_time</td><td class="col-type">timestamp</td><td class="description">Call end time.</td></tr>
+          <tr><td class="col-name">hold_seconds</td><td class="col-type">int</td><td class="description">Hold duration.</td></tr>
+          <tr><td class="col-name">transfer_count</td><td class="col-type">int</td><td class="description">Number of transfers.</td></tr>
+          <tr><td class="col-name">first_call_resolved_flag</td><td class="col-type">boolean</td><td class="description">First call resolution indicator.</td></tr>
+          <tr><td class="col-name">call_reason</td><td class="col-type">string</td><td class="description">Raw call reason or disposition.</td></tr>
+          <tr><td class="col-name">sentiment_score</td><td class="col-type">decimal</td><td class="description">NLP sentiment score.</td></tr>
+          <tr><td class="col-name">transcript_text</td><td class="col-type">text</td><td class="description">Transcript text when available.</td></tr>
+          <tr><td class="col-name">ingested_at</td><td class="col-type">timestamp</td><td class="description">Ingestion timestamp.</td></tr>
+        </tbody></table>
+      </div>
+    </section>
+
+    <section id="silver">
+      <div class="layer-title"><span class="badge silver">Silver</span><h2>Cleaned and Conformed Tables</h2></div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">silver_member</div><div class="table-purpose">Clean member master</div></div>
+        <table><thead><tr><th style="width:26%">Column</th><th style="width:16%">Type</th><th>Description</th></tr></thead><tbody>
+          <tr><td class="col-name">member_key</td><td class="col-type">string</td><td class="description">Internal member surrogate key.</td></tr>
+          <tr><td class="col-name">source_member_id</td><td class="col-type">string</td><td class="description">Original source member ID.</td></tr>
+          <tr><td class="col-name">member_mbi_hash</td><td class="col-type">string</td><td class="description">Hashed MBI or Medicare identifier.</td></tr>
+          <tr><td class="col-name">first_name</td><td class="col-type">string</td><td class="description">Member first name.</td></tr>
+          <tr><td class="col-name">last_name</td><td class="col-type">string</td><td class="description">Member last name.</td></tr>
+          <tr><td class="col-name">date_of_birth</td><td class="col-type">date</td><td class="description">Date of birth.</td></tr>
+          <tr><td class="col-name">age</td><td class="col-type">int</td><td class="description">Current age.</td></tr>
+          <tr><td class="col-name">gender</td><td class="col-type">string</td><td class="description">Gender.</td></tr>
+          <tr><td class="col-name">language_preference</td><td class="col-type">string</td><td class="description">Preferred language.</td></tr>
+          <tr><td class="col-name">phone_number_hash</td><td class="col-type">string</td><td class="description">Hashed phone number.</td></tr>
+          <tr><td class="col-name">email_hash</td><td class="col-type">string</td><td class="description">Hashed email address.</td></tr>
+          <tr><td class="col-name">address_state</td><td class="col-type">string</td><td class="description">Member state.</td></tr>
+          <tr><td class="col-name">address_county</td><td class="col-type">string</td><td class="description">Member county.</td></tr>
+          <tr><td class="col-name">dual_eligible_flag</td><td class="col-type">boolean</td><td class="description">Dual eligible flag.</td></tr>
+          <tr><td class="col-name">lis_flag</td><td class="col-type">boolean</td><td class="description">Low income subsidy flag.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">silver_plan</div><div class="table-purpose">Clean plan and contract dimension</div></div>
+        <table><thead><tr><th style="width:26%">Column</th><th style="width:16%">Type</th><th>Description</th></tr></thead><tbody>
+          <tr><td class="col-name">plan_key</td><td class="col-type">string</td><td class="description">Internal plan key.</td></tr>
+          <tr><td class="col-name">plan_id</td><td class="col-type">string</td><td class="description">Plan benefit package ID.</td></tr>
+          <tr><td class="col-name">contract_id</td><td class="col-type">string</td><td class="description">CMS contract ID.</td></tr>
+          <tr><td class="col-name">plan_name</td><td class="col-type">string</td><td class="description">Plan name.</td></tr>
+          <tr><td class="col-name">product_type</td><td class="col-type">string</td><td class="description">HMO, PPO, D-SNP, HMO-POS.</td></tr>
+          <tr><td class="col-name">state</td><td class="col-type">string</td><td class="description">Primary plan state.</td></tr>
+          <tr><td class="col-name">market</td><td class="col-type">string</td><td class="description">Market or region.</td></tr>
+          <tr><td class="col-name">enrollment_count</td><td class="col-type">int</td><td class="description">Current enrollment.</td></tr>
+          <tr><td class="col-name">effective_year</td><td class="col-type">int</td><td class="description">Measurement or contract year.</td></tr>
+          <tr><td class="col-name">active_flag</td><td class="col-type">boolean</td><td class="description">Active plan flag.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">silver_provider</div><div class="table-purpose">Clean provider and network dimension</div></div>
+        <table><thead><tr><th style="width:26%">Column</th><th style="width:16%">Type</th><th>Description</th></tr></thead><tbody>
+          <tr><td class="col-name">provider_key</td><td class="col-type">string</td><td class="description">Internal provider key.</td></tr>
+          <tr><td class="col-name">source_provider_id</td><td class="col-type">string</td><td class="description">Source provider ID.</td></tr>
+          <tr><td class="col-name">npi</td><td class="col-type">string</td><td class="description">National Provider Identifier.</td></tr>
+          <tr><td class="col-name">provider_name</td><td class="col-type">string</td><td class="description">Provider or facility name.</td></tr>
+          <tr><td class="col-name">provider_type</td><td class="col-type">string</td><td class="description">PCP, specialist, facility, pharmacy.</td></tr>
+          <tr><td class="col-name">specialty</td><td class="col-type">string</td><td class="description">Clinical specialty.</td></tr>
+          <tr><td class="col-name">provider_group</td><td class="col-type">string</td><td class="description">Provider group or IPA.</td></tr>
+          <tr><td class="col-name">network_status</td><td class="col-type">string</td><td class="description">In-network or out-of-network.</td></tr>
+          <tr><td class="col-name">state</td><td class="col-type">string</td><td class="description">Provider state.</td></tr>
+          <tr><td class="col-name">county</td><td class="col-type">string</td><td class="description">Provider county.</td></tr>
+          <tr><td class="col-name">active_flag</td><td class="col-type">boolean</td><td class="description">Active provider flag.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">silver_measure</div><div class="table-purpose">Standardized Stars measure catalog</div></div>
+        <table><thead><tr><th style="width:26%">Column</th><th style="width:16%">Type</th><th>Description</th></tr></thead><tbody>
+          <tr><td class="col-name">measure_key</td><td class="col-type">string</td><td class="description">Internal measure key.</td></tr>
+          <tr><td class="col-name">measure_code</td><td class="col-type">string</td><td class="description">COL, SPC, C23, C24, etc.</td></tr>
+          <tr><td class="col-name">measure_name</td><td class="col-type">string</td><td class="description">Measure display name.</td></tr>
+          <tr><td class="col-name">domain</td><td class="col-type">string</td><td class="description">HEDIS, CAHPS, HOS, Part D.</td></tr>
+          <tr><td class="col-name">sub_domain</td><td class="col-type">string</td><td class="description">Clinical, experience, operations, pharmacy.</td></tr>
+          <tr><td class="col-name">measure_weight</td><td class="col-type">decimal</td><td class="description">CMS measure weight.</td></tr>
+          <tr><td class="col-name">numerator_definition</td><td class="col-type">text</td><td class="description">Business numerator logic.</td></tr>
+          <tr><td class="col-name">denominator_definition</td><td class="col-type">text</td><td class="description">Business denominator logic.</td></tr>
+          <tr><td class="col-name">higher_is_better_flag</td><td class="col-type">boolean</td><td class="description">True if higher performance is better.</td></tr>
+          <tr><td class="col-name">active_year</td><td class="col-type">int</td><td class="description">Measurement year.</td></tr>
+          <tr><td class="col-name">active_flag</td><td class="col-type">boolean</td><td class="description">Active measure flag.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">silver_cahps_response</div><div class="table-purpose">Conformed official CAHPS responses</div></div>
+        <table><thead><tr><th style="width:26%">Column</th><th style="width:16%">Type</th><th>Description</th></tr></thead><tbody>
+          <tr><td class="col-name">response_key</td><td class="col-type">string</td><td class="description">Internal response key.</td></tr>
+          <tr><td class="col-name">survey_response_id</td><td class="col-type">string</td><td class="description">Source response ID.</td></tr>
+          <tr><td class="col-name">member_key</td><td class="col-type">string</td><td class="description">Member FK, nullable.</td></tr>
+          <tr><td class="col-name">plan_key</td><td class="col-type">string</td><td class="description">Plan FK.</td></tr>
+          <tr><td class="col-name">contract_id</td><td class="col-type">string</td><td class="description">CMS contract ID.</td></tr>
+          <tr><td class="col-name">survey_year</td><td class="col-type">int</td><td class="description">Survey year.</td></tr>
+          <tr><td class="col-name">question_code</td><td class="col-type">string</td><td class="description">CAHPS question code.</td></tr>
+          <tr><td class="col-name">composite_code</td><td class="col-type">string</td><td class="description">C22, C23, C24, C27, overall rating.</td></tr>
+          <tr><td class="col-name">response_value</td><td class="col-type">string</td><td class="description">Cleaned response value.</td></tr>
+          <tr><td class="col-name">top_box_flag</td><td class="col-type">boolean</td><td class="description">Top-box response indicator.</td></tr>
+          <tr><td class="col-name">response_date</td><td class="col-type">date</td><td class="description">Response date.</td></tr>
+          <tr><td class="col-name">survey_mode</td><td class="col-type">string</td><td class="description">Mail, phone, web.</td></tr>
+          <tr><td class="col-name">weight_value</td><td class="col-type">decimal</td><td class="description">Survey weight.</td></tr>
+        </tbody></table>
+      </div>
+    </section>
+
+    <section id="gold">
+      <div class="layer-title"><span class="badge gold">Gold</span><h2>Dashboard-Ready Tables</h2></div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">gold_star_rating_summary</div><div class="table-purpose">Executive and marketing star rating summary</div></div>
+        <table><thead><tr><th style="width:26%">Column</th><th style="width:16%">Type</th><th>Description</th></tr></thead><tbody>
+          <tr><td class="col-name">contract_id</td><td class="col-type">string</td><td class="description">CMS contract ID.</td></tr>
+          <tr><td class="col-name">plan_key</td><td class="col-type">string</td><td class="description">Plan FK.</td></tr>
+          <tr><td class="col-name">measurement_year</td><td class="col-type">int</td><td class="description">Measurement year.</td></tr>
+          <tr><td class="col-name">prior_year_star_rating</td><td class="col-type">decimal</td><td class="description">Prior year rating.</td></tr>
+          <tr><td class="col-name">current_star_rating</td><td class="col-type">decimal</td><td class="description">Current rating.</td></tr>
+          <tr><td class="col-name">projected_star_rating</td><td class="col-type">decimal</td><td class="description">Projected rating.</td></tr>
+          <tr><td class="col-name">star_gap_to_4</td><td class="col-type">decimal</td><td class="description">Gap to 4 stars.</td></tr>
+          <tr><td class="col-name">bonus_eligible_flag</td><td class="col-type">boolean</td><td class="description">QBP eligibility.</td></tr>
+          <tr><td class="col-name">estimated_bonus_amount</td><td class="col-type">decimal</td><td class="description">Estimated financial upside.</td></tr>
+          <tr><td class="col-name">last_refresh_at</td><td class="col-type">timestamp</td><td class="description">Data refresh timestamp.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">gold_measure_scorecard</div><div class="table-purpose">Measure-level performance for HEDIS and CAHPS</div></div>
+        <table><thead><tr><th style="width:26%">Column</th><th style="width:16%">Type</th><th>Description</th></tr></thead><tbody>
+          <tr><td class="col-name">contract_id</td><td class="col-type">string</td><td class="description">CMS contract ID.</td></tr>
+          <tr><td class="col-name">plan_key</td><td class="col-type">string</td><td class="description">Plan FK.</td></tr>
+          <tr><td class="col-name">measure_key</td><td class="col-type">string</td><td class="description">Measure FK.</td></tr>
+          <tr><td class="col-name">measure_code</td><td class="col-type">string</td><td class="description">Measure code.</td></tr>
+          <tr><td class="col-name">measure_name</td><td class="col-type">string</td><td class="description">Measure name.</td></tr>
+          <tr><td class="col-name">domain</td><td class="col-type">string</td><td class="description">HEDIS, CAHPS, HOS, Part D.</td></tr>
+          <tr><td class="col-name">measurement_year</td><td class="col-type">int</td><td class="description">Measurement year.</td></tr>
+          <tr><td class="col-name">numerator_count</td><td class="col-type">int</td><td class="description">Numerator count.</td></tr>
+          <tr><td class="col-name">denominator_count</td><td class="col-type">int</td><td class="description">Denominator count.</td></tr>
+          <tr><td class="col-name">current_rate</td><td class="col-type">decimal</td><td class="description">Current score or rate.</td></tr>
+          <tr><td class="col-name">target_rate</td><td class="col-type">decimal</td><td class="description">Target score or rate.</td></tr>
+          <tr><td class="col-name">projected_rate</td><td class="col-type">decimal</td><td class="description">Projected score or rate.</td></tr>
+          <tr><td class="col-name">status</td><td class="col-type">string</td><td class="description">Green, amber, red.</td></tr>
+          <tr><td class="col-name">open_gap_count</td><td class="col-type">int</td><td class="description">Open member gaps.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">gold_member_gap</div><div class="table-purpose">Member-level gap list and prioritization</div></div>
+        <table><thead><tr><th style="width:26%">Column</th><th style="width:16%">Type</th><th>Description</th></tr></thead><tbody>
+          <tr><td class="col-name">member_gap_key</td><td class="col-type">string</td><td class="description">Internal member-gap key.</td></tr>
+          <tr><td class="col-name">member_key</td><td class="col-type">string</td><td class="description">Member FK.</td></tr>
+          <tr><td class="col-name">plan_key</td><td class="col-type">string</td><td class="description">Plan FK.</td></tr>
+          <tr><td class="col-name">measure_key</td><td class="col-type">string</td><td class="description">Measure FK.</td></tr>
+          <tr><td class="col-name">measure_code</td><td class="col-type">string</td><td class="description">Measure code.</td></tr>
+          <tr><td class="col-name">gap_status</td><td class="col-type">string</td><td class="description">Open, closed, partial, borderline.</td></tr>
+          <tr><td class="col-name">gap_open_date</td><td class="col-type">date</td><td class="description">Gap opened date.</td></tr>
+          <tr><td class="col-name">gap_close_date</td><td class="col-type">date</td><td class="description">Gap closure date.</td></tr>
+          <tr><td class="col-name">days_open</td><td class="col-type">int</td><td class="description">Days since opened.</td></tr>
+          <tr><td class="col-name">closure_source</td><td class="col-type">string</td><td class="description">Claim, lab, attestation, survey, manual.</td></tr>
+          <tr><td class="col-name">propensity_score</td><td class="col-type">decimal</td><td class="description">Closure probability.</td></tr>
+          <tr><td class="col-name">priority_score</td><td class="col-type">decimal</td><td class="description">Outreach priority score.</td></tr>
+          <tr><td class="col-name">recommended_channel</td><td class="col-type">string</td><td class="description">Call, SMS, email, portal.</td></tr>
+          <tr><td class="col-name">recommended_incentive</td><td class="col-type">string</td><td class="description">Suggested incentive.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">gold_cahps_overview</div><div class="table-purpose">CAHPS overview summary for star dashboard</div></div>
+        <table><thead><tr><th style="width:26%">Column</th><th style="width:16%">Type</th><th>Description</th></tr></thead><tbody>
+          <tr><td class="col-name">contract_id</td><td class="col-type">string</td><td class="description">CMS contract ID.</td></tr>
+          <tr><td class="col-name">plan_key</td><td class="col-type">string</td><td class="description">Plan FK.</td></tr>
+          <tr><td class="col-name">survey_year</td><td class="col-type">int</td><td class="description">CAHPS survey year.</td></tr>
+          <tr><td class="col-name">current_cahps_rating</td><td class="col-type">decimal</td><td class="description">Current CAHPS rating.</td></tr>
+          <tr><td class="col-name">projected_cahps_rating</td><td class="col-type">decimal</td><td class="description">Projected CAHPS rating.</td></tr>
+          <tr><td class="col-name">gap_to_4_star</td><td class="col-type">decimal</td><td class="description">Gap to 4-star CAHPS performance.</td></tr>
+          <tr><td class="col-name">survey_window_start</td><td class="col-type">date</td><td class="description">Survey window start.</td></tr>
+          <tr><td class="col-name">survey_window_end</td><td class="col-type">date</td><td class="description">Survey window end.</td></tr>
+          <tr><td class="col-name">days_remaining</td><td class="col-type">int</td><td class="description">Days remaining in window.</td></tr>
+          <tr><td class="col-name">qbp_at_stake_amount</td><td class="col-type">decimal</td><td class="description">Bonus amount at stake.</td></tr>
+          <tr><td class="col-name">critical_composite_count</td><td class="col-type">int</td><td class="description">Critical CAHPS composites.</td></tr>
+          <tr><td class="col-name">at_risk_composite_count</td><td class="col-type">int</td><td class="description">At-risk CAHPS composites.</td></tr>
+          <tr><td class="col-name">on_track_composite_count</td><td class="col-type">int</td><td class="description">On-track CAHPS composites.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="table-card">
+        <div class="table-head"><div class="table-name">gold_team_view</div><div class="table-purpose">Department-level accountability and operational metrics</div></div>
+        <table><thead><tr><th style="width:26%">Column</th><th style="width:16%">Type</th><th>Description</th></tr></thead><tbody>
+          <tr><td class="col-name">team_view_key</td><td class="col-type">string</td><td class="description">Internal row key.</td></tr>
+          <tr><td class="col-name">department_key</td><td class="col-type">string</td><td class="description">Department FK.</td></tr>
+          <tr><td class="col-name">department_name</td><td class="col-type">string</td><td class="description">Network Ops, Call Center, UM, etc.</td></tr>
+          <tr><td class="col-name">leader_name</td><td class="col-type">string</td><td class="description">Team leader name.</td></tr>
+          <tr><td class="col-name">leader_email</td><td class="col-type">string</td><td class="description">Team leader email.</td></tr>
+          <tr><td class="col-name">contract_id</td><td class="col-type">string</td><td class="description">CMS contract ID.</td></tr>
+          <tr><td class="col-name">plan_key</td><td class="col-type">string</td><td class="description">Plan FK.</td></tr>
+          <tr><td class="col-name">measure_code</td><td class="col-type">string</td><td class="description">Owned measure or composite.</td></tr>
+          <tr><td class="col-name">metric_name</td><td class="col-type">string</td><td class="description">Operational KPI name.</td></tr>
+          <tr><td class="col-name">current_value</td><td class="col-type">string</td><td class="description">Current KPI value.</td></tr>
+          <tr><td class="col-name">target_value</td><td class="col-type">string</td><td class="description">Target KPI value.</td></tr>
+          <tr><td class="col-name">metric_status</td><td class="col-type">string</td><td class="description">Red, amber, green.</td></tr>
+          <tr><td class="col-name">impact_summary</td><td class="col-type">text</td><td class="description">Why this team metric matters.</td></tr>
+          <tr><td class="col-name">required_action</td><td class="col-type">text</td><td class="description">Required process change.</td></tr>
+          <tr><td class="col-name">done_when</td><td class="col-type">text</td><td class="description">Completion criteria.</td></tr>
+          <tr><td class="col-name">action_status</td><td class="col-type">string</td><td class="description">Not started, in progress, done.</td></tr>
+        </tbody></table>
+      </div>
+    </section>
+
+    <section id="views">
+      <div class="layer-title"><span class="badge view">Views</span><h2>Dashboard Views</h2></div>
+      <div class="compact-grid">
+        <div class="view-card"><h3>vw_marketing_overview</h3><p>Reads from gold_star_rating_summary, gold_domain_performance, and gold_bonus_projection.</p></div>
+        <div class="view-card"><h3>vw_executive_overview</h3><p>Contract-level star ratings, projected ratings, domain flags, and bonus exposure.</p></div>
+        <div class="view-card"><h3>vw_plan_detail</h3><p>Plan metadata, domain performance, measure scorecards, and historical ratings.</p></div>
+        <div class="view-card"><h3>vw_hedis_measures</h3><p>HEDIS measure scorecard with numerator, denominator, open gaps, and status.</p></div>
+        <div class="view-card"><h3>vw_cahps_overview</h3><p>CAHPS rating, composite scores, survey window, gap to target, and QBP at stake.</p></div>
+        <div class="view-card"><h3>vw_pulse_surveys</h3><p>Pulse wave response rates, top-box scores, official alignment, and confidence.</p></div>
+        <div class="view-card"><h3>vw_intervention_hub</h3><p>Process interventions, owning departments, lift, status, and due dates.</p></div>
+        <div class="view-card"><h3>vw_team_view</h3><p>Department ownership, team leader contact, metrics, required actions, and status.</p></div>
+        <div class="view-card"><h3>vw_member_gap_list</h3><p>Member-level open gaps, propensity, priority, recommended channel, and incentive.</p></div>
+        <div class="view-card"><h3>vw_campaign_roi</h3><p>Campaign performance, closures, cost per closure, estimated lift, and ROI.</p></div>
+        <div class="view-card"><h3>vw_alerts_priorities</h3><p>Critical alerts, warning signals, opportunity alerts, owner, and recommended action.</p></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

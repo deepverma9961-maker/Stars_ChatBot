@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HOS // Signal to Action</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F5F4F0;--surface:#FFFFFF;--surface2:#F0EEE9;--border:#E2DDD6;--border-dark:#C8C2B8;
+  --text:#1A1916;--text-2:#5C574F;--text-3:#9B9690;
+  --green:#1A6B4A;--green-bg:#E8F3EE;--green-mid:#2E9968;
+  --amber:#8B5E00;--amber-bg:#FFF3D6;--amber-mid:#C88A00;
+  --red:#8B1A1A;--red-bg:#FDEAEA;--red-mid:#CC3333;
+  --blue:#1A3F6B;--blue-bg:#E8EFF8;--blue-mid:#2E6AC8;
+  --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:13px;line-height:1.5;}
+.shell{display:flex;flex-direction:column;min-height:100vh;}
+
+/* TOP BAR */
+.topbar{background:var(--text);color:#fff;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:48px;flex-shrink:0;}
+.topbar-brand{display:flex;align-items:center;gap:12px;}
+.topbar-logo{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.04em;color:#fff;}
+.topbar-divider{width:1px;height:20px;background:rgba(255,255,255,0.15);}
+.topbar-contract{font-size:11px;color:rgba(255,255,255,0.5);font-family:var(--mono);}
+.topbar-nav{display:flex;gap:2px;}
+.tnav{padding:5px 14px;font-size:12px;font-weight:500;border-radius:4px;cursor:pointer;border:none;background:transparent;color:rgba(255,255,255,0.55);font-family:var(--sans);transition:all .15s;}
+.tnav:hover{color:#fff;background:rgba(255,255,255,0.08);}
+.tnav.active{color:#fff;background:rgba(255,255,255,0.14);}
+.topbar-right{display:flex;align-items:center;gap:10px;font-size:11px;color:rgba(255,255,255,0.4);font-family:var(--mono);}
+.live-badge{display:flex;align-items:center;gap:5px;font-size:10px;color:#2E9968;font-weight:500;}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#2E9968;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* PAGES */
+.page{display:none;padding:24px;max-width:1200px;margin:0 auto;width:100%;}
+.page.active{display:block;}
+
+/* PAGE HEADER */
+.ph{margin-bottom:20px;}
+.ph-title{font-size:18px;font-weight:600;color:var(--text);letter-spacing:-.02em;}
+.ph-sub{font-size:12px;color:var(--text-3);margin-top:2px;}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:16px;}
+.card-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text-3);margin-bottom:12px;}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+
+/* STAT CARDS */
+.stat-row{display:flex;gap:12px;margin-bottom:16px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:14px 16px;flex:1;}
+.stat-label{font-size:11px;color:var(--text-3);font-weight:500;margin-bottom:4px;}
+.stat-val{font-size:22px;font-weight:600;font-family:var(--mono);line-height:1;}
+.stat-sub{font-size:11px;color:var(--text-3);margin-top:4px;}
+
+/* CHIPS */
+.chip{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:3px;font-family:var(--mono);letter-spacing:.03em;}
+.chip-red{background:var(--red-bg);color:var(--red);}
+.chip-amber{background:var(--amber-bg);color:var(--amber);}
+.chip-green{background:var(--green-bg);color:var(--green);}
+.chip-blue{background:var(--blue-bg);color:var(--blue);}
+.chip-gray{background:var(--surface2);color:var(--text-3);}
+
+/* PROGRESS */
+.prog-track{height:5px;background:var(--surface2);border-radius:3px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:3px;transition:width .6s ease;}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);margin:16px 0;}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.tbl th{text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);padding:8px 10px;border-bottom:1px solid var(--border);}
+.tbl td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:var(--surface2);}
+.tbl td.mono{font-family:var(--mono);}
+
+/* SECTION HEADER */
+.sec-hdr{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text-3);margin-bottom:10px;margin-top:20px;}
+.sec-hdr:first-child{margin-top:0;}
+
+/* SUMMARY BANNER */
+.summary-banner{background:var(--text);color:#fff;border-radius:6px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:20px;}
+.sb-item{text-align:center;flex:1;}
+.sb-label{font-size:10px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.07em;font-family:var(--mono);margin-bottom:3px;}
+.sb-val{font-size:22px;font-weight:600;font-family:var(--mono);}
+.sb-sub{font-size:10px;color:rgba(255,255,255,0.4);margin-top:1px;}
+.sb-divider{width:1px;background:rgba(255,255,255,0.1);align-self:stretch;}
+
+/* INSIGHT BOX */
+.insight-box{background:#F0F6F3;border:1px solid #C0DAC8;border-radius:6px;padding:12px 14px;margin-bottom:16px;}
+.insight-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--green);font-family:var(--mono);margin-bottom:5px;}
+.insight-text{font-size:13px;line-height:1.6;color:var(--text);}
+
+/* FILTER BAR */
+.filter-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center;}
+.filter-btn{padding:5px 12px;border-radius:4px;font-size:12px;font-weight:500;border:1px solid var(--border);background:var(--surface);color:var(--text-2);cursor:pointer;font-family:var(--sans);transition:all .12s;}
+.filter-btn.active,.filter-btn:hover{background:var(--text);color:#fff;border-color:var(--text);}
+
+/* BREADCRUMB */
+.breadcrumb{font-size:11px;color:var(--text-3);margin-bottom:16px;display:flex;align-items:center;gap:6px;cursor:pointer;}
+.breadcrumb span{color:var(--blue-mid);}
+.breadcrumb:hover span{text-decoration:underline;}
+
+/* STEP FLOW */
+.step-flow{display:flex;flex-direction:column;gap:0;}
+.step{display:flex;gap:12px;position:relative;}
+.step:not(:last-child)::after{content:'';position:absolute;left:11px;top:26px;bottom:0;width:1px;background:var(--border);z-index:0;}
+.step-num{width:22px;height:22px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;font-family:var(--mono);color:var(--text-2);flex-shrink:0;position:relative;z-index:1;margin-top:1px;}
+.step-body{flex:1;padding-bottom:16px;}
+.step-title{font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.step-desc{font-size:11.5px;color:var(--text-2);line-height:1.6;}
+.step-result{display:inline-flex;align-items:center;gap:4px;margin-top:6px;font-size:11px;font-weight:600;color:var(--green);background:var(--green-bg);border:1px solid #C0DAC8;padding:3px 8px;border-radius:3px;font-family:var(--mono);}
+
+/* URGENCY FACTORS */
+.uf-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.uf{background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:10px 12px;display:flex;gap:9px;align-items:flex-start;}
+.uf-icon{font-size:13px;flex-shrink:0;}
+.uf-title{font-size:12px;font-weight:500;color:var(--text);}
+.uf-sub{font-size:10px;color:var(--text-3);margin-top:1px;}
+.uf-weight{font-size:10px;font-weight:700;font-family:var(--mono);color:var(--blue-mid);margin-top:2px;}
+
+/* INT CARD */
+.int-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;}
+.int-rank{width:24px;height:24px;border-radius:50%;background:var(--surface2);font-size:11px;font-weight:700;font-family:var(--mono);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.int-body{flex:1;}
+.int-title{font-size:13px;font-weight:600;margin-bottom:3px;}
+.int-desc{font-size:12px;color:var(--text-2);line-height:1.5;margin-bottom:8px;}
+.int-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.int-lift{font-size:11px;font-family:var(--mono);font-weight:600;color:var(--green);background:var(--green-bg);padding:2px 7px;border-radius:3px;}
+
+/* MEMBER TABLE extras */
+.mid-tag{font-family:var(--mono);font-size:10px;color:var(--text-3);}
+.risk-high{color:var(--red-mid);font-weight:600;font-family:var(--mono);font-size:11px;}
+.risk-med{color:var(--amber-mid);font-weight:600;font-family:var(--mono);font-size:11px;}
+.risk-low{color:var(--green-mid);font-weight:600;font-family:var(--mono);font-size:11px;}
+.awv-y{color:var(--green-mid);font-size:10px;font-family:var(--mono);}
+.awv-n{color:var(--red-mid);font-size:10px;font-family:var(--mono);}
+select.ss{font-size:11px;font-family:var(--sans);border:1px solid var(--border);border-radius:3px;padding:2px 6px;background:var(--surface);color:var(--text);cursor:pointer;outline:none;}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:16px;}
+.tab{background:transparent;border:none;border-bottom:2px solid transparent;padding:9px 14px;font-size:12px;font-weight:500;color:var(--text-3);cursor:pointer;font-family:var(--sans);transition:all .15s;white-space:nowrap;margin-bottom:-1px;}
+.tab:hover{color:var(--text);}
+.tab.active{color:var(--green);border-bottom-color:var(--green);}
+.tab-panel{display:none;}.tab-panel.active{display:block;}
+
+/* CAMPAIGN MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:var(--surface);border-radius:8px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;}
+.modal-hdr{background:var(--text);padding:16px 20px;border-radius:8px 8px 0 0;display:flex;justify-content:space-between;align-items:flex-start;position:sticky;top:0;z-index:1;}
+.modal-title{font-size:15px;font-weight:600;color:#fff;}
+.modal-sub{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;}
+.modal-body{padding:20px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.form-group{display:flex;flex-direction:column;gap:4px;}
+.form-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);font-family:var(--mono);}
+.form-input,.form-select,.form-textarea{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:8px 10px;font-size:12px;font-family:var(--sans);color:var(--text);outline:none;transition:border-color .15s;resize:vertical;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--green-mid);}
+.form-textarea{min-height:70px;}
+.modal-ftr{padding:12px 20px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;background:var(--surface2);border-radius:0 0 8px 8px;}
+.btn-cancel{font-size:12px;font-weight:500;padding:7px 14px;border-radius:4px;border:1px solid var(--border-dark);background:var(--surface);color:var(--text-2);cursor:pointer;font-family:var(--sans);}
+.btn-save{font-size:12px;font-weight:600;padding:7px 16px;border-radius:4px;border:none;background:var(--green);color:#fff;cursor:pointer;font-family:var(--sans);}
+.btn-primary{font-size:12px;font-weight:500;padding:6px 14px;border-radius:4px;border:none;background:var(--text);color:#fff;cursor:pointer;font-family:var(--sans);}
+.btn-outline{font-size:12px;font-weight:500;padding:6px 12px;border-radius:4px;border:1px solid var(--border-dark);background:var(--surface);color:var(--text-2);cursor:pointer;font-family:var(--sans);}
+
+/* MEMBER DETAIL SLIDE */
+.member-slide{display:none;position:fixed;top:0;right:0;width:min(520px,95vw);height:100vh;background:var(--surface);border-left:1px solid var(--border);z-index:900;overflow-y:auto;box-shadow:-4px 0 24px rgba(0,0,0,.1);}
+.member-slide.open{display:block;}
+.ms-hdr{background:var(--text);padding:16px 20px;display:flex;justify-content:space-between;align-items:flex-start;position:sticky;top:0;}
+.ms-name{font-size:16px;font-weight:600;color:#fff;}
+.ms-id{font-size:10px;color:rgba(255,255,255,0.5);font-family:var(--mono);margin-top:2px;}
+.ms-body{padding:20px;}
+.ms-section{margin-bottom:20px;}
+.ms-sec-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-3);margin-bottom:10px;font-family:var(--mono);}
+.ms-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.ms-row:last-child{border-bottom:none;}
+.ms-key{color:var(--text-2);}
+.ms-val{font-weight:500;font-family:var(--mono);font-size:11px;}
+.urgency-bar{height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;margin-top:4px;}
+.urgency-fill{height:100%;border-radius:4px;}
+
+/* TIMELINE */
+.timeline-bar{display:flex;gap:2px;height:26px;border-radius:5px;overflow:hidden;margin-bottom:8px;}
+.tl-int{background:rgba(26,107,74,.14);color:var(--green);flex:4;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;font-family:var(--mono);}
+.tl-mck{background:rgba(139,94,0,.12);color:var(--amber);flex:1.5;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;font-family:var(--mono);}
+.tl-blk{background:rgba(184,50,50,.12);color:var(--red-mid);flex:1;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;font-family:var(--mono);}
+.tl-srv{background:rgba(26,63,107,.12);color:var(--blue);flex:2;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;font-family:var(--mono);}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:10px 16px;border-radius:5px;font-size:12px;font-weight:500;z-index:2000;opacity:0;transition:opacity .2s;pointer-events:none;}
+.toast.show{opacity:1;}
+
+/* WORKLIST */
+.wl-item{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:9px 12px;margin-bottom:6px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12px;}
+.wl-name{font-weight:500;flex:1;min-width:100px;}
+.wl-empty{font-size:12px;color:var(--text-3);text-align:center;padding:14px;background:var(--surface2);border-radius:4px;}
+
+/* BREAKDOWN BAR */
+.brow{display:flex;align-items:center;gap:10px;margin-bottom:7px;}
+.blabel{font-size:11px;color:var(--text-2);width:180px;flex-shrink:0;font-family:var(--mono);}
+.btrack{flex:1;background:var(--surface2);border-radius:3px;height:18px;overflow:hidden;}
+.bfill{height:18px;border-radius:3px;display:flex;align-items:center;padding-left:8px;font-size:10px;font-weight:600;color:#fff;white-space:nowrap;}
+.bcount{font-size:11px;font-weight:700;font-family:var(--mono);width:40px;text-align:right;flex-shrink:0;}
+
+mb12{display:block;margin-bottom:12px;}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-logo">HOS // Signal to Action</div>
+    <div class="topbar-divider"></div>
+    <div class="topbar-contract">Contract H1234 · Measurement Year 2025</div>
+  </div>
+  <div class="topbar-nav">
+    <button class="tnav active" onclick="nav('p1',this)">Measure Overview</button>
+    <button class="tnav" onclick="nav('p2',this)">Measure Deep Dive</button>
+    <button class="tnav" onclick="nav('p3',this)">Gap & Outreach</button>
+    <button class="tnav" onclick="nav('p4',this)">Urgency Engine</button>
+
+  </div>
+  <div class="topbar-right">
+    <div class="live-badge"><div class="live-dot"></div> Live</div>
+    <span>Last updated: 08:22 AM</span>
+  </div>
+</div>
+
+<!-- ============================================================ PAGE 1: MEASURE OVERVIEW ============================================================ -->
+<div id="p1" class="page active">
+  <div class="ph">
+    <div class="ph-title">HOS Measure Overview</div>
+    <div class="ph-sub">Where are we bleeding? — All 5 measures, current rates, gaps to 4-star, and open care gaps at a glance. Click any row to deep dive.</div>
+  </div>
+
+  <div class="summary-banner">
+    <div class="sb-item"><div class="sb-label">Avg Star Rating</div><div class="sb-val">3.5 ★</div><div class="sb-sub">2025 Official</div></div>
+    <div class="sb-divider"></div>
+    <div class="sb-item"><div class="sb-label">Measures Below Cut</div><div class="sb-val" style="color:#CC3333;">2 / 5</div><div class="sb-sub">Fall Risk & Monitoring</div></div>
+    <div class="sb-divider"></div>
+    <div class="sb-item"><div class="sb-label">Total Open Gaps</div><div class="sb-val" style="color:#C88A00;">1,356</div><div class="sb-sub">Across all measures</div></div>
+    <div class="sb-divider"></div>
+    <div class="sb-item"><div class="sb-label">AWV Completion</div><div class="sb-val" style="color:#C88A00;">54%</div><div class="sb-sub">Target: 75%</div></div>
+    <div class="sb-divider"></div>
+    <div class="sb-item"><div class="sb-label">Survey Window</div><div class="sb-val">10 wks</div><div class="sb-sub">To blackout · Jul 2025</div></div>
+  </div>
+
+  <div class="insight-box">
+    <div class="insight-label">⚡ Key insight</div>
+    <div class="insight-text">AWV is the single highest-leverage action across all 5 measures. One AWV visit closes fall risk, physical activity, monitoring, and mental health gaps <strong>at the same appointment</strong>. 1,932 members have no AWV this year — that is your primary outreach target.</div>
+  </div>
+
+  <!-- MEASURES TABLE -->
+  <div class="sec-hdr">All HOS Measures — Click any row to deep dive</div>
+  <div class="card" style="padding:0;overflow:hidden;margin-bottom:16px;">
+    <table class="tbl" style="table-layout:fixed;width:100%;">
+      <colgroup>
+        <col style="width:30%"><col style="width:10%"><col style="width:10%"><col style="width:8%"><col style="width:10%"><col style="width:10%"><col style="width:22%">
+      </colgroup>
+      <thead>
+        <tr style="background:var(--surface2);">
+          <th>Measure</th><th>Type</th><th>Stars</th><th>Status</th><th>Rate</th><th>4★ Cut</th><th>Rate vs Cut</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr onclick="openMeasure('fall')" style="cursor:pointer;border-left:3px solid var(--red-mid);">
+          <td><div style="font-weight:600;font-size:12px;">Fall risk management</div><div style="font-size:10px;color:var(--text-3);font-family:var(--mono);">Process · Survey-based · Fall history members only · 302 open gaps</div></td>
+          <td><span class="chip chip-gray" style="font-size:9px;">Process</span></td>
+          <td><span style="font-family:var(--mono);font-weight:600;">3.0 ★</span></td>
+          <td><span class="chip chip-red">CRITICAL</span></td>
+          <td><span style="font-family:var(--mono);font-weight:600;color:var(--red-mid);">76.0%</span></td>
+          <td><span style="font-family:var(--mono);color:var(--text-3);">78.0%</span></td>
+          <td><div style="display:flex;align-items:center;gap:8px;"><div class="prog-track" style="flex:1;"><div class="prog-fill" style="width:76%;background:var(--red-mid);"></div></div><span style="font-size:10px;color:var(--red-mid);font-family:var(--mono);font-weight:600;">−2.0pp</span></div></td>
+        </tr>
+        <tr onclick="openMeasure('mon')" style="cursor:pointer;border-left:3px solid var(--red-mid);">
+          <td><div style="font-weight:600;font-size:12px;">Monitoring physical activity</div><div style="font-size:10px;color:var(--text-3);font-family:var(--mono);">Process · Survey-based · Linked to physical activity · 1,054 open gaps</div></td>
+          <td><span class="chip chip-gray" style="font-size:9px;">Process</span></td>
+          <td><span style="font-family:var(--mono);font-weight:600;">3.0 ★</span></td>
+          <td><span class="chip chip-red">CRITICAL</span></td>
+          <td><span style="font-family:var(--mono);font-weight:600;color:var(--red-mid);">69.0%</span></td>
+          <td><span style="font-family:var(--mono);color:var(--text-3);">71.0%</span></td>
+          <td><div style="display:flex;align-items:center;gap:8px;"><div class="prog-track" style="flex:1;"><div class="prog-fill" style="width:69%;background:var(--red-mid);"></div></div><span style="font-size:10px;color:var(--red-mid);font-family:var(--mono);font-weight:600;">−2.0pp</span></div></td>
+        </tr>
+        <tr onclick="openMeasure('phys')" style="cursor:pointer;border-left:3px solid var(--amber-mid);">
+          <td><div style="font-weight:600;font-size:12px;">Improving / maintaining physical health</div><div style="font-size:10px;color:var(--text-3);font-family:var(--mono);">Outcome · 2yr longitudinal · SF-36 PCS · Returns to full weight 2026</div></td>
+          <td><span class="chip chip-blue" style="font-size:9px;">Outcome</span></td>
+          <td><span style="font-family:var(--mono);font-weight:600;">3.5 ★</span></td>
+          <td><span class="chip chip-amber">AT RISK</span></td>
+          <td><span style="font-family:var(--mono);font-weight:600;color:var(--amber-mid);">72.0%</span></td>
+          <td><span style="font-family:var(--mono);color:var(--text-3);">76.0%</span></td>
+          <td><div style="display:flex;align-items:center;gap:8px;"><div class="prog-track" style="flex:1;"><div class="prog-fill" style="width:72%;background:var(--amber-mid);"></div></div><span style="font-size:10px;color:var(--amber-mid);font-family:var(--mono);font-weight:600;">−4.0pp</span></div></td>
+        </tr>
+        <tr onclick="openMeasure('ment')" style="cursor:pointer;border-left:3px solid var(--amber-mid);">
+          <td><div style="font-weight:600;font-size:12px;">Improving / maintaining mental health</div><div style="font-size:10px;color:var(--text-3);font-family:var(--mono);">Outcome · 2yr longitudinal · SF-36 MCS · Returns to full weight 2026</div></td>
+          <td><span class="chip chip-blue" style="font-size:9px;">Outcome</span></td>
+          <td><span style="font-family:var(--mono);font-weight:600;">3.5 ★</span></td>
+          <td><span class="chip chip-amber">AT RISK</span></td>
+          <td><span style="font-family:var(--mono);font-weight:600;color:var(--amber-mid);">74.0%</span></td>
+          <td><span style="font-family:var(--mono);color:var(--text-3);">78.0%</span></td>
+          <td><div style="display:flex;align-items:center;gap:8px;"><div class="prog-track" style="flex:1;"><div class="prog-fill" style="width:74%;background:var(--amber-mid);"></div></div><span style="font-size:10px;color:var(--amber-mid);font-family:var(--mono);font-weight:600;">−4.0pp</span></div></td>
+        </tr>
+        <tr onclick="openMeasure('pact')" style="cursor:pointer;border-left:3px solid var(--green-mid);">
+          <td><div style="font-weight:600;font-size:12px;">Physical activity</div><div style="font-size:10px;color:var(--text-3);font-family:var(--mono);">Process · Survey-based · Provider conversation · 798 members no wellness visit</div></td>
+          <td><span class="chip chip-gray" style="font-size:9px;">Process</span></td>
+          <td><span style="font-family:var(--mono);font-weight:600;">4.0 ★</span></td>
+          <td><span class="chip chip-green">ON TRACK</span></td>
+          <td><span style="font-family:var(--mono);font-weight:600;color:var(--green-mid);">81.0%</span></td>
+          <td><span style="font-family:var(--mono);color:var(--text-3);">79.0%</span></td>
+          <td><div style="display:flex;align-items:center;gap:8px;"><div class="prog-track" style="flex:1;"><div class="prog-fill" style="width:81%;background:var(--green-mid);"></div></div><span style="font-size:10px;color:var(--green-mid);font-family:var(--mono);font-weight:600;">+2.0pp</span></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- AWV FOOTER -->
+  <div class="card" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+    <div style="font-size:18px;">🏥</div>
+    <div style="flex:1;">
+      <div style="font-weight:600;font-size:13px;">Annual Wellness Visit (AWV) — single highest-leverage action across all 5 measures</div>
+      <div style="font-size:12px;color:var(--text-2);margin-top:3px;">One AWV closes gaps on fall risk, physical activity, monitoring, and mental health at a single appointment. Members with AWV close 5.5× more care gaps.</div>
+    </div>
+    <div style="display:flex;gap:20px;flex-shrink:0;flex-wrap:wrap;">
+      <div style="text-align:center;"><div style="font-size:20px;font-weight:600;font-family:var(--mono);color:var(--green-mid);">54%</div><div style="font-size:10px;color:var(--text-3);">AWV completion</div></div>
+      <div style="text-align:center;"><div style="font-size:20px;font-weight:600;font-family:var(--mono);color:var(--red-mid);">1,932</div><div style="font-size:10px;color:var(--text-3);">No AWV this year</div></div>
+      <div style="text-align:center;"><div style="font-size:20px;font-weight:600;font-family:var(--mono);color:var(--amber-mid);">75%</div><div style="font-size:10px;color:var(--text-3);">Target</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ PAGE 2: MEASURE DEEP DIVE ============================================================ -->
+<div id="p2" class="page">
+  <div class="breadcrumb" onclick="nav('p1',document.querySelectorAll('.tnav')[0])">← <span>Back to Measure Overview</span></div>
+
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap;">
+    <div>
+      <div id="dd-name" style="font-size:20px;font-weight:600;letter-spacing:-.02em;"></div>
+      <div id="dd-type" style="font-size:11px;color:var(--text-3);font-family:var(--mono);margin-top:3px;"></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-shrink:0;">
+      <span id="dd-badge"></span>
+      <button class="btn-primary" onclick="nav('p3',document.querySelectorAll('.tnav')[2])">→ View open gaps & outreach</button>
+    </div>
+  </div>
+
+  <!-- SCORE STRIP -->
+  <div class="g4" style="margin-bottom:16px;">
+    <div class="stat-card"><div class="stat-label">Current rate</div><div class="stat-val" id="dd-rate"></div><div class="stat-sub" id="dd-rate-sub"></div></div>
+    <div class="stat-card"><div class="stat-label">4-star cut (projected)</div><div class="stat-val" id="dd-cut" style="color:var(--amber-mid);"></div></div>
+    <div class="stat-card"><div class="stat-label">Gap to 4-star</div><div class="stat-val" id="dd-gap"></div></div>
+    <div class="stat-card"><div class="stat-label">Members needed to close gap</div><div class="stat-val" id="dd-needed" style="color:var(--blue-mid);"></div><div class="stat-sub">more Yes answers needed</div></div>
+  </div>
+
+  <!-- HOW GAP IS BUILT -->
+  <div class="g2" style="margin-bottom:12px;">
+    <div class="card">
+      <div class="card-title">How the open gap is identified</div>
+      <div class="step-flow" id="dd-steps"></div>
+    </div>
+    <div>
+      <!-- SURVEY / MOCK -->
+      <div class="card" style="margin-bottom:12px;">
+        <div class="card-title">Mock / pulse survey results</div>
+        <div class="g4" id="dd-mock"></div>
+        <div id="dd-mock-note" style="margin-top:10px;font-size:12px;color:var(--red);background:var(--red-bg);border:1px solid rgba(184,50,50,.15);border-radius:4px;padding:9px 12px;line-height:1.6;"></div>
+      </div>
+      <!-- AWV -->
+      <div class="card">
+        <div class="card-title">Annual Wellness Visit connection</div>
+        <div style="display:flex;align-items:center;gap:12px;background:var(--green-bg);border:1px solid #C0DAC8;border-radius:4px;padding:10px 12px;margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:600;color:var(--green);flex-shrink:0;">AWV completion</div>
+          <div style="flex:1;background:rgba(46,153,104,.15);border-radius:3px;height:6px;overflow:hidden;"><div class="prog-fill" id="dd-awv-bar" style="background:var(--green-mid);"></div></div>
+          <div style="font-size:16px;font-weight:600;font-family:var(--mono);color:var(--green-mid);" id="dd-awv-pct"></div>
+        </div>
+        <div style="font-size:12px;color:var(--text-2);" id="dd-awv-note"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SURVEY QUESTIONS -->
+  <div class="card" style="margin-bottom:12px;padding:0;overflow:hidden;">
+    <div style="padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface2);">
+      <div class="card-title" style="margin:0;">HOS Survey Questions for this measure</div>
+    </div>
+    <table class="tbl" style="width:100%;">
+      <thead><tr style="background:var(--surface2);"><th style="width:45%;">Official HOS Question</th><th style="width:25%;">What it maps to</th><th style="width:15%;">Top-box rule</th><th style="text-align:right;width:15%;">Top-box %</th></tr></thead>
+      <tbody id="dd-questions"></tbody>
+    </table>
+  </div>
+
+  <!-- TEAM ACTIONS -->
+  <div class="card">
+    <div class="card-title">Active interventions</div>
+    <div id="dd-actions"></div>
+  </div>
+</div>
+
+<!-- ============================================================ PAGE 3: GAP & OUTREACH ============================================================ -->
+<div id="p3" class="page">
+  <div class="ph">
+    <div class="ph-title">Gap & Outreach</div>
+    <div class="ph-sub">Fall Risk Management — 302 open gaps. Work the member lists, create campaigns, track outreach status.</div>
+  </div>
+
+  <!-- REMOVED: step-by-step and mock survey cards (covered in Deep Dive) -->
+  <div style="display:none;" class="g2" style="margin-bottom:16px;">
+  </div>
+
+  <!-- MEMBER LIST WITH TABS -->
+  <div class="sec-hdr">Member lists & campaign management</div>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <div style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--surface2);">
+      <div style="display:flex;gap:20px;">
+        <div style="text-align:center;"><div style="font-size:16px;font-weight:600;font-family:var(--mono);color:var(--red-mid);">302</div><div style="font-size:9px;color:var(--text-3);">OPEN GAP</div></div>
+        <div style="text-align:center;"><div style="font-size:16px;font-weight:600;font-family:var(--mono);color:var(--green-mid);">198</div><div style="font-size:9px;color:var(--text-3);">REACHED</div></div>
+        <div style="text-align:center;"><div style="font-size:16px;font-weight:600;font-family:var(--mono);color:var(--amber-mid);">104</div><div style="font-size:9px;color:var(--text-3);">PENDING</div></div>
+        <div style="text-align:center;"><div style="font-size:16px;font-weight:600;font-family:var(--mono);color:var(--green-mid);">82</div><div style="font-size:9px;color:var(--text-3);">COMPLETE</div></div>
+      </div>
+      <button class="btn-primary" onclick="openCampaignModal(null)">+ Create campaign</button>
+    </div>
+    <div style="padding:0 16px;">
+      <div class="tabs">
+        <button class="tab active" onclick="showTab('care',this)">Care management</button>
+        <button class="tab" onclick="showTab('out',this)">Outreach list</button>
+        <button class="tab" onclick="showTab('prov',this)">Provider report</button>
+        <button class="tab" onclick="showTab('wl',this)">Campaign worklist <span id="wl-badge" style="background:var(--green);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;font-family:var(--mono);margin-left:4px;">0</span></button>
+      </div>
+    </div>
+
+    <!-- CARE MGMT TAB -->
+    <div class="tab-panel active" id="tab-care" style="padding:0 16px 16px;">
+      <div style="overflow-x:auto;">
+        <table class="tbl">
+          <thead><tr><th>Member ID</th><th>Name</th><th>Flag reason</th><th>AWV</th><th>Risk</th><th>Urgency score</th><th>Assigned</th><th>Status</th><th></th></tr></thead>
+          <tbody id="care-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- OUTREACH TAB -->
+    <div class="tab-panel" id="tab-out" style="padding:0 16px 16px;">
+      <div style="overflow-x:auto;">
+        <table class="tbl">
+          <thead><tr><th>Member ID</th><th>Name</th><th>Reason</th><th>Pred. response</th><th>Attempts</th><th>Last contact</th><th>Channel</th><th>Status</th></tr></thead>
+          <tbody id="out-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PROVIDER REPORT TAB -->
+    <div class="tab-panel" id="tab-prov" style="padding:16px;">
+      <div style="font-size:11px;color:var(--text-3);margin-bottom:12px;font-family:var(--mono);">14 providers · 302 patients total · Monthly report distributed May 7 2025</div>
+      <div id="prov-content"></div>
+    </div>
+
+    <!-- WORKLIST TAB -->
+    <div class="tab-panel" id="tab-wl" style="padding:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div style="font-size:12px;color:var(--text-2);">Campaigns created for the 302 open gap members</div>
+        <button class="btn-outline" onclick="openCampaignModal(null)">+ Add campaign</button>
+      </div>
+      <div id="wl-list"><div class="wl-empty">No campaigns created yet. Click "+ Campaign" on any member row or use the button above.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ PAGE 4: URGENCY ENGINE ============================================================ -->
+<div id="p4" class="page">
+  <div class="ph">
+    <div class="ph-title">Urgency Engine</div>
+    <div class="ph-sub">How the agent scores each of the 302 open-gap members to determine who gets called first</div>
+  </div>
+
+  <div class="insight-box">
+    <div class="insight-label">How it works</div>
+    <div class="insight-text">The agent assigns a <strong>composite urgency score (0–100)</strong> to each of the 302 members with an open fall risk gap. Care management works the list from highest score down, ensuring the most at-risk members are contacted first. The score is recalculated nightly as new claims and EHR data flows in.</div>
+  </div>
+
+  <div class="sec-hdr">Urgency score factors — weights and underlying data sources</div>
+  <div class="card" style="padding:0;overflow:hidden;margin-bottom:16px;">
+    <table class="tbl" style="width:100%;table-layout:fixed;">
+      <colgroup><col style="width:22%"><col style="width:8%"><col style="width:25%"><col style="width:20%"><col style="width:25%"></colgroup>
+      <thead>
+        <tr style="background:var(--surface2);">
+          <th>Factor</th><th style="text-align:center;">Weight</th><th>What is measured</th><th>Data source</th><th>High urgency triggers</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="font-weight:600;">Fall history severity</td><td style="text-align:center;font-family:var(--mono);font-weight:600;color:var(--blue-mid);">25%</td><td style="font-size:11px;color:var(--text-2);">Recency and number of fall-related claims in last 24 months</td><td><span class="chip chip-gray">Claims · ICD-10 W00-W19</span></td><td style="font-size:11px;color:var(--text-2);">Fall claim in last 6 months, or 2+ falls in 24 months</td></tr>
+        <tr><td style="font-weight:600;">AWV status</td><td style="text-align:center;font-family:var(--mono);font-weight:600;color:var(--blue-mid);">20%</td><td style="font-size:11px;color:var(--text-2);">Whether the member has a completed AWV in the last 12 months</td><td><span class="chip chip-gray">Claims · CPT G0438/G0439</span></td><td style="font-size:11px;color:var(--text-2);">No AWV in the last 12 months</td></tr>
+        <tr><td style="font-weight:600;">Age</td><td style="text-align:center;font-family:var(--mono);font-weight:600;color:var(--blue-mid);">15%</td><td style="font-size:11px;color:var(--text-2);">Member age — older members face exponentially higher fall risk</td><td><span class="chip chip-gray">Enrollment data</span></td><td style="font-size:11px;color:var(--text-2);">Age 80+ = maximum points; 70–79 = high; &lt;70 = low</td></tr>
+        <tr><td style="font-weight:600;">Comorbidities</td><td style="text-align:center;font-family:var(--mono);font-weight:600;color:var(--blue-mid);">15%</td><td style="font-size:11px;color:var(--text-2);">Conditions that increase fall risk: diabetes, osteoporosis, vision issues, neurological conditions</td><td><span class="chip chip-gray">Claims · ICD-10</span></td><td style="font-size:11px;color:var(--text-2);">2+ active comorbidities from risk list</td></tr>
+        <tr><td style="font-weight:600;">Mock survey response</td><td style="text-align:center;font-family:var(--mono);font-weight:600;color:var(--blue-mid);">10%</td><td style="font-size:11px;color:var(--text-2);">How the member responded (or didn't) on the pre-regulatory mock survey</td><td><span class="chip chip-gray">Internal survey data</span></td><td style="font-size:11px;color:var(--text-2);">Answered "No" = high; No response = medium; "Yes" = low</td></tr>
+        <tr><td style="font-weight:600;">Time since last provider visit</td><td style="text-align:center;font-family:var(--mono);font-weight:600;color:var(--blue-mid);">10%</td><td style="font-size:11px;color:var(--text-2);">Months since last documented visit with any provider</td><td><span class="chip chip-gray">Claims · EHR</span></td><td style="font-size:11px;color:var(--text-2);">No visit in 6+ months</td></tr>
+        <tr><td style="font-weight:600;">Homebound status</td><td style="text-align:center;font-family:var(--mono);font-weight:600;color:var(--blue-mid);">5%</td><td style="font-size:11px;color:var(--text-2);">Whether member is identified as homebound — needs different intervention pathway (home safety assessment)</td><td><span class="chip chip-gray">Claims · ICD-10 Z74.09</span></td><td style="font-size:11px;color:var(--text-2);">Active homebound status = max points + routes to home safety pathway</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec-hdr">How the score is calculated</div>
+  <div class="card" style="margin-bottom:16px;">
+    <div style="font-family:var(--mono);font-size:12px;background:var(--surface2);border-radius:4px;padding:14px;margin-bottom:12px;line-height:2;">
+      Urgency Score = (Fall severity × 0.25) + (No AWV × 0.20) + (Age score × 0.15) + (Comorbidity score × 0.15) + (Mock survey score × 0.10) + (Visit gap × 0.10) + (Homebound × 0.05)<br>
+      <span style="color:var(--text-3);">All sub-scores normalized to 0–100 before weighting. Final score rounded to nearest integer.</span>
+    </div>
+    <div class="g3">
+      <div style="background:var(--red-bg);border:1px solid rgba(204,51,51,.2);border-radius:4px;padding:12px;text-align:center;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--red);margin-bottom:4px;">High urgency</div>
+        <div style="font-size:22px;font-weight:600;font-family:var(--mono);color:var(--red-mid);">70–100</div>
+        <div style="font-size:11px;color:var(--red);margin-top:3px;">→ Care management priority call</div>
+      </div>
+      <div style="background:var(--amber-bg);border:1px solid rgba(200,138,0,.2);border-radius:4px;padding:12px;text-align:center;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amber);margin-bottom:4px;">Medium urgency</div>
+        <div style="font-size:22px;font-weight:600;font-family:var(--mono);color:var(--amber-mid);">40–69</div>
+        <div style="font-size:11px;color:var(--amber);margin-top:3px;">→ Care mgmt or outreach call</div>
+      </div>
+      <div style="background:var(--green-bg);border:1px solid #C0DAC8;border-radius:4px;padding:12px;text-align:center;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--green);margin-bottom:4px;">Low urgency</div>
+        <div style="font-size:22px;font-weight:600;font-family:var(--mono);color:var(--green-mid);">0–39</div>
+        <div style="font-size:11px;color:var(--green);margin-top:3px;">→ Outreach call or pre-survey reminder</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-hdr">Score distribution — current 302 open gap members</div>
+  <div class="card">
+    <div class="g3">
+      <div class="stat-card"><div class="stat-label">High urgency (70–100)</div><div class="stat-val" style="color:var(--red-mid);">112</div><div class="stat-sub">37% of open gaps</div></div>
+      <div class="stat-card"><div class="stat-label">Medium urgency (40–69)</div><div class="stat-val" style="color:var(--amber-mid);">134</div><div class="stat-sub">44% of open gaps</div></div>
+      <div class="stat-card"><div class="stat-label">Low urgency (0–39)</div><div class="stat-val" style="color:var(--green-mid);">56</div><div class="stat-sub">19% of open gaps</div></div>
+    </div>
+    <div style="margin-top:14px;">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-2);margin-bottom:4px;"><span>Score distribution across all 302 members</span></div>
+      <div style="display:flex;height:12px;border-radius:5px;overflow:hidden;gap:2px;">
+        <div style="width:37%;background:var(--red-mid);border-radius:3px 0 0 3px;"></div>
+        <div style="width:44%;background:var(--amber-mid);"></div>
+        <div style="width:19%;background:var(--green-mid);border-radius:0 3px 3px 0;"></div>
+      </div>
+      <div style="display:flex;gap:16px;margin-top:6px;font-size:10px;color:var(--text-3);font-family:var(--mono);">
+        <span>■ <span style="color:var(--red-mid);">High 37%</span></span>
+        <span>■ <span style="color:var(--amber-mid);">Med 44%</span></span>
+        <span>■ <span style="color:var(--green-mid);">Low 19%</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================ CAMPAIGN MODAL ============================================================ -->
+<div class="modal-overlay" id="campaign-modal">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <div>
+        <div class="modal-title">Design intervention campaign</div>
+        <div class="modal-sub" id="campaign-modal-member">Select member from the list</div>
+      </div>
+      <button onclick="closeCampaignModal()" style="background:rgba(255,255,255,.12);border:none;color:#fff;font-size:15px;width:28px;height:28px;border-radius:4px;cursor:pointer;flex-shrink:0;">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group" style="grid-column:1/-1;">
+          <div class="form-label">Intervention type</div>
+          <select class="form-select" id="c-type">
+            <option>AWV scheduling — annual wellness visit</option>
+            <option>Provider visit — fall prevention discussion</option>
+            <option>Home safety assessment referral</option>
+            <option>Health coaching — physical activity follow-up</option>
+            <option>Chronic disease management enrollment</option>
+            <option>PT/OT referral — mobility support</option>
+            <option>Mental health screening + navigation</option>
+            <option>Fitness program enrollment (SilverSneakers)</option>
+            <option>Pre-survey outreach — recall reinforcement</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <div class="form-label">Assign to team</div>
+          <select class="form-select" id="c-team"><option>Care management</option><option>Outreach team</option><option>Clinical</option><option>Behavioral health</option><option>Benefits</option></select>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Priority</div>
+          <select class="form-select" id="c-priority"><option>High</option><option>Medium</option><option>Low</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <div class="form-label">Target date</div>
+          <input class="form-input" type="date" id="c-date">
+        </div>
+        <div class="form-group">
+          <div class="form-label">Expected lift</div>
+          <input class="form-input" type="text" id="c-lift" placeholder="e.g. +1–2pp">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Notes</div>
+        <textarea class="form-textarea" id="c-notes" placeholder="Clinical context, barriers, special instructions..."></textarea>
+      </div>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn-cancel" onclick="closeCampaignModal()">Cancel</button>
+      <button class="btn-save" onclick="saveCampaign()">Save to worklist</button>
+    </div>
+  </div>
+</div>
+
+<!-- MEMBER DETAIL SLIDE -->
+<div class="member-slide" id="member-slide">
+  <div class="ms-hdr">
+    <div>
+      <div class="ms-name" id="slide-name"></div>
+      <div class="ms-id" id="slide-id"></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:flex-start;">
+      <button onclick="openCampaignModalForMember(currentMember)" style="font-size:11px;font-weight:500;padding:5px 12px;border-radius:4px;border:none;background:var(--green-mid);color:#fff;cursor:pointer;font-family:var(--sans);margin-top:2px;">+ Campaign</button>
+      <button onclick="closeMemberSlide()" style="background:rgba(255,255,255,.12);border:none;color:#fff;font-size:15px;width:28px;height:28px;border-radius:4px;cursor:pointer;margin-top:2px;">✕</button>
+    </div>
+  </div>
+  <div class="ms-body" id="slide-body"></div>
+</div>
+<div id="slide-overlay" onclick="closeMemberSlide()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:899;"></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────
+const MEASURES = {
+  fall: {
+    name:'Fall risk management', type:'Process measure · Survey-based · Fall history members only',
+    badge:'CRITICAL', badgeClass:'chip-red', rate:76.0, cut4:78.0, stars:3,
+    needed: 10, eligible:1260, documented:958, openGap:302,
+    survey:{sent:820,responded:512,no:184,noResp:124},
+    awv:{pct:48,note:'655 members with no AWV — scheduling a visit closes the fall gap at the same appointment via CPT G0438/G0439.'},
+    questions:[
+      {q:'In the last 6 months, did your personal doctor talk with you about falling or problems with balance or walking?',proxy:'Did your doctor discuss fall prevention with you?',rule:'Yes = top box',pct:76,color:'var(--red-mid)'},
+      {q:'In the last 6 months, did your personal doctor talk with you about how to prevent falls?',proxy:'Did your doctor give you fall prevention advice?',rule:'Yes = top box',pct:74,color:'var(--red-mid)'},
+    ],
+    steps:[
+      {title:'Pull fall-risk eligible population',desc:'Agent scans claims for ICD-10 codes W00–W19 (fall injuries) and Z91.81 (fall risk history).',result:'→ 1,260 eligible members'},
+      {title:'Cross-reference claims + EHR for documentation',desc:'Checks for fall prevention counseling CPT codes (claims) and discussion notes (EHR) in last 12 months. No documentation on either = open gap.',result:'→ 302 open gaps identified'},
+      {title:'Score by urgency, route to team',desc:'Agent scores all 302 by urgency factors. High → care mgmt. Med/Low → outreach. Provider report auto-distributed.',result:'→ 14 providers notified · 198 reached'},
+    ],
+    actions:[
+      {team:'Care mgmt',cls:'chip-blue',txt:'Call members using urgency scores to prioritize. Schedule a provider visit for fall prevention discussion. Note: the call does not close the gap — only the documented provider visit does.',sub:'Week 2–5',lift:'+2–3pp',status:'Active',scls:'chip-green'},
+      {team:'Clinical',cls:'chip-green',txt:'EHR alert set for all 302 — when any visits for any reason, provider is prompted to document fall prevention. Homebound members get a home safety assessment referral instead.',sub:'Week 1–3',lift:'+3–5pp',status:'Active',scls:'chip-green'},
+      {team:'Outreach',cls:'chip-gray',txt:'Pre-survey call to reinforce member recall of fall prevention conversation before the regulatory survey opens. Cannot run in July — CMS blackout.',sub:'Pre-survey window',lift:'+1–2pp',status:'Scheduled',scls:'chip-gray'},
+    ]
+  },
+  mon:{
+    name:'Monitoring physical activity', type:'Process measure · Survey-based · Linked to physical activity',
+    badge:'CRITICAL', badgeClass:'chip-red', rate:69.0, cut4:71.0, stars:3,
+    needed: 22, eligible:3402, documented:2348, openGap:1054,
+    survey:{sent:2100,responded:1380,no:487,noResp:233},
+    awv:{pct:54,note:'AWV return visit is the natural moment to discuss physical activity progress and document the follow-up conversation.'},
+    questions:[
+      {q:'In the last 6 months, did your personal doctor talk with you about how much exercise or physical activity you get?',proxy:'Did your doctor discuss your exercise habits?',rule:'Yes = top box',pct:69,color:'var(--red-mid)'},
+      {q:'In the last 6 months, did your personal doctor give you a plan or goal for your physical activity?',proxy:'Did your doctor set activity goals with you?',rule:'Yes = top box',pct:68,color:'var(--red-mid)'},
+    ],
+    steps:[
+      {title:'Identify members who received activity advice',desc:'Finds members who got physical activity advice (from Physical Activity measure) but have no follow-up discussion documented in the last 12 months.',result:'→ 1,054 open gaps'},
+      {title:'Score by urgency and response likelihood',desc:'Agent scores each member on urgency + predicted survey response likelihood. Highest value contacts (high urgency + high response probability) are prioritized first.',result:'→ 198 high-value contacts identified first'},
+      {title:'Route and generate provider report',desc:'22 providers with lowest monitoring conversation rates flagged. Report distributed with patient lists sorted by urgency.',result:'→ 22 providers notified'},
+    ],
+    actions:[
+      {team:'Care team',cls:'chip-blue',txt:'Health coach assigned to high-urgency members — structured follow-up on activity progress using agent urgency + response scores.',sub:'30d post-advice',lift:'+2–4pp',status:'Planning',scls:'chip-amber'},
+      {team:'Clinical',cls:'chip-green',txt:'EHR prompt at return visits — flag when physical activity follow-up has not been documented.',sub:'Week 2–3',lift:'+3–4pp',status:'Active',scls:'chip-green'},
+      {team:'Outreach',cls:'chip-gray',txt:'Pre-survey call to remind members of follow-up conversations (outside blackout window).',sub:'Pre-survey',lift:'+1–2pp',status:'Scheduled',scls:'chip-gray'},
+    ]
+  },
+  phys:{
+    name:'Improving / maintaining physical health', type:'Outcome measure · 2-year longitudinal · SF-36 PCS · Returns to full weight 2026',
+    badge:'AT RISK', badgeClass:'chip-amber', rate:72.0, cut4:76.0, stars:3.5,
+    needed: 40, eligible:3100, documented:1786, openGap:694,
+    survey:{sent:3200,responded:2180,no:620,noResp:470},
+    awv:{pct:54,note:'AWV enables chronic disease management, PT/OT referrals, fitness enrollment, depression screening — all in one visit.'},
+    questions:[
+      {q:'Compared to 2 years ago, how would you rate your physical health in general?',proxy:'Has your physical health improved or stayed the same?',rule:'Better / Same = top box',pct:72,color:'var(--amber-mid)'},
+      {q:'In the last 4 weeks, how much of the time did your physical health limit your daily activities?',proxy:'Physical health limiting your daily life?',rule:'None / A little = top box',pct:71,color:'var(--amber-mid)'},
+    ],
+    steps:[
+      {title:'Stratify all members by health trajectory',desc:'Agent uses HOS PCS scores + claims + pulse survey to classify all 4,200 members: Declined / At-risk / Maintained / Improved / Non-responder.',result:'→ Declined: 310 · At-risk: 780 · Non-resp: 470'},
+      {title:'Score non-responders by predicted response likelihood',desc:'470 non-responders scored by predicted likelihood of completing the HOS survey. High + medium probability only are prioritised for outreach.',result:'→ High: 198 · Medium: 156 · Low: 116 deprioritised'},
+      {title:'Build monthly member health trajectory scorecard',desc:'Physical health trend per member produced for care team review. Declining and at-risk members flagged for immediate intervention planning.',result:'→ 310 declining · 780 at-risk · care team notified'},
+    ],
+    actions:[
+      {team:'Care mgmt',cls:'chip-blue',txt:'Chronic disease management enrollment for declined + at-risk members (diabetes, COPD, heart failure). Prioritise using agent trajectory scorecard.',sub:'Ongoing · Expected: +2–3pp',status:'Planning',scls:'chip-amber'},
+      {team:'Benefits',cls:'chip-green',txt:'SilverSneakers / Silver&Fit enrollment for at-risk and maintained members to support physical activity and slow decline.',sub:'Week 3–6 · Expected: +1–2pp',status:'Active',scls:'chip-green'},
+      {team:'Outreach',cls:'chip-gray',txt:'Engage non-responders — high + medium likelihood only per agent score. Ensure HOS survey completion.',sub:'Pre-survey window · Expected: +5pp response rate',status:'Scheduled',scls:'chip-gray'},
+    ]
+  },
+  ment:{
+    name:'Improving / maintaining mental health', type:'Outcome measure · 2-year longitudinal · SF-36 MCS · Returns to full weight 2026',
+    badge:'AT RISK', badgeClass:'chip-amber', rate:74.0, cut4:78.0, stars:3.5,
+    needed: 40, eligible:3100, documented:1837, openGap:643,
+    survey:{sent:3200,responded:2180,no:570,noResp:470},
+    awv:{pct:54,note:'AWV includes PHQ-9 depression screening — key trigger for mental health care navigation.'},
+    questions:[
+      {q:'Compared to 2 years ago, how would you rate your mental or emotional health in general?',proxy:'Has your emotional health improved or stayed the same?',rule:'Better / Same = top box',pct:74,color:'var(--amber-mid)'},
+      {q:'In the last 4 weeks, how much of the time did you feel calm and peaceful?',proxy:'Feeling calm and in control lately?',rule:'Most / All of the time = top box',pct:73,color:'var(--amber-mid)'},
+    ],
+    steps:[
+      {title:'Stratify all members by MCS trajectory',desc:'Agent uses HOS MCS scores + claims + pulse survey to classify members: Declined / At-risk / Maintained / Improved / Non-responder.',result:'→ Declined: 280 · At-risk: 760 · Non-resp: 470'},
+      {title:'Identify members with PHQ-9 elevation',desc:'Cross-references behavioral health claims for members with PHQ-9 elevation in last 12 months — direct indicator of mental health decline risk.',result:'→ 312 members with depression risk flag · routed to behavioral health'},
+      {title:'Monthly MCS trajectory scorecard',desc:'MCS trend per member flagged for rapid decliners (>5pt drop) for immediate outreach priority.',result:'→ 48 rapid decliners flagged urgent'},
+    ],
+    actions:[
+      {team:'Behavioral',cls:'chip-blue',txt:'Mental health screening + care navigation for members with declining MCS scores. PHQ-9 follow-up and specialist referral.',sub:'Week 4–8 · Expected: +1–2pp',status:'Planning',scls:'chip-amber'},
+      {team:'Care mgmt',cls:'chip-blue',txt:'Chronic disease management for members with comorbidities contributing to mental health decline.',sub:'Ongoing · Expected: +1–2pp',status:'Planning',scls:'chip-amber'},
+      {team:'Outreach',cls:'chip-gray',txt:'Engage non-responders — high + medium likelihood only per agent score. Ensure HOS survey completion for mental health cohort.',sub:'Pre-survey window · Expected: +5pp response rate',status:'Scheduled',scls:'chip-gray'},
+    ]
+  },
+  pact:{
+    name:'Physical activity', type:'Process measure · Survey-based · Provider conversation at visit',
+    badge:'ON TRACK', badgeClass:'chip-green', rate:81.0, cut4:79.0, stars:4,
+    needed: 0, eligible:4200, documented:3402, openGap:798,
+    survey:{sent:3100,responded:2340,no:390,noResp:370},
+    awv:{pct:54,note:'798 members with no wellness visit = 798 missed physical activity advice opportunities. Closing AWV gaps directly closes this measure.'},
+    questions:[
+      {q:'In the last 6 months, did your personal doctor talk with you about exercise or physical activity?',proxy:'Did your doctor discuss exercise with you?',rule:'Yes = top box',pct:81,color:'var(--green-mid)'},
+    ],
+    steps:[
+      {title:'Identify members with no physical activity conversation documented',desc:'Checks claims for physical activity counseling CPT codes and EHR notes. Members without any visit in 12+ months are automatically flagged as they have no opportunity for the conversation.',result:'→ 798 members with no wellness visit'},
+      {title:'Provider scorecard — % of patients receiving advice',desc:'28 providers scored. 6 below 75% rate flagged for provider relations outreach.',result:'→ 6 providers below 75% target'},
+    ],
+    actions:[
+      {team:'Care mgmt',cls:'chip-blue',txt:'Schedule annual wellness visits for 798 no-visit members — enables physical activity advice to be given and documented at the visit.',sub:'Monthly',lift:'+1–2pp',status:'Active',scls:'chip-green'},
+      {team:'Outreach',cls:'chip-gray',txt:'Pre-survey reminder to reinforce physical activity conversation recall before regulatory survey (outside blackout window).',sub:'Pre-survey',lift:'+1–2pp',status:'Scheduled',scls:'chip-gray'},
+    ]
+  }
+};
+
+const MEMBERS = [
+  {id:'M-10042',name:'Dorothy Simmons',age:81,awv:false,risk:'High',urgency:88,openGaps:['Fall Risk'],handler:'Care mgmt',assigned:'J. Martinez',status:'In progress',flag:'Fall ICD W19 · No discussion',channel:'Phone',attempts:2,lastContact:'May 3',mockSurvey:'No',lastVisit:'Mar 12',comorbidities:['Osteoporosis','Type 2 Diabetes'],homebound:false},
+  {id:'M-10158',name:'Harold Greene',age:74,awv:true,risk:'High',urgency:72,openGaps:['Fall Risk','Monitoring'],handler:'Care mgmt',assigned:'J. Martinez',status:'Not started',flag:'Balance issue · No discussion',channel:'Phone+Mail',attempts:1,lastContact:'May 1',mockSurvey:'No',lastVisit:'Feb 28',comorbidities:['Vestibular disorder'],homebound:false},
+  {id:'M-10273',name:'Margaret Fowler',age:69,awv:false,risk:'Medium',urgency:54,openGaps:['Fall Risk'],handler:'Care mgmt',assigned:'S. Patel',status:'Complete',flag:'Fall ICD W01 · No discussion',channel:'Phone',attempts:3,lastContact:'May 5',mockSurvey:'Yes',lastVisit:'Apr 2',comorbidities:['Hypertension'],homebound:false},
+  {id:'M-10391',name:'Robert Kline',age:83,awv:false,risk:'High',urgency:91,openGaps:['Fall Risk','Physical Health'],handler:'Care mgmt',assigned:'S. Patel',status:'In progress',flag:'Multiple falls · No discussion',channel:'Phone',attempts:2,lastContact:'May 4',mockSurvey:'No',lastVisit:'Jan 15',comorbidities:['Parkinson\'s','Osteoporosis','Type 2 Diabetes'],homebound:true},
+  {id:'M-10445',name:'Evelyn Torres',age:71,awv:true,risk:'Medium',urgency:48,openGaps:['Fall Risk'],handler:'Outreach',assigned:'K. Brown',status:'Not started',flag:'Fall ICD W18 · No discussion',channel:'Phone',attempts:0,lastContact:'—',mockSurvey:'No response',lastVisit:'Apr 18',comorbidities:['Type 2 Diabetes'],homebound:false},
+  {id:'M-10512',name:'James Whitfield',age:78,awv:false,risk:'High',urgency:79,openGaps:['Fall Risk','Monitoring'],handler:'Care mgmt',assigned:'K. Brown',status:'In progress',flag:'Balance issue · No discussion',channel:'Phone',attempts:1,lastContact:'May 2',mockSurvey:'No',lastVisit:'Mar 5',comorbidities:['Vision impairment','Hypertension'],homebound:false},
+  {id:'M-10634',name:'Shirley Nguyen',age:66,awv:false,risk:'Low',urgency:31,openGaps:['Fall Risk'],handler:'Outreach',assigned:'Unassigned',status:'Not started',flag:'Fall ICD W19 · No discussion',channel:'Phone',attempts:0,lastContact:'—',mockSurvey:'Yes',lastVisit:'Feb 10',comorbidities:[],homebound:false},
+  {id:'M-10789',name:'Arthur Collins',age:76,awv:true,risk:'Medium',urgency:55,openGaps:['Fall Risk','Mental Health'],handler:'Care mgmt',assigned:'J. Martinez',status:'Not started',flag:'Fall history · No discussion',channel:'Mail',attempts:1,lastContact:'Apr 30',mockSurvey:'No response',lastVisit:'Apr 15',comorbidities:['Depression (mild)'],homebound:false},
+];
+
+let currentMeasure = 'fall';
+let currentMember = null;
+let worklist = [];
+let memberFilter = 'all';
+
+// ─── NAVIGATION ──────────────────────────────────────────────
+function nav(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tnav').forEach(b => { b.classList.remove('active'); b.style=''; });
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ─── MEASURE DEEP DIVE ───────────────────────────────────────
+function openMeasure(id) {
+  currentMeasure = id;
+  const m = MEASURES[id];
+  document.getElementById('dd-name').textContent = m.name;
+  document.getElementById('dd-type').textContent = m.type;
+  const badge = document.getElementById('dd-badge');
+  badge.className = 'chip ' + m.badgeClass;
+  badge.textContent = m.badge;
+  document.getElementById('dd-rate').textContent = m.rate + '%';
+  document.getElementById('dd-rate').style.color = m.rate >= m.cut4 ? 'var(--green-mid)' : m.rate >= m.cut4 - 2 ? 'var(--amber-mid)' : 'var(--red-mid)';
+  document.getElementById('dd-cut').textContent = m.cut4 + '%';
+  document.getElementById('dd-gap').textContent = (m.rate >= m.cut4 ? '+' : '−') + Math.abs(m.cut4 - m.rate).toFixed(1) + 'pp';
+  document.getElementById('dd-gap').style.color = m.rate >= m.cut4 ? 'var(--green-mid)' : 'var(--red-mid)';
+  document.getElementById('dd-needed').textContent = m.needed > 0 ? m.needed : '—';
+
+  // Steps
+  document.getElementById('dd-steps').innerHTML = m.steps.map((s, i) => `
+    <div class="step">
+      <div class="step-num">${i+1}</div>
+      <div class="step-body">
+        <div class="step-title">${s.title}</div>
+        <div class="step-desc">${s.desc}</div>
+        <div class="step-result">${s.result}</div>
+      </div>
+    </div>`).join('');
+
+  // Mock survey
+  const sv = m.survey;
+  document.getElementById('dd-mock').innerHTML = `
+    <div style="background:var(--surface2);border-radius:4px;padding:10px;text-align:center;"><div style="font-size:18px;font-weight:600;font-family:var(--mono);color:var(--green-mid);">${sv.sent.toLocaleString()}</div><div style="font-size:9px;color:var(--text-3);text-transform:uppercase;">Sent</div></div>
+    <div style="background:var(--surface2);border-radius:4px;padding:10px;text-align:center;"><div style="font-size:18px;font-weight:600;font-family:var(--mono);color:var(--blue-mid);">${sv.responded.toLocaleString()}</div><div style="font-size:9px;color:var(--text-3);text-transform:uppercase;">Responded</div></div>
+    <div style="background:var(--red-bg);border-radius:4px;padding:10px;text-align:center;"><div style="font-size:18px;font-weight:600;font-family:var(--mono);color:var(--red-mid);">${sv.no.toLocaleString()}</div><div style="font-size:9px;color:var(--red);text-transform:uppercase;">Answered No</div></div>
+    <div style="background:var(--amber-bg);border-radius:4px;padding:10px;text-align:center;"><div style="font-size:18px;font-weight:600;font-family:var(--mono);color:var(--amber-mid);">${sv.noResp.toLocaleString()}</div><div style="font-size:9px;color:var(--amber);text-transform:uppercase;">No response</div></div>`;
+  document.getElementById('dd-mock-note').innerHTML = `<strong>${sv.no.toLocaleString()} confirmed No responses</strong> (${Math.round(sv.no/sv.responded*100)}% of respondents) — these members actually stated they have not had the relevant discussion. Highest priority for intervention before the real survey opens.`;
+
+  // AWV
+  document.getElementById('dd-awv-bar').style.width = m.awv.pct + '%';
+  document.getElementById('dd-awv-pct').textContent = m.awv.pct + '%';
+  document.getElementById('dd-awv-note').textContent = m.awv.note;
+
+  // Questions
+  document.getElementById('dd-questions').innerHTML = m.questions.map(q => `
+    <tr>
+      <td style="font-size:12px;line-height:1.5;">${q.q}</td>
+      <td style="font-size:11px;color:var(--text-3);">${q.proxy}</td>
+      <td style="font-size:11px;font-family:var(--mono);">${q.rule}</td>
+      <td style="text-align:right;font-family:var(--mono);font-weight:600;color:${q.color};font-size:13px;">${q.pct}%</td>
+    </tr>`).join('');
+
+  // Actions
+  document.getElementById('dd-actions').innerHTML = m.actions.map((a, i) => `
+    <div class="int-card">
+      <div class="int-rank">${i+1}</div>
+      <div class="int-body">
+        <div class="int-title"><span class="chip ${a.cls}" style="margin-right:6px;">${a.team}</span><span style="font-size:11px;color:var(--text-3);font-family:var(--mono);">${a.sub}</span></div>
+        <div class="int-desc">${a.txt}</div>
+        <div class="int-meta">
+          <span class="chip ${a.scls}">${a.status}</span>
+        </div>
+      </div>
+    </div>`).join('');
+
+  nav('p2', document.querySelectorAll('.tnav')[1]);
+}
+
+// ─── TABS ─────────────────────────────────────────────────────
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ─── RENDER MEMBER LISTS ─────────────────────────────────────
+function renderCareTbody() {
+  document.getElementById('care-tbody').innerHTML = MEMBERS.filter(m => m.handler === 'Care mgmt').map(m => `
+    <tr>
+      <td class="mid-tag">${m.id}</td>
+      <td style="font-weight:500;cursor:pointer;color:var(--blue-mid);" onclick="openMemberSlide('${m.id}')">${m.name}</td>
+      <td><span style="font-size:10px;color:var(--red-mid);background:var(--red-bg);padding:2px 6px;border-radius:3px;border:1px solid rgba(204,51,51,.2);">${m.flag}</span></td>
+      <td>${m.awv ? '<span class="awv-y">✓ Done</span>' : '<span class="awv-n">✗ None</span>'}</td>
+      <td><span class="${m.risk==='High'?'risk-high':m.risk==='Medium'?'risk-med':'risk-low'}">${m.risk}</span></td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="flex:1;background:var(--surface2);border-radius:3px;height:5px;overflow:hidden;"><div style="width:${m.urgency}%;height:100%;background:${m.urgency>=70?'var(--red-mid)':m.urgency>=40?'var(--amber-mid)':'var(--green-mid)'};border-radius:3px;"></div></div>
+          <span style="font-family:var(--mono);font-size:11px;font-weight:600;">${m.urgency}</span>
+        </div>
+      </td>
+      <td style="font-size:11px;color:var(--text-2);">${m.assigned}</td>
+      <td><select class="ss"><option${m.status==='In progress'?' selected':''}>In progress</option><option${m.status==='Not started'?' selected':''}>Not started</option><option${m.status==='Complete'?' selected':''}>Complete</option><option${m.status==='Scheduled'?' selected':''}>Scheduled</option></select></td>
+      <td><button onclick="openCampaignModalForMember(MEMBERS.find(x=>x.id==='${m.id}'))" style="font-size:10px;padding:3px 8px;border-radius:3px;border:1px solid var(--border-dark);background:var(--surface);color:var(--text-2);cursor:pointer;font-family:var(--sans);">+ Campaign</button></td>
+    </tr>`).join('');
+}
+
+function renderOutTbody() {
+  document.getElementById('out-tbody').innerHTML = MEMBERS.filter(m => m.handler === 'Outreach').map(m => `
+    <tr>
+      <td class="mid-tag">${m.id}</td>
+      <td style="font-weight:500;cursor:pointer;color:var(--blue-mid);" onclick="openMemberSlide('${m.id}')">${m.name}</td>
+      <td style="font-size:11px;color:var(--text-2);">${m.flag}</td>
+      <td><span class="${m.risk==='High'?'risk-high':m.risk==='Medium'?'risk-med':'risk-low'}">${m.risk}</span></td>
+      <td style="text-align:center;font-weight:600;font-family:var(--mono);">${m.attempts}</td>
+      <td style="font-size:11px;color:var(--text-2);">${m.lastContact}</td>
+      <td><span class="chip chip-gray">${m.channel}</span></td>
+      <td><select class="ss"><option${m.status==='Not started'?' selected':''}>Not started</option><option${m.status==='In progress'?' selected':''}>In progress</option><option${m.status==='Scheduled'?' selected':''}>Scheduled</option><option${m.status==='Complete'?' selected':''}>Complete</option></select></td>
+    </tr>`).join('');
+}
+
+function renderProvContent() {
+  const providers = [
+    {name:'Dr. Rachel Kim', count:48, pts:MEMBERS.slice(0,3)},
+    {name:'Dr. Samuel Okonkwo', count:35, pts:MEMBERS.slice(3,5)},
+    {name:'Dr. Linda Marsh', count:29, pts:MEMBERS.slice(5,7)},
+  ];
+  document.getElementById('prov-content').innerHTML = providers.map(p => `
+    <div style="margin-bottom:12px;">
+      <div style="background:var(--surface2);padding:9px 12px;border-radius:4px 4px 0 0;border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:600;font-size:13px;">${p.name}</span>
+        <span style="font-size:12px;color:var(--text-2);">${p.count} patients with open gap &nbsp;<span class="chip chip-red" style="font-size:9px;">Needs action</span></span>
+      </div>
+      <div style="border:1px solid var(--border);border-top:none;border-radius:0 0 4px 4px;overflow:hidden;">
+        <table class="tbl"><thead><tr><th>Member ID</th><th>Name</th><th>Flag</th><th>Last visit</th></tr></thead>
+        <tbody>${p.pts.map(pt => `<tr><td class="mid-tag">${pt.id}</td><td style="cursor:pointer;color:var(--blue-mid);" onclick="openMemberSlide('${pt.id}')">${pt.name}</td><td><span style="font-size:10px;color:var(--red-mid);background:var(--red-bg);padding:2px 6px;border-radius:3px;">${pt.flag}</span></td><td style="font-size:11px;color:var(--text-2);">${pt.lastVisit}</td></tr>`).join('')}</tbody>
+        </table>
+      </div>
+    </div>`).join('');
+}
+
+function renderMemberTbody() {
+  const filtered = memberFilter === 'all' ? MEMBERS
+    : memberFilter === 'high' ? MEMBERS.filter(m => m.urgency >= 70)
+    : memberFilter === 'noawv' ? MEMBERS.filter(m => !m.awv)
+    : memberFilter === 'care' ? MEMBERS.filter(m => m.handler === 'Care mgmt')
+    : MEMBERS.filter(m => m.handler === 'Outreach');
+
+  document.getElementById('member-tbody').innerHTML = filtered.map(m => `
+    <tr>
+      <td class="mid-tag">${m.id}</td>
+      <td style="font-weight:500;cursor:pointer;color:var(--blue-mid);" onclick="openMemberSlide('${m.id}')">${m.name}</td>
+      <td style="font-family:var(--mono);">${m.age}</td>
+      <td>${m.awv ? '<span class="awv-y">✓ AWV</span>' : '<span class="awv-n">✗ No AWV</span>'}</td>
+      <td><span class="${m.risk==='High'?'risk-high':m.risk==='Medium'?'risk-med':'risk-low'}">${m.risk}</span></td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="flex:1;background:var(--surface2);border-radius:3px;height:5px;overflow:hidden;"><div style="width:${m.urgency}%;height:100%;background:${m.urgency>=70?'var(--red-mid)':m.urgency>=40?'var(--amber-mid)':'var(--green-mid)'};border-radius:3px;"></div></div>
+          <span style="font-family:var(--mono);font-size:11px;font-weight:600;color:${m.urgency>=70?'var(--red-mid)':m.urgency>=40?'var(--amber-mid)':'var(--green-mid)'};">${m.urgency}</span>
+        </div>
+      </td>
+      <td style="font-size:11px;">${m.openGaps.map(g => `<span class="chip chip-red" style="font-size:9px;margin-right:3px;">${g}</span>`).join('')}</td>
+      <td><span class="chip ${m.handler==='Care mgmt'?'chip-blue':'chip-gray'}">${m.handler}</span></td>
+      <td>
+        <div style="display:flex;gap:5px;">
+          <button onclick="openMemberSlide('${m.id}')" style="font-size:10px;padding:3px 7px;border-radius:3px;border:1px solid var(--border-dark);background:var(--surface);color:var(--text-2);cursor:pointer;font-family:var(--sans);">View</button>
+          <button onclick="openCampaignModalForMember(MEMBERS.find(x=>x.id==='${m.id}'))" style="font-size:10px;padding:3px 7px;border-radius:3px;border:none;background:var(--green);color:#fff;cursor:pointer;font-family:var(--sans);">+ Campaign</button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+function filterMembers(f, btn) {
+  memberFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMemberTbody();
+}
+
+// ─── MEMBER SLIDE ─────────────────────────────────────────────
+function openMemberSlide(id) {
+  const m = MEMBERS.find(x => x.id === id);
+  if (!m) return;
+  currentMember = m;
+  document.getElementById('slide-name').textContent = m.name;
+  document.getElementById('slide-id').textContent = m.id + ' · Age ' + m.age;
+
+  const urgencyColor = m.urgency >= 70 ? 'var(--red-mid)' : m.urgency >= 40 ? 'var(--amber-mid)' : 'var(--green-mid)';
+  const urgencyLabel = m.urgency >= 70 ? 'High' : m.urgency >= 40 ? 'Medium' : 'Low';
+
+  document.getElementById('slide-body').innerHTML = `
+    <div class="ms-section">
+      <div class="ms-sec-title">Urgency score</div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+        <div style="font-size:32px;font-weight:600;font-family:var(--mono);color:${urgencyColor};">${m.urgency}</div>
+        <div><span class="chip ${m.urgency>=70?'chip-red':m.urgency>=40?'chip-amber':'chip-green'}">${urgencyLabel} urgency</span><div style="font-size:11px;color:var(--text-3);margin-top:3px;">${m.openGaps.join(' · ')}</div></div>
+      </div>
+      <div class="urgency-bar"><div class="urgency-fill" style="width:${m.urgency}%;background:${urgencyColor};"></div></div>
+    </div>
+
+    <div class="ms-section">
+      <div class="ms-sec-title">Score breakdown</div>
+      ${[
+        {label:'Fall history severity (25%)', score: m.flag.includes('Multiple') ? 95 : m.flag.includes('W1') ? 75 : 55},
+        {label:'No AWV (20%)', score: m.awv ? 0 : 100},
+        {label:'Age (15%)', score: m.age >= 80 ? 100 : m.age >= 75 ? 75 : m.age >= 70 ? 50 : 30},
+        {label:'Comorbidities (15%)', score: m.comorbidities.length >= 2 ? 90 : m.comorbidities.length === 1 ? 50 : 10},
+        {label:'Mock survey (10%)', score: m.mockSurvey === 'No' ? 100 : m.mockSurvey === 'No response' ? 60 : 0},
+        {label:'Time since visit (10%)', score: m.lastContact === '—' ? 80 : 40},
+        {label:'Homebound (5%)', score: m.homebound ? 100 : 0},
+      ].map(f => `<div style="margin-bottom:7px;">
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px;"><span style="color:var(--text-2);">${f.label}</span><span style="font-family:var(--mono);font-weight:600;">${f.score}</span></div>
+        <div style="background:var(--surface2);border-radius:3px;height:4px;overflow:hidden;"><div style="width:${f.score}%;height:100%;background:${f.score>=70?'var(--red-mid)':f.score>=40?'var(--amber-mid)':'var(--green-mid)'};border-radius:3px;"></div></div>
+      </div>`).join('')}
+    </div>
+
+    <div class="ms-section">
+      <div class="ms-sec-title">Member details</div>
+      <div class="ms-row"><span class="ms-key">AWV status</span><span class="ms-val" style="color:${m.awv?'var(--green-mid)':'var(--red-mid)'};">${m.awv ? '✓ Completed' : '✗ Not completed'}</span></div>
+      <div class="ms-row"><span class="ms-key">Risk level</span><span class="ms-val">${m.risk}</span></div>
+      <div class="ms-row"><span class="ms-key">Handler</span><span class="ms-val">${m.handler}</span></div>
+      <div class="ms-row"><span class="ms-key">Assigned to</span><span class="ms-val">${m.assigned}</span></div>
+      <div class="ms-row"><span class="ms-key">Contact attempts</span><span class="ms-val">${m.attempts}</span></div>
+      <div class="ms-row"><span class="ms-key">Last contact</span><span class="ms-val">${m.lastContact}</span></div>
+      <div class="ms-row"><span class="ms-key">Channel</span><span class="ms-val">${m.channel}</span></div>
+      <div class="ms-row"><span class="ms-key">Mock survey response</span><span class="ms-val" style="color:${m.mockSurvey==='No'?'var(--red-mid)':m.mockSurvey==='Yes'?'var(--green-mid)':'var(--amber-mid)'};">${m.mockSurvey}</span></div>
+      <div class="ms-row"><span class="ms-key">Last provider visit</span><span class="ms-val">${m.lastVisit}</span></div>
+      <div class="ms-row"><span class="ms-key">Homebound</span><span class="ms-val">${m.homebound ? '⚠ Yes' : 'No'}</span></div>
+      <div class="ms-row"><span class="ms-key">Active comorbidities</span><span class="ms-val">${m.comorbidities.length ? m.comorbidities.join(', ') : 'None flagged'}</span></div>
+    </div>
+
+    <div class="ms-section">
+      <div class="ms-sec-title">Open HOS gaps</div>
+      ${m.openGaps.map(g => `<div style="background:var(--red-bg);border:1px solid rgba(204,51,51,.15);border-radius:4px;padding:8px 12px;margin-bottom:6px;font-size:12px;color:var(--red);">⚠ ${g} — no documented discussion in last 12 months</div>`).join('')}
+    </div>
+
+    <div class="ms-section">
+      <div class="ms-sec-title">Flag reason</div>
+      <div style="font-size:12px;color:var(--text-2);background:var(--surface2);border-radius:4px;padding:10px 12px;">${m.flag}</div>
+    </div>
+
+    <div style="margin-top:4px;">
+      <button class="btn-primary" style="width:100%;padding:10px;" onclick="openCampaignModalForMember(currentMember)">+ Create intervention campaign for this member</button>
+    </div>`;
+
+  document.getElementById('member-slide').classList.add('open');
+  document.getElementById('slide-overlay').style.display = 'block';
+}
+
+function closeMemberSlide() {
+  document.getElementById('member-slide').classList.remove('open');
+  document.getElementById('slide-overlay').style.display = 'none';
+}
+
+// ─── CAMPAIGN MODAL ───────────────────────────────────────────
+function openCampaignModal(member) {
+  currentMember = member;
+  document.getElementById('campaign-modal-member').textContent = member ? member.name + ' · ' + member.id : 'General campaign — not tied to specific member';
+  document.getElementById('c-date').value = new Date(Date.now() + 14*86400000).toISOString().split('T')[0];
+  document.getElementById('campaign-modal').classList.add('open');
+}
+
+function openCampaignModalForMember(member) {
+  closeMemberSlide();
+  openCampaignModal(member);
+}
+
+function closeCampaignModal() {
+  document.getElementById('campaign-modal').classList.remove('open');
+}
+
+function saveCampaign() {
+  const item = {
+    member: currentMember ? currentMember.name : 'General',
+    memberId: currentMember ? currentMember.id : '—',
+    type: document.getElementById('c-type').value,
+    team: document.getElementById('c-team').value,
+    priority: document.getElementById('c-priority').value,
+    date: document.getElementById('c-date').value,
+    lift: document.getElementById('c-lift').value || 'TBD',
+    notes: document.getElementById('c-notes').value
+  };
+  worklist.push(item);
+  closeCampaignModal();
+  renderWorklist();
+  const badge = document.getElementById('wl-badge');
+  if (badge) badge.textContent = worklist.length;
+  showToast('Campaign saved to worklist');
+}
+
+function renderWorklist() {
+  const el = document.getElementById('wl-list');
+  if (!el) return;
+  if (!worklist.length) { el.innerHTML = '<div class="wl-empty">No campaigns created yet.</div>'; return; }
+  el.innerHTML = worklist.map(w => `
+    <div class="wl-item">
+      <div class="wl-name">${w.member}</div>
+      <span class="mid-tag">${w.memberId}</span>
+      <span class="chip chip-gray">${w.type.split('—')[0].trim()}</span>
+      <span class="chip chip-blue">${w.team}</span>
+      <span class="chip ${w.priority==='High'?'chip-red':w.priority==='Medium'?'chip-amber':'chip-green'}">${w.priority}</span>
+      <span class="chip chip-gray">${w.date}</span>
+      <span style="font-size:10px;color:var(--green);font-family:var(--mono);">${w.lift}</span>
+    </div>`).join('');
+}
+
+// ─── TOAST ────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ─── INIT ─────────────────────────────────────────────────────
+renderCareTbody();
+renderOutTbody();
+renderProvContent();
+renderMemberTbody();
+renderWorklist();
+</script>
+</body>
+</html>
