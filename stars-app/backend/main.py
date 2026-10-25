@@ -7,7 +7,7 @@ import os
 from .routers import (
     plans, hedis, cahps, members, campaigns,
     alerts, interventions, team_view, simulator, star_summary,
-    market, hos, outreach,
+    market, hos, outreach, chat,
 )
 from .services.voice_agent import handle_voice_agent
 
@@ -34,6 +34,7 @@ app.include_router(simulator.router, prefix="/api")
 app.include_router(market.router, prefix="/api")
 app.include_router(hos.router, prefix="/api")
 app.include_router(outreach.router, prefix="/api")
+app.include_router(chat.router, prefix="/api")
 
 
 @app.on_event("startup")

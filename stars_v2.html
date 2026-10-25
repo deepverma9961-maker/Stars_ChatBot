@@ -523,6 +523,118 @@
     .hos-score-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
     .hos-score-val{font-size:22px;font-weight:800}
     .hos-score-sub{font-size:11px;margin-top:3px}
+
+    /* ── AI Assistant Page ── */
+    .ai-chat-container{display:flex;height:100%;overflow:hidden;background:#f8fafc}
+    .ai-sidebar{width:260px;background:#fff;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;flex-shrink:0}
+    .ai-sidebar-header{padding:16px;border-bottom:1px solid #e5e7eb}
+    .ai-sidebar-header h3{font-size:14px;font-weight:700;color:#1e293b;margin:0 0 12px}
+    .ai-new-chat-btn{width:100%;padding:10px 16px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+    .ai-new-chat-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(16,185,129,.3)}
+    .ai-sidebar-search{padding:12px 16px}
+    .ai-sidebar-search input{width:100%;padding:8px 12px;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;background:#f8fafc;box-sizing:border-box}
+    .ai-sidebar-search input:focus{outline:none;border-color:#10b981}
+    .ai-conv-list{flex:1;overflow-y:auto;padding:8px}
+    .ai-conv-item{padding:10px 12px;border-radius:8px;cursor:pointer;font-size:12px;color:#4b5563;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:background .15s}
+    .ai-conv-item:hover{background:#f0fdf4}
+    .ai-conv-item.active{background:#d1fae5;color:#065f46;font-weight:600}
+    .ai-conv-time{font-size:10px;color:#9ca3af;margin-top:2px}
+    .ai-main{flex:1;display:flex;flex-direction:column;min-width:0}
+    .ai-topbar{padding:12px 20px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between}
+    .ai-topbar-left{display:flex;align-items:center;gap:10px}
+    .ai-topbar-title{font-size:16px;font-weight:700;color:#1e293b}
+    .ai-topbar-badge{padding:3px 10px;background:#d1fae5;color:#065f46;border-radius:6px;font-size:11px;font-weight:600}
+    .ai-topbar-right{display:flex;align-items:center;gap:12px}
+    .ai-topbar-btn{padding:5px 12px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;font-size:11px;cursor:pointer;color:#6b7280;transition:all .15s}
+    .ai-topbar-btn:hover{background:#f0fdf4;border-color:#10b981;color:#065f46}
+    .ai-topbar-model{padding:4px 10px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:8px;font-size:11px;color:#065f46;font-weight:600;display:flex;align-items:center;gap:4px}
+    .ai-topbar-model::before{content:'';width:6px;height:6px;border-radius:50%;background:#10b981}
+    .ai-messages{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:16px}
+    .ai-msg{max-width:85%;animation:aiMsgIn .3s ease-out}
+    .ai-msg.user{align-self:flex-end}
+    .ai-msg.assistant{align-self:flex-start}
+    .ai-msg-bubble{padding:12px 16px;border-radius:14px;font-size:13px;line-height:1.6}
+    .ai-msg.user .ai-msg-bubble{background:linear-gradient(135deg,#10b981,#059669);color:#fff;border-bottom-right-radius:4px}
+    .ai-msg.assistant .ai-msg-bubble{background:#fff;color:#1e293b;border:1px solid #e5e7eb;border-bottom-left-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+    .ai-msg-time{font-size:10px;color:#9ca3af;margin-top:4px}
+    .ai-msg.user .ai-msg-time{text-align:right}
+    .ai-insights{margin-top:10px;padding:12px 14px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px}
+    .ai-insights-title{font-size:11px;font-weight:700;color:#065f46;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+    .ai-insights ul{margin:0;padding:0 0 0 16px;font-size:12px;color:#374151;line-height:1.7}
+    .ai-data-table{margin-top:10px;width:100%;border-collapse:collapse;font-size:11px}
+    .ai-data-table th{background:#f0fdf4;padding:6px 10px;text-align:left;font-weight:600;color:#065f46;border-bottom:2px solid #a7f3d0}
+    .ai-data-table td{padding:6px 10px;border-bottom:1px solid #e5e7eb;color:#374151}
+    .ai-data-table tr:hover td{background:#f8fafc}
+    .ai-suggestions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .ai-suggestion-btn{padding:6px 14px;background:#f8fafc;border:1px solid #d1d5db;border-radius:20px;font-size:11px;cursor:pointer;color:#4b5563;transition:all .15s}
+    .ai-suggestion-btn:hover{background:#d1fae5;border-color:#10b981;color:#065f46}
+    .ai-input-area{padding:16px 20px;background:#fff;border-top:1px solid #e5e7eb}
+    .ai-input-row{display:flex;gap:10px;align-items:flex-end}
+    .ai-input-row textarea{flex:1;padding:10px 14px;border:1px solid #d1d5db;border-radius:12px;font-size:13px;resize:none;min-height:20px;max-height:120px;font-family:inherit;line-height:1.4;transition:border-color .15s}
+    .ai-input-row textarea:focus{outline:none;border-color:#10b981;box-shadow:0 0 0 3px rgba(16,185,129,.1)}
+    .ai-send-btn{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#10b981,#059669);border:none;color:#fff;font-size:16px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .ai-send-btn:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(16,185,129,.3)}
+    .ai-send-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+    .ai-orch-panel{width:320px;background:#fff;border-left:1px solid #e5e7eb;overflow-y:auto;flex-shrink:0;display:none}
+    .ai-orch-panel.open{display:flex;flex-direction:column}
+    .ai-orch-header{padding:16px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between}
+    .ai-orch-header h4{font-size:13px;font-weight:700;color:#1e293b;margin:0;display:flex;align-items:center;gap:8px}
+    .ai-orch-body{padding:16px;flex:1}
+    .ai-orch-step{margin-bottom:16px;position:relative;padding-left:24px}
+    .ai-orch-step::before{content:'';position:absolute;left:8px;top:20px;bottom:-16px;width:2px;background:#e5e7eb}
+    .ai-orch-step:last-child::before{display:none}
+    .ai-orch-dot{position:absolute;left:2px;top:4px;width:14px;height:14px;border-radius:50%;border:2px solid #e5e7eb;background:#fff}
+    .ai-orch-step.done .ai-orch-dot{background:#10b981;border-color:#10b981}
+    .ai-orch-step.error .ai-orch-dot{background:#ef4444;border-color:#ef4444}
+    .ai-orch-step.running .ai-orch-dot{background:#f59e0b;border-color:#f59e0b;animation:aiPulse 1s infinite}
+    .ai-orch-step-title{font-size:12px;font-weight:700;color:#1e293b;display:flex;align-items:center;gap:6px}
+    .ai-orch-badge{padding:1px 6px;border-radius:4px;font-size:10px;font-weight:600}
+    .ai-orch-badge.done{background:#d1fae5;color:#065f46}
+    .ai-orch-badge.error{background:#fee2e2;color:#991b1b}
+    .ai-orch-badge.running{background:#fef3c7;color:#92400e}
+    .ai-orch-step-detail{font-size:11px;color:#6b7280;margin-top:2px}
+    .ai-orch-step-timing{font-size:10px;color:#9ca3af;margin-top:2px}
+    .ai-orch-tool{margin-top:4px;padding:4px 8px;background:#f8fafc;border-radius:4px;font-size:10px;color:#6b7280;display:flex;align-items:center;gap:4px}
+    .ai-orch-tool::before{content:'';width:5px;height:5px;border-radius:50%;background:#6366f1}
+    .ai-judge-section{margin-top:16px;padding:12px;background:#f8fafc;border-radius:10px;border:1px solid #e5e7eb}
+    .ai-judge-title{font-size:12px;font-weight:700;color:#1e293b;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+    .ai-judge-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+    .ai-judge-label{font-size:11px;color:#4b5563;width:110px;flex-shrink:0}
+    .ai-judge-bar{flex:1;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden}
+    .ai-judge-fill{height:100%;border-radius:4px;transition:width .5s ease}
+    .ai-judge-score{font-size:11px;font-weight:700;width:28px;text-align:right}
+    .ai-judge-suggestions{margin-top:10px;padding:10px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px}
+    .ai-judge-suggestions p{font-size:11px;color:#92400e;margin:3px 0;line-height:1.4}
+    .ai-analytics-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center}
+    .ai-analytics-modal.open{display:flex}
+    .ai-analytics-content{background:#fff;border-radius:16px;padding:24px;width:520px;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+    .ai-analytics-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+    .ai-analytics-header h3{font-size:16px;font-weight:700;color:#1e293b;margin:0;display:flex;align-items:center;gap:8px}
+    .ai-analytics-close{width:28px;height:28px;border-radius:50%;border:1px solid #e5e7eb;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:#6b7280}
+    .ai-analytics-close:hover{background:#fee2e2;border-color:#ef4444;color:#ef4444}
+    .ai-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+    .ai-stat-card{background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:14px}
+    .ai-stat-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#9ca3af;margin-bottom:4px}
+    .ai-stat-value{font-size:20px;font-weight:800;color:#1e293b}
+    .ai-stat-sub{font-size:10px;color:#6b7280;margin-top:2px}
+    .ai-analytics-section{margin-bottom:16px}
+    .ai-analytics-section h4{font-size:13px;font-weight:700;color:#1e293b;margin-bottom:10px}
+    .ai-agent-bar{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+    .ai-agent-bar-label{font-size:11px;color:#4b5563;width:80px;flex-shrink:0}
+    .ai-agent-bar-fill{height:18px;background:linear-gradient(90deg,#6366f1,#818cf8);border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-size:10px;color:#fff;font-weight:600;min-width:24px;transition:width .5s ease}
+    .ai-welcome{text-align:center;padding:60px 20px;color:#9ca3af}
+    .ai-welcome h2{font-size:22px;font-weight:800;color:#1e293b;margin-bottom:8px}
+    .ai-welcome p{font-size:13px;max-width:400px;margin:0 auto 24px}
+    .ai-welcome-cards{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+    .ai-welcome-card{padding:12px 18px;background:#fff;border:1px solid #e5e7eb;border-radius:10px;cursor:pointer;font-size:12px;color:#4b5563;transition:all .15s;max-width:200px}
+    .ai-welcome-card:hover{border-color:#10b981;background:#f0fdf4;color:#065f46}
+    .ai-typing{display:flex;align-items:center;gap:4px;padding:12px 16px}
+    .ai-typing-dot{width:6px;height:6px;border-radius:50%;background:#10b981;animation:aiTyping 1.4s infinite}
+    .ai-typing-dot:nth-child(2){animation-delay:.2s}
+    .ai-typing-dot:nth-child(3){animation-delay:.4s}
+    @keyframes aiTyping{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
+    @keyframes aiMsgIn{0%{opacity:0;transform:translateY(10px)}100%{opacity:1;transform:translateY(0)}}
+    @keyframes aiPulse{0%,100%{opacity:1}50%{opacity:.5}}
   </style>
 </head>
 <body>
@@ -552,6 +664,7 @@
       <div class="ntab" id="ntab-eho4all" data-page="eho4all" onclick="showPage('eho4all',this)">EHO4all</div>
       <div class="ntab" data-page="market" onclick="showPage('market',this)">Market Analysis</div>
       <div class="ntab" data-page="outreach-audit" onclick="showPage('outreach-audit',this)">Outreach Audit</div>
+      <div class="ntab" data-page="ai-assistant" onclick="showPage('ai-assistant',this)" style="border-left-color:#10b981">AI Assistant</div>
     </div>
     <div class="topbar-right">
     </div>
@@ -1530,6 +1643,83 @@
 </div>
 
 
+<!-- AI ASSISTANT -->
+<div id="pg-ai-assistant" class="page" style="display:none;flex-direction:column;padding:0;overflow:hidden">
+  <div class="ai-chat-container">
+    <!-- Sidebar -->
+    <div class="ai-sidebar">
+      <div class="ai-sidebar-header">
+        <h3>StarPulse AI</h3>
+        <button class="ai-new-chat-btn" onclick="aiNewChat()">+ New Chat</button>
+      </div>
+      <div class="ai-sidebar-search"><input type="text" placeholder="Search conversations..." oninput="aiFilterConvs(this.value)"></div>
+      <div class="ai-conv-list" id="ai-conv-list"></div>
+    </div>
+    <!-- Main Chat -->
+    <div class="ai-main">
+      <div class="ai-topbar">
+        <div class="ai-topbar-left">
+          <span class="ai-topbar-title">StarPulse AI Assistant</span>
+          <span class="ai-topbar-badge">Medicare Analytics</span>
+        </div>
+        <div class="ai-topbar-right">
+          <button class="ai-topbar-btn" onclick="aiToggleAnalytics()">Analytics</button>
+          <button class="ai-topbar-btn" onclick="aiToggleOrch()">Orchestration</button>
+          <span class="ai-topbar-model">Llama 3.3 70B</span>
+        </div>
+      </div>
+      <div class="ai-messages" id="ai-messages">
+        <div class="ai-welcome">
+          <h2>StarPulse AI Assistant</h2>
+          <p>Ask questions about star ratings, HEDIS measures, member gaps, CAHPS scores, and more.</p>
+          <div class="ai-welcome-cards">
+            <div class="ai-welcome-card" onclick="aiSendMessage('What are the top 5 plans by overall star rating in 2026?')">Top plans by star rating</div>
+            <div class="ai-welcome-card" onclick="aiSendMessage('Show me HEDIS measures with the most open gaps')">HEDIS gap analysis</div>
+            <div class="ai-welcome-card" onclick="aiSendMessage('What is the average CAHPS score across all contracts?')">CAHPS performance</div>
+            <div class="ai-welcome-card" onclick="aiSendMessage('Which contracts have critical alerts?')">Critical alerts</div>
+          </div>
+        </div>
+      </div>
+      <div class="ai-input-area">
+        <div class="ai-suggestions" id="ai-suggestions"></div>
+        <div class="ai-input-row">
+          <textarea id="ai-input" placeholder="Message StarPulse AI..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();aiSend()}"></textarea>
+          <button class="ai-send-btn" id="ai-send-btn" onclick="aiSend()">&#9654;</button>
+        </div>
+      </div>
+    </div>
+    <!-- Orchestration Panel -->
+    <div class="ai-orch-panel" id="ai-orch-panel">
+      <div class="ai-orch-header">
+        <h4><span style="font-size:16px">&#9881;</span> Agent Orchestration</h4>
+        <button class="ai-topbar-btn" onclick="aiToggleOrch()" style="font-size:14px;padding:2px 8px">&times;</button>
+      </div>
+      <div class="ai-orch-body" id="ai-orch-body">
+        <p style="font-size:12px;color:#9ca3af;text-align:center;margin-top:40px">Send a message to see the agent pipeline</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Analytics Modal -->
+<div class="ai-analytics-modal" id="ai-analytics-modal">
+  <div class="ai-analytics-content">
+    <div class="ai-analytics-header">
+      <h3><span style="font-size:18px">&#128200;</span> Analytics</h3>
+      <button class="ai-analytics-close" onclick="aiToggleAnalytics()">&times;</button>
+    </div>
+    <div class="ai-stat-grid" id="ai-stats-grid"></div>
+    <div class="ai-analytics-section">
+      <h4>Agent Usage</h4>
+      <div id="ai-agent-usage"></div>
+    </div>
+    <div class="ai-analytics-section">
+      <h4>Cost Breakdown</h4>
+      <div id="ai-cost-breakdown"></div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 // ── NAV ──────────────────────────────────────────────────────
@@ -2386,6 +2576,7 @@ function showPage(id,el){
   if(id==='hos'&&typeof hosInitPage==='function')hosInitPage();
   if(id==='adherence'&&typeof adhInitPage==='function')adhInitPage();
   if(id==='agent'){if(typeof renderAgentQueue==='function')renderAgentQueue();}
+  if(id==='ai-assistant'&&typeof aiChatInit==='function')aiChatInit();
   if(id==='outreach-audit')oaLoadLogs();
 }
 window.showPage=showPage;
@@ -6039,6 +6230,343 @@ window.adhInitPage=function(){
 // Initial render
 renderAdh();
 adhUpdateStats();
+
+})();
+
+// ── AI ASSISTANT ──────────────────────────────────────────────
+(function(){
+let aiConvId=null;
+let aiHistory=[];
+let aiConversations=[];
+let aiLoading=false;
+
+window.aiChatInit=function(){
+  aiLoadConversations();
+};
+
+window.aiNewChat=function(){
+  aiConvId=null;
+  aiHistory=[];
+  const msgs=document.getElementById('ai-messages');
+  msgs.innerHTML=`<div class="ai-welcome">
+    <h2>StarPulse AI Assistant</h2>
+    <p>Ask questions about star ratings, HEDIS measures, member gaps, CAHPS scores, and more.</p>
+    <div class="ai-welcome-cards">
+      <div class="ai-welcome-card" onclick="aiSendMessage('What are the top 5 plans by overall star rating in 2026?')">Top plans by star rating</div>
+      <div class="ai-welcome-card" onclick="aiSendMessage('Show me HEDIS measures with the most open gaps')">HEDIS gap analysis</div>
+      <div class="ai-welcome-card" onclick="aiSendMessage('What is the average CAHPS score across all contracts?')">CAHPS performance</div>
+      <div class="ai-welcome-card" onclick="aiSendMessage('Which contracts have critical alerts?')">Critical alerts</div>
+    </div>
+  </div>`;
+  document.getElementById('ai-suggestions').innerHTML='';
+  document.getElementById('ai-orch-body').innerHTML='<p style="font-size:12px;color:#9ca3af;text-align:center;margin-top:40px">Send a message to see the agent pipeline</p>';
+  aiHighlightConv(null);
+};
+
+window.aiSendMessage=function(msg){
+  document.getElementById('ai-input').value=msg;
+  aiSend();
+};
+
+window.aiSend=async function(){
+  const inp=document.getElementById('ai-input');
+  const msg=inp.value.trim();
+  if(!msg||aiLoading)return;
+  inp.value='';
+  inp.style.height='auto';
+  aiLoading=true;
+  document.getElementById('ai-send-btn').disabled=true;
+
+  // Clear welcome if first message
+  const msgs=document.getElementById('ai-messages');
+  const welcome=msgs.querySelector('.ai-welcome');
+  if(welcome)welcome.remove();
+
+  // Add user message
+  aiAddMessage('user',msg);
+  aiHistory.push({role:'user',content:msg});
+
+  // Show typing indicator
+  const typingEl=document.createElement('div');
+  typingEl.className='ai-msg assistant';
+  typingEl.id='ai-typing';
+  typingEl.innerHTML='<div class="ai-msg-bubble"><div class="ai-typing"><div class="ai-typing-dot"></div><div class="ai-typing-dot"></div><div class="ai-typing-dot"></div></div></div>';
+  msgs.appendChild(typingEl);
+  msgs.scrollTop=msgs.scrollHeight;
+
+  // Show running state in orchestration
+  aiShowOrchRunning();
+
+  try{
+    const BASE=window.location.origin;
+    const resp=await fetch(BASE+'/api/chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:msg,conversation_id:aiConvId})
+    });
+    const data=await resp.json();
+
+    // Remove typing
+    const t=document.getElementById('ai-typing');
+    if(t)t.remove();
+
+    aiConvId=data.conversation_id;
+    aiHistory.push({role:'assistant',content:data.response});
+
+    // Render response
+    aiAddAssistantMessage(data);
+
+    // Update orchestration panel
+    aiRenderOrchestration(data.orchestration);
+
+    // Update suggestions
+    aiRenderSuggestions(data.response);
+
+    // Refresh conversation list
+    aiLoadConversations();
+
+  }catch(err){
+    const t=document.getElementById('ai-typing');
+    if(t)t.remove();
+    aiAddMessage('assistant','Sorry, I encountered an error connecting to the AI service. Please check that the backend is running and Databricks is configured.\n\nError: '+err.message);
+    aiRenderOrchError(err.message);
+  }
+
+  aiLoading=false;
+  document.getElementById('ai-send-btn').disabled=false;
+  document.getElementById('ai-input').focus();
+};
+
+function aiAddMessage(role,content){
+  const msgs=document.getElementById('ai-messages');
+  const div=document.createElement('div');
+  div.className='ai-msg '+role;
+  const time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  div.innerHTML=`<div class="ai-msg-bubble">${escHtml(content)}</div><div class="ai-msg-time">${time}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function aiAddAssistantMessage(data){
+  const msgs=document.getElementById('ai-messages');
+  const div=document.createElement('div');
+  div.className='ai-msg assistant';
+  const time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+
+  let html=`<div class="ai-msg-bubble">${aiFormatMarkdown(data.response)}`;
+
+  // Add data table if rows returned
+  if(data.data&&data.data.length>0){
+    const cols=Object.keys(data.data[0]);
+    html+=`<div style="overflow-x:auto;margin-top:10px"><table class="ai-data-table"><thead><tr>`;
+    cols.forEach(c=>html+=`<th>${escHtml(c)}</th>`);
+    html+=`</tr></thead><tbody>`;
+    data.data.slice(0,20).forEach(row=>{
+      html+='<tr>';
+      cols.forEach(c=>html+=`<td>${escHtml(String(row[c]??''))}</td>`);
+      html+='</tr>';
+    });
+    html+=`</tbody></table></div>`;
+    if(data.data_count>20)html+=`<div style="font-size:10px;color:#9ca3af;margin-top:4px">Showing 20 of ${data.data_count} rows</div>`;
+  }
+
+  html+=`</div><div class="ai-msg-time">${time} &middot; ${(data.total_duration_ms/1000).toFixed(1)}s &middot; ${data.usage.total_tokens||0} tokens</div>`;
+  div.innerHTML=html;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function aiFormatMarkdown(text){
+  let html=escHtml(text);
+  html=html.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+  html=html.replace(/`([^`]+)`/g,'<code style="background:#f0fdf4;padding:1px 4px;border-radius:3px;font-size:11px">$1</code>');
+  html=html.replace(/^### (.+)$/gm,'<div style="font-size:13px;font-weight:700;margin:10px 0 4px">$1</div>');
+  html=html.replace(/^## (.+)$/gm,'<div style="font-size:14px;font-weight:700;margin:12px 0 6px">$1</div>');
+  html=html.replace(/^- (.+)$/gm,'<div style="padding-left:12px">&bull; $1</div>');
+  html=html.replace(/^\d+\.\s(.+)$/gm,'<div style="padding-left:12px">$&</div>');
+  html=html.replace(/\n/g,'<br>');
+  return html;
+}
+
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function aiShowOrchRunning(){
+  const body=document.getElementById('ai-orch-body');
+  body.innerHTML=`
+    <div class="ai-orch-step running"><div class="ai-orch-dot"></div>
+      <div class="ai-orch-step-title">Router Agent <span class="ai-orch-badge running">Running</span></div>
+      <div class="ai-orch-step-detail">Classifying query...</div>
+    </div>`;
+}
+
+function aiRenderOrchestration(steps){
+  const body=document.getElementById('ai-orch-body');
+  let html='';
+  (steps||[]).forEach(s=>{
+    const status=s.status||'done';
+    const badge=`<span class="ai-orch-badge ${status}">${status.charAt(0).toUpperCase()+status.slice(1)}</span>`;
+    let title='',detail='',extra='';
+    if(s.step==='router'){
+      title='Router Agent';
+      detail=`Classifies &amp; routes &middot; ${s.model||''}`;
+      if(s.category)extra=`<div class="ai-orch-tool">${s.category==='nl2sql'?'transfer_to_nl2sql':'direct_response'} <span style="margin-left:auto;font-size:9px">${s.duration_ms||0}ms</span></div>`;
+    }else if(s.step==='nl2sql'){
+      title='NL2SQL';
+      detail='SQL generation';
+      if(s.sql)extra=`<div class="ai-orch-tool">run_sql_query <span style="margin-left:auto;font-size:9px">${s.duration_ms||0}ms</span></div>`;
+    }else if(s.step==='databricks'){
+      title='Databricks';
+      detail=`Warehouse query &middot; ${s.row_count||0} rows`;
+      extra=`<div class="ai-orch-step-timing">${s.duration_ms||0}ms</div>`;
+    }else if(s.step==='response'){
+      title='Response';
+      detail='Final answer';
+    }else if(s.step==='judge'){
+      title='LLM Judge';
+      const overall=s.overall||0;
+      detail=`Quality evaluation &middot; ${s.duration_ms||0}ms`;
+      if(s.scores&&Object.keys(s.scores).length>0){
+        extra=aiRenderJudgeScores(s.scores,s.suggestions||[],overall);
+      }
+    }
+    html+=`<div class="ai-orch-step ${status}"><div class="ai-orch-dot"></div>
+      <div class="ai-orch-step-title">${title} ${badge}</div>
+      <div class="ai-orch-step-detail">${detail}</div>
+      ${extra}
+    </div>`;
+  });
+  body.innerHTML=html;
+}
+
+function aiRenderJudgeScores(scores,suggestions,overall){
+  const labels={groundedness:'Groundedness',accuracy:'Accuracy',completeness:'Completeness',clarity:'Clarity',clinical_relevance:'Clinical Relevance',actionability:'Actionability',conciseness:'Conciseness',sql_correctness:'SQL Correctness'};
+  const colors={1:'#ef4444',2:'#f59e0b',3:'#eab308',4:'#22c55e',5:'#10b981'};
+  let html=`<div class="ai-judge-section"><div class="ai-judge-title"><span style="color:${overall>=3.5?'#10b981':'#f59e0b'}">Score ${overall.toFixed(1)}</span></div>`;
+  Object.entries(labels).forEach(([k,v])=>{
+    const val=scores[k]||0;
+    const pct=(val/5)*100;
+    const color=colors[Math.round(val)]||'#9ca3af';
+    html+=`<div class="ai-judge-row"><span class="ai-judge-label">${v}</span><div class="ai-judge-bar"><div class="ai-judge-fill" style="width:${pct}%;background:${color}"></div></div><span class="ai-judge-score" style="color:${color}">${val}/5</span></div>`;
+  });
+  if(suggestions.length>0){
+    html+=`<div class="ai-judge-suggestions">`;
+    suggestions.forEach(s=>html+=`<p>&#128161; ${escHtml(s)}</p>`);
+    html+=`</div>`;
+  }
+  html+=`</div>`;
+  return html;
+}
+
+function aiRenderOrchError(errMsg){
+  const body=document.getElementById('ai-orch-body');
+  body.innerHTML=`<div class="ai-orch-step error"><div class="ai-orch-dot"></div>
+    <div class="ai-orch-step-title">Error <span class="ai-orch-badge error">Failed</span></div>
+    <div class="ai-orch-step-detail">${escHtml(errMsg)}</div>
+  </div>`;
+}
+
+function aiRenderSuggestions(response){
+  const el=document.getElementById('ai-suggestions');
+  const suggestions=[];
+  const lines=response.split('\n');
+  let inFollowUp=false;
+  lines.forEach(line=>{
+    if(/follow.?up|you (might|could|may) (also )?ask/i.test(line))inFollowUp=true;
+    if(inFollowUp&&/^\d+\.|^-/.test(line.trim())){
+      const q=line.replace(/^\d+\.\s*|^-\s*/,'').replace(/\*\*/g,'').replace(/\?.*$/,'?').trim();
+      if(q.length>10&&q.length<120)suggestions.push(q);
+    }
+  });
+  if(suggestions.length>0){
+    el.innerHTML=suggestions.slice(0,3).map(s=>`<button class="ai-suggestion-btn" onclick="aiSendMessage('${s.replace(/'/g,"\\'")}')">${escHtml(s)}</button>`).join('');
+  }else{
+    el.innerHTML='';
+  }
+}
+
+window.aiToggleOrch=function(){
+  document.getElementById('ai-orch-panel').classList.toggle('open');
+};
+
+window.aiToggleAnalytics=async function(){
+  const modal=document.getElementById('ai-analytics-modal');
+  if(modal.classList.contains('open')){modal.classList.remove('open');return;}
+  modal.classList.add('open');
+  try{
+    const BASE=window.location.origin;
+    const resp=await fetch(BASE+'/api/chat/analytics');
+    const data=await resp.json();
+    document.getElementById('ai-stats-grid').innerHTML=`
+      <div class="ai-stat-card"><div class="ai-stat-label">Tokens Used</div><div class="ai-stat-value">${(data.tokens_used/1000).toFixed(1)}K</div><div class="ai-stat-sub">${data.queries} queries</div></div>
+      <div class="ai-stat-card"><div class="ai-stat-label">Est. Cost</div><div class="ai-stat-value">$${data.est_cost.toFixed(2)}</div><div class="ai-stat-sub">$${data.cost_per_query.toFixed(4)} / query</div></div>
+      <div class="ai-stat-card"><div class="ai-stat-label">Queries</div><div class="ai-stat-value">${data.queries}</div><div class="ai-stat-sub">this period</div></div>
+    `;
+    const agentHtml=Object.entries(data.agent_usage||{}).map(([k,v])=>{
+      const maxV=Math.max(...Object.values(data.agent_usage));
+      const pct=(v/maxV)*100;
+      return`<div class="ai-agent-bar"><span class="ai-agent-bar-label">${k}</span><div class="ai-agent-bar-fill" style="width:${pct}%">${v}</div></div>`;
+    }).join('');
+    document.getElementById('ai-agent-usage').innerHTML=agentHtml||'<p style="font-size:12px;color:#9ca3af">No data yet</p>';
+    document.getElementById('ai-cost-breakdown').innerHTML=`
+      <div style="display:flex;gap:16px;font-size:13px">
+        <div><span style="color:#6366f1;font-size:10px">&#9679;</span> Input Tokens: <strong>$${data.input_cost.toFixed(4)}</strong></div>
+        <div><span style="color:#f472b6;font-size:10px">&#9679;</span> Output Tokens: <strong>$${data.output_cost.toFixed(4)}</strong></div>
+      </div>`;
+  }catch(e){
+    document.getElementById('ai-stats-grid').innerHTML='<p style="font-size:12px;color:#ef4444;grid-column:1/-1">Failed to load analytics</p>';
+  }
+};
+
+async function aiLoadConversations(){
+  try{
+    const BASE=window.location.origin;
+    const resp=await fetch(BASE+'/api/chat/history');
+    aiConversations=await resp.json();
+    aiRenderConvList();
+  }catch(e){}
+}
+
+function aiRenderConvList(){
+  const el=document.getElementById('ai-conv-list');
+  if(!aiConversations.length){el.innerHTML='<p style="font-size:11px;color:#9ca3af;text-align:center;padding:20px">No conversations yet</p>';return;}
+  el.innerHTML=aiConversations.map(c=>`<div class="ai-conv-item ${c.id===aiConvId?'active':''}" onclick="aiLoadConv('${c.id}')">${escHtml(c.title)}<div class="ai-conv-time">${c.message_count} messages</div></div>`).join('');
+}
+
+window.aiLoadConv=async function(id){
+  try{
+    const BASE=window.location.origin;
+    const resp=await fetch(BASE+'/api/chat/history/'+id);
+    const data=await resp.json();
+    aiConvId=id;
+    aiHistory=data.messages||[];
+    const msgs=document.getElementById('ai-messages');
+    msgs.innerHTML='';
+    aiHistory.forEach(m=>{
+      if(m.role==='user')aiAddMessage('user',m.content);
+      else if(m.role==='assistant'){
+        if(m.orchestration){
+          aiAddAssistantMessage({response:m.content,data:[],data_count:0,total_duration_ms:0,usage:{total_tokens:0}});
+          aiRenderOrchestration(m.orchestration);
+        }else{
+          aiAddMessage('assistant',m.content);
+        }
+      }
+    });
+    aiHighlightConv(id);
+  }catch(e){}
+};
+
+function aiHighlightConv(id){
+  document.querySelectorAll('.ai-conv-item').forEach(el=>{
+    el.classList.toggle('active',el.onclick.toString().includes(id));
+  });
+}
+
+window.aiFilterConvs=function(q){
+  const items=document.querySelectorAll('.ai-conv-item');
+  q=q.toLowerCase();
+  items.forEach(el=>{el.style.display=el.textContent.toLowerCase().includes(q)?'':'none';});
+};
 
 })();
 

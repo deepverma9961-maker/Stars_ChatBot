@@ -129,24 +129,145 @@
     .auto-assign-row:last-child{border-bottom:none}
     .assign-label{color:#6b7280;width:100px;flex-shrink:0}
     .assign-val{font-weight:600;color:#111;flex:1}
-    .mkt-hero{background:linear-gradient(135deg,#1a1a2e 0%,#2d1b1b 60%,#3d1a1a 100%);padding:28px 32px;color:#fff;flex-shrink:0}
-    .mkt-hero h1{font-size:36px;font-weight:800;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px}
-    .mkt-hero h1 span{color:#F26722}
-    .mkt-hero-sub{font-size:15px;color:#9ca3af;max-width:600px;line-height:1.5;margin-bottom:12px}
+    .mkt-hero{background:linear-gradient(135deg,#0f0f1a 0%,#1a1028 30%,#2a1520 60%,#1e1018 100%);padding:48px 40px 40px;color:#fff;flex-shrink:0;position:relative;overflow:hidden}
+    .mkt-hero::before{content:'';position:absolute;top:-100px;right:-60px;width:500px;height:500px;background:radial-gradient(circle,rgba(242,103,34,.25) 0%,transparent 65%);pointer-events:none;animation:heroGlow1 5s ease-in-out infinite alternate}
+    .mkt-hero::after{content:'';position:absolute;bottom:-40px;left:15%;width:400px;height:400px;background:radial-gradient(circle,rgba(242,103,34,.18) 0%,transparent 65%);pointer-events:none;animation:heroGlow2 7s ease-in-out infinite alternate}
+    @keyframes heroGlow1{0%{transform:translate(0,0) scale(1);opacity:.6}100%{transform:translate(-50px,40px) scale(1.3);opacity:1}}
+    @keyframes heroGlow2{0%{transform:translate(0,0) scale(1);opacity:.4}100%{transform:translate(40px,-30px) scale(1.25);opacity:1}}
+    .mkt-hero-particles{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden}
+    .mkt-hero-particles span{position:absolute;border-radius:50%;animation:particleFloat linear infinite}
+    .mkt-hero-particles span:nth-child(1){left:3%;top:90%;width:3px;height:3px;background:rgba(242,103,34,.5);animation-duration:7s;animation-delay:0s}
+    .mkt-hero-particles span:nth-child(2){left:8%;top:85%;width:2px;height:2px;background:rgba(255,255,255,.15);animation-duration:9s;animation-delay:0.3s}
+    .mkt-hero-particles span:nth-child(3){left:13%;top:95%;width:4px;height:4px;background:rgba(242,103,34,.35);animation-duration:8s;animation-delay:1.2s}
+    .mkt-hero-particles span:nth-child(4){left:18%;top:80%;width:2px;height:2px;background:rgba(255,138,80,.4);animation-duration:10s;animation-delay:0.8s}
+    .mkt-hero-particles span:nth-child(5){left:22%;top:92%;width:3px;height:3px;background:rgba(255,255,255,.12);animation-duration:6s;animation-delay:2s}
+    .mkt-hero-particles span:nth-child(6){left:27%;top:88%;width:2px;height:2px;background:rgba(242,103,34,.45);animation-duration:11s;animation-delay:0.5s}
+    .mkt-hero-particles span:nth-child(7){left:32%;top:96%;width:3px;height:3px;background:rgba(255,138,80,.3);animation-duration:7.5s;animation-delay:1.8s}
+    .mkt-hero-particles span:nth-child(8){left:36%;top:82%;width:2px;height:2px;background:rgba(255,255,255,.18);animation-duration:9.5s;animation-delay:3s}
+    .mkt-hero-particles span:nth-child(9){left:40%;top:90%;width:4px;height:4px;background:rgba(242,103,34,.4);animation-duration:8.5s;animation-delay:0.2s}
+    .mkt-hero-particles span:nth-child(10){left:44%;top:87%;width:2px;height:2px;background:rgba(255,255,255,.1);animation-duration:12s;animation-delay:1s}
+    .mkt-hero-particles span:nth-child(11){left:48%;top:94%;width:3px;height:3px;background:rgba(242,103,34,.5);animation-duration:6.5s;animation-delay:2.5s}
+    .mkt-hero-particles span:nth-child(12){left:52%;top:85%;width:2px;height:2px;background:rgba(255,138,80,.35);animation-duration:10.5s;animation-delay:0.7s}
+    .mkt-hero-particles span:nth-child(13){left:56%;top:91%;width:3px;height:3px;background:rgba(255,255,255,.14);animation-duration:7.2s;animation-delay:1.5s}
+    .mkt-hero-particles span:nth-child(14){left:60%;top:97%;width:4px;height:4px;background:rgba(242,103,34,.45);animation-duration:9.2s;animation-delay:3.5s}
+    .mkt-hero-particles span:nth-child(15){left:63%;top:83%;width:2px;height:2px;background:rgba(255,138,80,.4);animation-duration:8.2s;animation-delay:0.4s}
+    .mkt-hero-particles span:nth-child(16){left:67%;top:93%;width:3px;height:3px;background:rgba(242,103,34,.35);animation-duration:11.5s;animation-delay:2.2s}
+    .mkt-hero-particles span:nth-child(17){left:71%;top:86%;width:2px;height:2px;background:rgba(255,255,255,.16);animation-duration:6.8s;animation-delay:1.3s}
+    .mkt-hero-particles span:nth-child(18){left:74%;top:95%;width:3px;height:3px;background:rgba(242,103,34,.5);animation-duration:7.8s;animation-delay:0.9s}
+    .mkt-hero-particles span:nth-child(19){left:78%;top:89%;width:4px;height:4px;background:rgba(255,138,80,.3);animation-duration:10.2s;animation-delay:2.8s}
+    .mkt-hero-particles span:nth-child(20){left:82%;top:92%;width:2px;height:2px;background:rgba(255,255,255,.12);animation-duration:8.8s;animation-delay:0.6s}
+    .mkt-hero-particles span:nth-child(21){left:5%;top:75%;width:2px;height:2px;background:rgba(242,103,34,.3);animation-duration:13s;animation-delay:4s}
+    .mkt-hero-particles span:nth-child(22){left:15%;top:70%;width:3px;height:3px;background:rgba(255,255,255,.1);animation-duration:14s;animation-delay:1.7s}
+    .mkt-hero-particles span:nth-child(23){left:25%;top:78%;width:2px;height:2px;background:rgba(242,103,34,.4);animation-duration:8s;animation-delay:3.2s}
+    .mkt-hero-particles span:nth-child(24){left:35%;top:72%;width:3px;height:3px;background:rgba(255,138,80,.35);animation-duration:9s;animation-delay:0.1s}
+    .mkt-hero-particles span:nth-child(25){left:45%;top:76%;width:2px;height:2px;background:rgba(255,255,255,.15);animation-duration:11s;animation-delay:2.3s}
+    .mkt-hero-particles span:nth-child(26){left:53%;top:80%;width:4px;height:4px;background:rgba(242,103,34,.45);animation-duration:7s;animation-delay:1.1s}
+    .mkt-hero-particles span:nth-child(27){left:62%;top:74%;width:2px;height:2px;background:rgba(255,138,80,.3);animation-duration:12.5s;animation-delay:3.8s}
+    .mkt-hero-particles span:nth-child(28){left:70%;top:79%;width:3px;height:3px;background:rgba(242,103,34,.35);animation-duration:6.2s;animation-delay:0.8s}
+    .mkt-hero-particles span:nth-child(29){left:80%;top:73%;width:2px;height:2px;background:rgba(255,255,255,.13);animation-duration:10s;animation-delay:2.6s}
+    .mkt-hero-particles span:nth-child(30){left:88%;top:77%;width:3px;height:3px;background:rgba(242,103,34,.4);animation-duration:8.5s;animation-delay:1.4s}
+    .mkt-hero-particles span:nth-child(31){left:6%;top:65%;width:3px;height:3px;background:rgba(255,138,80,.45);animation-duration:9.8s;animation-delay:3.3s}
+    .mkt-hero-particles span:nth-child(32){left:16%;top:60%;width:2px;height:2px;background:rgba(242,103,34,.3);animation-duration:7.3s;animation-delay:0.2s}
+    .mkt-hero-particles span:nth-child(33){left:26%;top:68%;width:4px;height:4px;background:rgba(255,255,255,.1);animation-duration:11.8s;animation-delay:2.1s}
+    .mkt-hero-particles span:nth-child(34){left:38%;top:62%;width:2px;height:2px;background:rgba(242,103,34,.5);animation-duration:6s;animation-delay:1.6s}
+    .mkt-hero-particles span:nth-child(35){left:47%;top:66%;width:3px;height:3px;background:rgba(255,138,80,.35);animation-duration:13.5s;animation-delay:4.2s}
+    .mkt-hero-particles span:nth-child(36){left:57%;top:63%;width:2px;height:2px;background:rgba(255,255,255,.14);animation-duration:8.3s;animation-delay:0.5s}
+    .mkt-hero-particles span:nth-child(37){left:66%;top:69%;width:3px;height:3px;background:rgba(242,103,34,.4);animation-duration:10.8s;animation-delay:2.9s}
+    .mkt-hero-particles span:nth-child(38){left:76%;top:64%;width:2px;height:2px;background:rgba(255,138,80,.3);animation-duration:7.6s;animation-delay:1.2s}
+    .mkt-hero-particles span:nth-child(39){left:84%;top:67%;width:4px;height:4px;background:rgba(242,103,34,.35);animation-duration:9.5s;animation-delay:3.6s}
+    .mkt-hero-particles span:nth-child(40){left:92%;top:62%;width:2px;height:2px;background:rgba(255,255,255,.12);animation-duration:6.7s;animation-delay:0.7s}
+    .mkt-hero-particles span:nth-child(41){left:2%;top:55%;width:3px;height:3px;background:rgba(242,103,34,.45);animation-duration:12s;animation-delay:2.4s}
+    .mkt-hero-particles span:nth-child(42){left:11%;top:50%;width:2px;height:2px;background:rgba(255,255,255,.16);animation-duration:8s;animation-delay:1s}
+    .mkt-hero-particles span:nth-child(43){left:21%;top:58%;width:3px;height:3px;background:rgba(255,138,80,.4);animation-duration:10.5s;animation-delay:3.1s}
+    .mkt-hero-particles span:nth-child(44){left:31%;top:52%;width:2px;height:2px;background:rgba(242,103,34,.35);animation-duration:7.2s;animation-delay:0.3s}
+    .mkt-hero-particles span:nth-child(45){left:42%;top:56%;width:4px;height:4px;background:rgba(255,255,255,.1);animation-duration:14s;animation-delay:2.7s}
+    .mkt-hero-particles span:nth-child(46){left:51%;top:53%;width:2px;height:2px;background:rgba(242,103,34,.5);animation-duration:6.5s;animation-delay:1.8s}
+    .mkt-hero-particles span:nth-child(47){left:59%;top:57%;width:3px;height:3px;background:rgba(255,138,80,.35);animation-duration:9.2s;animation-delay:4.5s}
+    .mkt-hero-particles span:nth-child(48){left:68%;top:51%;width:2px;height:2px;background:rgba(255,255,255,.13);animation-duration:11.2s;animation-delay:0.6s}
+    .mkt-hero-particles span:nth-child(49){left:77%;top:55%;width:3px;height:3px;background:rgba(242,103,34,.4);animation-duration:7.8s;animation-delay:2s}
+    .mkt-hero-particles span:nth-child(50){left:86%;top:58%;width:4px;height:4px;background:rgba(255,138,80,.45);animation-duration:8.6s;animation-delay:1.4s}
+    .mkt-hero-particles span:nth-child(51){left:9%;top:45%;width:2px;height:2px;background:rgba(242,103,34,.35);animation-duration:13s;animation-delay:3.4s}
+    .mkt-hero-particles span:nth-child(52){left:19%;top:40%;width:3px;height:3px;background:rgba(255,255,255,.11);animation-duration:6.3s;animation-delay:0.9s}
+    .mkt-hero-particles span:nth-child(53){left:29%;top:48%;width:2px;height:2px;background:rgba(242,103,34,.45);animation-duration:10s;animation-delay:2.3s}
+    .mkt-hero-particles span:nth-child(54){left:39%;top:42%;width:3px;height:3px;background:rgba(255,138,80,.3);animation-duration:8.4s;animation-delay:1.6s}
+    .mkt-hero-particles span:nth-child(55){left:49%;top:46%;width:2px;height:2px;background:rgba(255,255,255,.15);animation-duration:12.5s;animation-delay:4.1s}
+    .mkt-hero-particles span:nth-child(56){left:58%;top:43%;width:4px;height:4px;background:rgba(242,103,34,.4);animation-duration:7s;animation-delay:0.4s}
+    .mkt-hero-particles span:nth-child(57){left:69%;top:47%;width:2px;height:2px;background:rgba(255,138,80,.4);animation-duration:9.8s;animation-delay:2.6s}
+    .mkt-hero-particles span:nth-child(58){left:79%;top:41%;width:3px;height:3px;background:rgba(242,103,34,.3);animation-duration:6.8s;animation-delay:1.3s}
+    .mkt-hero-particles span:nth-child(59){left:87%;top:48%;width:2px;height:2px;background:rgba(255,255,255,.12);animation-duration:11s;animation-delay:3.7s}
+    .mkt-hero-particles span:nth-child(60){left:95%;top:44%;width:3px;height:3px;background:rgba(242,103,34,.5);animation-duration:8s;animation-delay:0.8s}
+    .mkt-hero-particles span:nth-child(61){left:4%;top:35%;width:2px;height:2px;background:rgba(255,138,80,.35);animation-duration:10.3s;animation-delay:2.8s}
+    .mkt-hero-particles span:nth-child(62){left:14%;top:30%;width:3px;height:3px;background:rgba(242,103,34,.4);animation-duration:7.5s;animation-delay:1.1s}
+    .mkt-hero-particles span:nth-child(63){left:24%;top:38%;width:4px;height:4px;background:rgba(255,255,255,.1);animation-duration:13.5s;animation-delay:4.3s}
+    .mkt-hero-particles span:nth-child(64){left:34%;top:32%;width:2px;height:2px;background:rgba(242,103,34,.45);animation-duration:6.2s;animation-delay:0.5s}
+    .mkt-hero-particles span:nth-child(65){left:43%;top:36%;width:3px;height:3px;background:rgba(255,138,80,.3);animation-duration:9s;animation-delay:2.2s}
+    .mkt-hero-particles span:nth-child(66){left:54%;top:33%;width:2px;height:2px;background:rgba(255,255,255,.14);animation-duration:11.5s;animation-delay:1.7s}
+    .mkt-hero-particles span:nth-child(67){left:64%;top:37%;width:3px;height:3px;background:rgba(242,103,34,.35);animation-duration:8.2s;animation-delay:3.9s}
+    .mkt-hero-particles span:nth-child(68){left:73%;top:31%;width:2px;height:2px;background:rgba(255,138,80,.45);animation-duration:7.3s;animation-delay:0.6s}
+    .mkt-hero-particles span:nth-child(69){left:83%;top:35%;width:4px;height:4px;background:rgba(242,103,34,.3);animation-duration:10.8s;animation-delay:2.5s}
+    .mkt-hero-particles span:nth-child(70){left:91%;top:38%;width:2px;height:2px;background:rgba(255,255,255,.12);animation-duration:6s;animation-delay:1.5s}
+    .mkt-hero-particles span:nth-child(71){left:7%;top:25%;width:3px;height:3px;background:rgba(242,103,34,.5);animation-duration:12s;animation-delay:3.5s}
+    .mkt-hero-particles span:nth-child(72){left:17%;top:20%;width:2px;height:2px;background:rgba(255,255,255,.15);animation-duration:8.5s;animation-delay:0.2s}
+    .mkt-hero-particles span:nth-child(73){left:28%;top:28%;width:3px;height:3px;background:rgba(255,138,80,.4);animation-duration:9.5s;animation-delay:2.1s}
+    .mkt-hero-particles span:nth-child(74){left:37%;top:22%;width:2px;height:2px;background:rgba(242,103,34,.35);animation-duration:7s;animation-delay:1.4s}
+    .mkt-hero-particles span:nth-child(75){left:46%;top:26%;width:4px;height:4px;background:rgba(255,255,255,.1);animation-duration:14s;animation-delay:4.4s}
+    .mkt-hero-particles span:nth-child(76){left:55%;top:23%;width:2px;height:2px;background:rgba(242,103,34,.45);animation-duration:6.5s;animation-delay:0.7s}
+    .mkt-hero-particles span:nth-child(77){left:65%;top:27%;width:3px;height:3px;background:rgba(255,138,80,.35);animation-duration:10.5s;animation-delay:2.9s}
+    .mkt-hero-particles span:nth-child(78){left:75%;top:21%;width:2px;height:2px;background:rgba(255,255,255,.13);animation-duration:8s;animation-delay:1.8s}
+    .mkt-hero-particles span:nth-child(79){left:85%;top:25%;width:3px;height:3px;background:rgba(242,103,34,.4);animation-duration:11.2s;animation-delay:3.2s}
+    .mkt-hero-particles span:nth-child(80){left:93%;top:28%;width:4px;height:4px;background:rgba(255,138,80,.5);animation-duration:7.8s;animation-delay:0.3s}
+    @keyframes particleFloat{0%{transform:translateY(0) translateX(0);opacity:0}8%{opacity:1}85%{opacity:.8}100%{transform:translateY(-180px) translateX(25px);opacity:0}}
+    .mkt-hero h1{font-size:42px;font-weight:800;line-height:1.12;margin-bottom:16px;letter-spacing:-.8px}
+    .mkt-hero h1 span{color:#F26722;background:linear-gradient(135deg,#F26722,#ff8a50);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .mkt-hero-sub{font-size:15px;color:#b0b3bf;max-width:620px;line-height:1.65;margin-bottom:20px}
+    .mkt-hero-stats{display:flex;gap:32px;margin-top:8px}
+    .mkt-hero-stat{text-align:left}
+    .mkt-hero-stat-val{font-size:28px;font-weight:800;color:#fff;line-height:1.1}
+    .mkt-hero-stat-val em{font-style:normal;color:#F26722}
+    .mkt-hero-stat-lbl{font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;margin-top:4px;font-weight:500}
     .mkt-body{padding:20px 24px}
-    .cap-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;margin-bottom:12px}
-    .cap-card{padding:12px 14px;border-right:1px solid #e5e7eb;cursor:pointer;transition:background .15s;position:relative}
+    .cap-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:16px}
+    .cap-card{padding:18px 16px;border-radius:14px;cursor:pointer;transition:all .25s ease;position:relative;background:#fff;border:1px solid #e8eaef;box-shadow:0 1px 3px rgba(0,0,0,.04)}
     .cap-card:last-child{border-right:none}
-    .cap-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:#F26722}
-    .cap-card:hover{background:#fef9f9}
-    .cap-icon{width:28px;height:28px;background:#fef2f2;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;margin-bottom:8px}
-    .cap-title{font-size:12px;font-weight:700;color:#111;margin-bottom:4px;line-height:1.2}
-    .cap-desc{font-size:11px;color:#6b7280;line-height:1.4;margin-bottom:8px}
-    .cap-link{font-size:11px;font-weight:600;color:#F26722}
+    .cap-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#F26722,#ff8a50);border-radius:14px 14px 0 0;opacity:.8;transition:opacity .25s}
+    .cap-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(242,103,34,.12);border-color:#fdd0b1}
+    .cap-card:hover::before{opacity:1}
+    .cap-icon{width:36px;height:36px;background:linear-gradient(135deg,#fff5ef,#ffe8d6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:10px}
+    .cap-title{font-size:13px;font-weight:700;color:#111;margin-bottom:6px;line-height:1.3}
+    .cap-desc{font-size:11px;color:#6b7280;line-height:1.5;margin-bottom:10px}
+    .cap-link{font-size:11px;font-weight:700;color:#F26722;transition:color .15s;display:inline-flex;align-items:center;gap:4px}
+    .cap-card:hover .cap-link{color:#d4551a}
     .mkt-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
     .mkt-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:12px 14px}
     .mkt-card-title{font-size:12px;font-weight:700;color:#111;margin-bottom:2px}
     .mkt-card-sub{font-size:10px;color:#6b7280;margin-bottom:8px}
+    .mkt-feat-card{flex:1 1 calc(50% - 8px);min-width:280px;display:flex;flex-direction:column;justify-content:space-between;border-radius:16px;padding:24px 28px;cursor:pointer;transition:all .25s ease;position:relative;overflow:hidden}
+    .mkt-feat-card:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(242,103,34,.15)}
+    .mkt-feat-card.exec{background:linear-gradient(135deg,#fff7f0,#ffe8d4);border:1px solid #f5c8a0}
+    .mkt-feat-card.market{background:linear-gradient(135deg,#f0f4ff,#e0e8ff);border:1px solid #b8c8f0}
+    .mkt-feat-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px}
+    .mkt-feat-card.exec .mkt-feat-icon{background:rgba(242,103,34,.12)}
+    .mkt-feat-card.market .mkt-feat-icon{background:rgba(59,130,246,.1)}
+    .mkt-section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#9ca3af;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+    .mkt-section-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,#e5e7eb,transparent)}
+    .mkt-feat-card{transition:all .3s ease;animation:mktCardFadeUp .6s ease-out both}
+    .mkt-feat-card:nth-child(2){animation-delay:.15s}
+    .mkt-feat-card.exec::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,transparent 40%,rgba(242,103,34,.06) 60%,transparent 80%);background-size:300% 300%;animation:cardShimmer 6s ease-in-out infinite;border-radius:16px;pointer-events:none}
+    .mkt-feat-card.market::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,transparent 40%,rgba(59,130,246,.06) 60%,transparent 80%);background-size:300% 300%;animation:cardShimmer 7s ease-in-out infinite;animation-delay:1s;border-radius:16px;pointer-events:none}
+    @keyframes cardShimmer{0%{background-position:100% 100%}50%{background-position:0% 0%}100%{background-position:100% 100%}}
+    @keyframes mktCardFadeUp{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
+    .cap-card{animation:capCardEntrance .5s ease-out both}
+    .cap-card:nth-child(1){animation-delay:.1s}
+    .cap-card:nth-child(2){animation-delay:.18s}
+    .cap-card:nth-child(3){animation-delay:.26s}
+    .cap-card:nth-child(4){animation-delay:.34s}
+    .cap-card:nth-child(5){animation-delay:.42s}
+    @keyframes capCardEntrance{0%{opacity:0;transform:translateY(16px) scale(.97)}100%{opacity:1;transform:translateY(0) scale(1)}}
+    .cap-card::after{content:'';position:absolute;bottom:0;left:50%;width:0;height:2px;background:linear-gradient(90deg,#F26722,#ff8a50);transition:all .3s ease;transform:translateX(-50%);border-radius:0 0 14px 14px}
+    .cap-card:hover::after{width:100%;left:0;transform:translateX(0)}
+    .mkt-section-title{animation:mktCardFadeUp .5s ease-out both;animation-delay:.05s}
+    .mkt-feat-card .btn-primary{transition:all .2s ease}
+    .mkt-feat-card .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.2)}
     .sum-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
     .sum-card{background:#1e293b;border:none;border-radius:10px;padding:14px 16px;border-top:3px solid #F26722}
     .sum-card.red{border-top-color:#F26722}.sum-card.blue{border-top-color:#F26722}.sum-card.teal{border-top-color:#F26722}.sum-card.amber{border-top-color:#F26722}
@@ -402,6 +523,118 @@
     .hos-score-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
     .hos-score-val{font-size:22px;font-weight:800}
     .hos-score-sub{font-size:11px;margin-top:3px}
+
+    /* ── AI Assistant Page ── */
+    .ai-chat-container{display:flex;height:100%;overflow:hidden;background:#f8fafc}
+    .ai-sidebar{width:260px;background:#fff;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;flex-shrink:0}
+    .ai-sidebar-header{padding:16px;border-bottom:1px solid #e5e7eb}
+    .ai-sidebar-header h3{font-size:14px;font-weight:700;color:#1e293b;margin:0 0 12px}
+    .ai-new-chat-btn{width:100%;padding:10px 16px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+    .ai-new-chat-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(16,185,129,.3)}
+    .ai-sidebar-search{padding:12px 16px}
+    .ai-sidebar-search input{width:100%;padding:8px 12px;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;background:#f8fafc;box-sizing:border-box}
+    .ai-sidebar-search input:focus{outline:none;border-color:#10b981}
+    .ai-conv-list{flex:1;overflow-y:auto;padding:8px}
+    .ai-conv-item{padding:10px 12px;border-radius:8px;cursor:pointer;font-size:12px;color:#4b5563;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:background .15s}
+    .ai-conv-item:hover{background:#f0fdf4}
+    .ai-conv-item.active{background:#d1fae5;color:#065f46;font-weight:600}
+    .ai-conv-time{font-size:10px;color:#9ca3af;margin-top:2px}
+    .ai-main{flex:1;display:flex;flex-direction:column;min-width:0}
+    .ai-topbar{padding:12px 20px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between}
+    .ai-topbar-left{display:flex;align-items:center;gap:10px}
+    .ai-topbar-title{font-size:16px;font-weight:700;color:#1e293b}
+    .ai-topbar-badge{padding:3px 10px;background:#d1fae5;color:#065f46;border-radius:6px;font-size:11px;font-weight:600}
+    .ai-topbar-right{display:flex;align-items:center;gap:12px}
+    .ai-topbar-btn{padding:5px 12px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;font-size:11px;cursor:pointer;color:#6b7280;transition:all .15s}
+    .ai-topbar-btn:hover{background:#f0fdf4;border-color:#10b981;color:#065f46}
+    .ai-topbar-model{padding:4px 10px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:8px;font-size:11px;color:#065f46;font-weight:600;display:flex;align-items:center;gap:4px}
+    .ai-topbar-model::before{content:'';width:6px;height:6px;border-radius:50%;background:#10b981}
+    .ai-messages{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:16px}
+    .ai-msg{max-width:85%;animation:aiMsgIn .3s ease-out}
+    .ai-msg.user{align-self:flex-end}
+    .ai-msg.assistant{align-self:flex-start}
+    .ai-msg-bubble{padding:12px 16px;border-radius:14px;font-size:13px;line-height:1.6}
+    .ai-msg.user .ai-msg-bubble{background:linear-gradient(135deg,#10b981,#059669);color:#fff;border-bottom-right-radius:4px}
+    .ai-msg.assistant .ai-msg-bubble{background:#fff;color:#1e293b;border:1px solid #e5e7eb;border-bottom-left-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+    .ai-msg-time{font-size:10px;color:#9ca3af;margin-top:4px}
+    .ai-msg.user .ai-msg-time{text-align:right}
+    .ai-insights{margin-top:10px;padding:12px 14px;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:10px}
+    .ai-insights-title{font-size:11px;font-weight:700;color:#065f46;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+    .ai-insights ul{margin:0;padding:0 0 0 16px;font-size:12px;color:#374151;line-height:1.7}
+    .ai-data-table{margin-top:10px;width:100%;border-collapse:collapse;font-size:11px}
+    .ai-data-table th{background:#f0fdf4;padding:6px 10px;text-align:left;font-weight:600;color:#065f46;border-bottom:2px solid #a7f3d0}
+    .ai-data-table td{padding:6px 10px;border-bottom:1px solid #e5e7eb;color:#374151}
+    .ai-data-table tr:hover td{background:#f8fafc}
+    .ai-suggestions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .ai-suggestion-btn{padding:6px 14px;background:#f8fafc;border:1px solid #d1d5db;border-radius:20px;font-size:11px;cursor:pointer;color:#4b5563;transition:all .15s}
+    .ai-suggestion-btn:hover{background:#d1fae5;border-color:#10b981;color:#065f46}
+    .ai-input-area{padding:16px 20px;background:#fff;border-top:1px solid #e5e7eb}
+    .ai-input-row{display:flex;gap:10px;align-items:flex-end}
+    .ai-input-row textarea{flex:1;padding:10px 14px;border:1px solid #d1d5db;border-radius:12px;font-size:13px;resize:none;min-height:20px;max-height:120px;font-family:inherit;line-height:1.4;transition:border-color .15s}
+    .ai-input-row textarea:focus{outline:none;border-color:#10b981;box-shadow:0 0 0 3px rgba(16,185,129,.1)}
+    .ai-send-btn{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#10b981,#059669);border:none;color:#fff;font-size:16px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .ai-send-btn:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(16,185,129,.3)}
+    .ai-send-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+    .ai-orch-panel{width:320px;background:#fff;border-left:1px solid #e5e7eb;overflow-y:auto;flex-shrink:0;display:none}
+    .ai-orch-panel.open{display:flex;flex-direction:column}
+    .ai-orch-header{padding:16px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between}
+    .ai-orch-header h4{font-size:13px;font-weight:700;color:#1e293b;margin:0;display:flex;align-items:center;gap:8px}
+    .ai-orch-body{padding:16px;flex:1}
+    .ai-orch-step{margin-bottom:16px;position:relative;padding-left:24px}
+    .ai-orch-step::before{content:'';position:absolute;left:8px;top:20px;bottom:-16px;width:2px;background:#e5e7eb}
+    .ai-orch-step:last-child::before{display:none}
+    .ai-orch-dot{position:absolute;left:2px;top:4px;width:14px;height:14px;border-radius:50%;border:2px solid #e5e7eb;background:#fff}
+    .ai-orch-step.done .ai-orch-dot{background:#10b981;border-color:#10b981}
+    .ai-orch-step.error .ai-orch-dot{background:#ef4444;border-color:#ef4444}
+    .ai-orch-step.running .ai-orch-dot{background:#f59e0b;border-color:#f59e0b;animation:aiPulse 1s infinite}
+    .ai-orch-step-title{font-size:12px;font-weight:700;color:#1e293b;display:flex;align-items:center;gap:6px}
+    .ai-orch-badge{padding:1px 6px;border-radius:4px;font-size:10px;font-weight:600}
+    .ai-orch-badge.done{background:#d1fae5;color:#065f46}
+    .ai-orch-badge.error{background:#fee2e2;color:#991b1b}
+    .ai-orch-badge.running{background:#fef3c7;color:#92400e}
+    .ai-orch-step-detail{font-size:11px;color:#6b7280;margin-top:2px}
+    .ai-orch-step-timing{font-size:10px;color:#9ca3af;margin-top:2px}
+    .ai-orch-tool{margin-top:4px;padding:4px 8px;background:#f8fafc;border-radius:4px;font-size:10px;color:#6b7280;display:flex;align-items:center;gap:4px}
+    .ai-orch-tool::before{content:'';width:5px;height:5px;border-radius:50%;background:#6366f1}
+    .ai-judge-section{margin-top:16px;padding:12px;background:#f8fafc;border-radius:10px;border:1px solid #e5e7eb}
+    .ai-judge-title{font-size:12px;font-weight:700;color:#1e293b;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+    .ai-judge-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+    .ai-judge-label{font-size:11px;color:#4b5563;width:110px;flex-shrink:0}
+    .ai-judge-bar{flex:1;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden}
+    .ai-judge-fill{height:100%;border-radius:4px;transition:width .5s ease}
+    .ai-judge-score{font-size:11px;font-weight:700;width:28px;text-align:right}
+    .ai-judge-suggestions{margin-top:10px;padding:10px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px}
+    .ai-judge-suggestions p{font-size:11px;color:#92400e;margin:3px 0;line-height:1.4}
+    .ai-analytics-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center}
+    .ai-analytics-modal.open{display:flex}
+    .ai-analytics-content{background:#fff;border-radius:16px;padding:24px;width:520px;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+    .ai-analytics-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+    .ai-analytics-header h3{font-size:16px;font-weight:700;color:#1e293b;margin:0;display:flex;align-items:center;gap:8px}
+    .ai-analytics-close{width:28px;height:28px;border-radius:50%;border:1px solid #e5e7eb;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:#6b7280}
+    .ai-analytics-close:hover{background:#fee2e2;border-color:#ef4444;color:#ef4444}
+    .ai-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+    .ai-stat-card{background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:14px}
+    .ai-stat-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#9ca3af;margin-bottom:4px}
+    .ai-stat-value{font-size:20px;font-weight:800;color:#1e293b}
+    .ai-stat-sub{font-size:10px;color:#6b7280;margin-top:2px}
+    .ai-analytics-section{margin-bottom:16px}
+    .ai-analytics-section h4{font-size:13px;font-weight:700;color:#1e293b;margin-bottom:10px}
+    .ai-agent-bar{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+    .ai-agent-bar-label{font-size:11px;color:#4b5563;width:80px;flex-shrink:0}
+    .ai-agent-bar-fill{height:18px;background:linear-gradient(90deg,#6366f1,#818cf8);border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-size:10px;color:#fff;font-weight:600;min-width:24px;transition:width .5s ease}
+    .ai-welcome{text-align:center;padding:60px 20px;color:#9ca3af}
+    .ai-welcome h2{font-size:22px;font-weight:800;color:#1e293b;margin-bottom:8px}
+    .ai-welcome p{font-size:13px;max-width:400px;margin:0 auto 24px}
+    .ai-welcome-cards{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+    .ai-welcome-card{padding:12px 18px;background:#fff;border:1px solid #e5e7eb;border-radius:10px;cursor:pointer;font-size:12px;color:#4b5563;transition:all .15s;max-width:200px}
+    .ai-welcome-card:hover{border-color:#10b981;background:#f0fdf4;color:#065f46}
+    .ai-typing{display:flex;align-items:center;gap:4px;padding:12px 16px}
+    .ai-typing-dot{width:6px;height:6px;border-radius:50%;background:#10b981;animation:aiTyping 1.4s infinite}
+    .ai-typing-dot:nth-child(2){animation-delay:.2s}
+    .ai-typing-dot:nth-child(3){animation-delay:.4s}
+    @keyframes aiTyping{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
+    @keyframes aiMsgIn{0%{opacity:0;transform:translateY(10px)}100%{opacity:1;transform:translateY(0)}}
+    @keyframes aiPulse{0%,100%{opacity:1}50%{opacity:.5}}
   </style>
 </head>
 <body>
@@ -431,6 +664,7 @@
       <div class="ntab" id="ntab-eho4all" data-page="eho4all" onclick="showPage('eho4all',this)">EHO4all</div>
       <div class="ntab" data-page="market" onclick="showPage('market',this)">Market Analysis</div>
       <div class="ntab" data-page="outreach-audit" onclick="showPage('outreach-audit',this)">Outreach Audit</div>
+      <div class="ntab" data-page="ai-assistant" onclick="showPage('ai-assistant',this)" style="border-left-color:#10b981">AI Assistant</div>
     </div>
     <div class="topbar-right">
     </div>
@@ -439,41 +673,47 @@
   <!-- MARKETING -->
   <div id="pg-marketing" class="page active">
     <div class="mkt-hero">
-      <div style="margin-bottom:14px;display:flex;align-items:center;gap:10px">
-        <span style="font-size:26px;font-weight:900;color:#F26722;letter-spacing:-0.5px;line-height:1">EXL</span>
-        <span style="color:#d1d5db;font-size:18px;font-weight:200">|</span>
-        <span style="font-size:13px;color:#9ca3af;font-weight:500">StarPulse · Medicare Stars Platform</span>
+      <div class="mkt-hero-particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div style="margin-bottom:20px;display:flex;align-items:center;gap:12px;position:relative;z-index:1">
+        <span style="font-size:30px;font-weight:900;color:#F26722;letter-spacing:-0.5px;line-height:1">EXL</span>
+        <span style="color:rgba(255,255,255,.2);font-size:22px;font-weight:200">|</span>
+        <span style="font-size:14px;color:rgba(255,255,255,.5);font-weight:500;letter-spacing:.02em">StarPulse · Medicare Stars Platform</span>
       </div>
-      <h1>Close every gap.<br><span>Reach 4★ and beyond.</span></h1>
-      <p class="mkt-hero-sub">StarPulse is an AI-powered Medicare Stars platform that identifies member gaps, automates outreach campaigns, and projects your CMS star rating — across all domains, in real time.</p>
+      <h1 style="position:relative;z-index:1">Close every gap.<br><span>Reach 4★ and beyond.</span></h1>
+      <p class="mkt-hero-sub" style="position:relative;z-index:1">StarPulse is an AI-powered Medicare Stars platform that identifies member gaps, automates outreach campaigns, and projects your CMS star rating — across all domains, in real time.</p>
+      <div class="mkt-hero-stats" style="position:relative;z-index:1">
+        <div class="mkt-hero-stat"><div class="mkt-hero-stat-val"><em>5</em></div><div class="mkt-hero-stat-lbl">Star Domains</div></div>
+        <div class="mkt-hero-stat"><div class="mkt-hero-stat-val"><em>45+</em></div><div class="mkt-hero-stat-lbl">CMS Measures</div></div>
+        <div class="mkt-hero-stat"><div class="mkt-hero-stat-val"><em>AI</em></div><div class="mkt-hero-stat-lbl">Powered Outreach</div></div>
+        <div class="mkt-hero-stat"><div class="mkt-hero-stat-val"><em>Real-time</em></div><div class="mkt-hero-stat-lbl">Projections</div></div>
+      </div>
     </div>
-    <div class="scroll" style="padding:12px 24px">
-      <!-- Executive Overview + Market Analysis — side by side -->
-      <div style="display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap">
-        <div onclick="showPage('executive')" style="flex:1 1 calc(50% - 8px);min-width:280px;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(135deg,#fff5ef,#ffe8d6);border:1px solid #F26722;border-radius:12px;padding:16px 24px;cursor:pointer">
+    <div class="scroll" style="padding:20px 28px">
+      <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap">
+        <div class="mkt-feat-card exec" onclick="showPage('executive')">
           <div>
-            <div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px">Executive Overview</div>
-            <div style="font-size:12px;color:#7c3a10;line-height:1.5">Monitor all top contracts by enrollment, compare PY to Projected ratings, and identify underperforming plans.</div>
+            <div style="font-size:16px;font-weight:700;color:#111;margin-bottom:6px">Executive Overview</div>
+            <div style="font-size:12px;color:#7c3a10;line-height:1.6">Monitor all top contracts by enrollment, compare PY to Projected ratings, and identify underperforming plans.</div>
           </div>
-          <div style="margin-top:12px"><button class="btn-primary" style="padding:10px 24px;font-size:13px;background:#F26722" onclick="showPage('executive')">View Executive Overview →</button></div>
+          <div style="margin-top:16px"><button class="btn-primary" style="padding:10px 28px;font-size:13px;background:linear-gradient(135deg,#F26722,#e05a1a);border-radius:10px;border:none;color:#fff;cursor:pointer;font-weight:600;box-shadow:0 4px 12px rgba(242,103,34,.25)" onclick="showPage('executive')">View Executive Overview →</button></div>
         </div>
-        <div onclick="showPage('market')" style="flex:1 1 calc(50% - 8px);min-width:280px;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(135deg,#fff5ef,#ffe8d6);border:1px solid #F26722;border-radius:12px;padding:16px 24px;cursor:pointer">
+        <div class="mkt-feat-card market" onclick="showPage('market')">
           <div>
-            <div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px">Market Analysis</div>
-            <div style="font-size:12px;color:#7c3a10;line-height:1.5">Analyze CMS enrollment trends, compare plan star ratings, and identify market opportunities across organizations and contracts.</div>
+            <div style="font-size:16px;font-weight:700;color:#111;margin-bottom:6px">Market Analysis</div>
+            <div style="font-size:12px;color:#3b4f80;line-height:1.6">Analyze CMS enrollment trends, compare plan star ratings, and identify market opportunities across organizations and contracts.</div>
           </div>
-          <div style="margin-top:12px"><button class="btn-primary" style="padding:10px 24px;font-size:13px;background:#F26722" onclick="showPage('market')">View Market Analysis →</button></div>
+          <div style="margin-top:16px"><button class="btn-primary" style="padding:10px 28px;font-size:13px;background:linear-gradient(135deg,#3b82f6,#2563eb);border-radius:10px;border:none;color:#fff;cursor:pointer;font-weight:600;box-shadow:0 4px 12px rgba(59,130,246,.25)" onclick="showPage('market')">View Market Analysis →</button></div>
         </div>
       </div>
-      <div class="section-title">Platform Capabilities</div>
-      <div class="cap-grid" style="margin-bottom:24px">
+      <div class="mkt-section-title">Platform Capabilities</div>
+      <div class="cap-grid" style="margin-bottom:28px">
         <div class="cap-card" onclick="showPage('hedis')"><div class="cap-title">HEDIS Clinical Quality</div><div class="cap-desc">Leverage AI to monitor HEDIS measures, pinpoint gaps, and engage members.</div><div class="cap-link">Explore →</div></div>
         <div class="cap-card" onclick="showPage('cahps')"><div class="cap-title">CAHPS Member Experience</div><div class="cap-desc">Analyze CAHPS survey data to uncover drivers of member satisfaction.</div><div class="cap-link">Explore →</div></div>
         <div class="cap-card" onclick="showPage('hos')"><div class="cap-title">HOS Health Outcomes</div><div class="cap-desc">Track physical and mental health outcomes to support star rating goals.</div><div class="cap-link">Explore →</div></div>
         <div class="cap-card" onclick="showPage('simulator')"><div class="cap-title">Medical Adherence</div><div class="cap-desc">Monitor PDC-based adherence and close pharmacy gaps.</div><div class="cap-link">Explore →</div></div>
         <div class="cap-card" onclick="showPage('executive')"><div class="cap-title">Admin / Operational</div><div class="cap-desc">Track appeals, call center access, quality scores, and complaints.</div><div class="cap-link">Explore →</div></div>
       </div>
-      <div class="section-title">Quick Navigation</div>
+      <div class="mkt-section-title">Quick Navigation</div>
       <div class="cap-grid">
         <div class="cap-card" onclick="showPage('simulator')"><div class="cap-title">Simulator</div><div class="cap-desc">Model scenarios and see their impact on Star ratings in real-time.</div><div class="cap-link">Launch →</div></div>
         <div class="cap-card" onclick="showPage('agent')"><div class="cap-title">Agent Execution</div><div class="cap-desc">Manage outreach campaigns with tailored agent scripts.</div><div class="cap-link">Launch →</div></div>
@@ -936,7 +1176,7 @@
       <div style="background:#fff;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;margin-bottom:14px">
         <div style="padding:10px 16px;border-bottom:1px solid #f3f4f6;display:flex;justify-content:space-between;align-items:center;background:#fff8f5">
           <span style="font-size:12px;font-weight:700;color:#F26722">EHO4all measure scorecard — LIS/Dual subgroup</span>
-          <span style="font-size:11px;color:#9ca3af">CMS benchmark comparison · 2027</span>
+          <span style="font-size:11px;color:#9ca3af">CMS benchmark comparison · 2025</span>
         </div>
         <table class="data-table">
           <thead>
@@ -992,7 +1232,7 @@
           <span style="width:28px;height:28px;border-radius:7px;background:#fff0e6;display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">📈</span>
           Market Analysis
         </div>
-        <div style="font-size:11px;color:#9ca3af;margin-top:2px;margin-left:36px">CMS Enrollment · Plan Star History · Measure Star History · 2021–2027</div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:2px;margin-left:36px">CMS Enrollment · Plan Star History · Measure Star History · 2022–2026</div>
       </div>
       <div style="display:flex;gap:8px">
         <button class="ma-export-btn" onclick="maExportCSV()">⬇ Export CSV</button>
@@ -1016,7 +1256,7 @@
 
         <!-- Plan Star Ratings Table -->
         <div class="ma-table-card">
-          <div class="ma-table-title">Plan Star Ratings — 7-Year Comparison <span class="ma-table-sub" id="ma-plan-count"></span></div>
+          <div class="ma-table-title">Plan Star Ratings — 5-Year Comparison <span class="ma-table-sub" id="ma-plan-count"></span></div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap">
             <div class="ma-dd-wrap" style="min-width:200px">
               <div class="ma-dd-trigger" id="ma-orgtop-trigger" onclick="maToggleDD('orgtop')">
@@ -1060,7 +1300,7 @@
 
         <!-- Measure Star Ratings Table -->
         <div class="ma-table-card">
-          <div class="ma-table-title">Measure Star Ratings — 7-Year by Domain <span class="ma-table-sub" id="ma-measure-count"></span></div>
+          <div class="ma-table-title">Measure Star Ratings — 5-Year by Domain <span class="ma-table-sub" id="ma-measure-count"></span></div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap">
             <div id="ma-domain-chips" style="display:flex;flex-wrap:wrap;gap:2px">
               <div class="ma-dom-chip on" onclick="maDomToggle(this)" data-domain="all">All</div>
@@ -1403,6 +1643,83 @@
 </div>
 
 
+<!-- AI ASSISTANT -->
+<div id="pg-ai-assistant" class="page" style="display:none;flex-direction:column;padding:0;overflow:hidden">
+  <div class="ai-chat-container">
+    <!-- Sidebar -->
+    <div class="ai-sidebar">
+      <div class="ai-sidebar-header">
+        <h3>StarPulse AI</h3>
+        <button class="ai-new-chat-btn" onclick="aiNewChat()">+ New Chat</button>
+      </div>
+      <div class="ai-sidebar-search"><input type="text" placeholder="Search conversations..." oninput="aiFilterConvs(this.value)"></div>
+      <div class="ai-conv-list" id="ai-conv-list"></div>
+    </div>
+    <!-- Main Chat -->
+    <div class="ai-main">
+      <div class="ai-topbar">
+        <div class="ai-topbar-left">
+          <span class="ai-topbar-title">StarPulse AI Assistant</span>
+          <span class="ai-topbar-badge">Medicare Analytics</span>
+        </div>
+        <div class="ai-topbar-right">
+          <button class="ai-topbar-btn" onclick="aiToggleAnalytics()">Analytics</button>
+          <button class="ai-topbar-btn" onclick="aiToggleOrch()">Orchestration</button>
+          <span class="ai-topbar-model">Llama 3.3 70B</span>
+        </div>
+      </div>
+      <div class="ai-messages" id="ai-messages">
+        <div class="ai-welcome">
+          <h2>StarPulse AI Assistant</h2>
+          <p>Ask questions about star ratings, HEDIS measures, member gaps, CAHPS scores, and more.</p>
+          <div class="ai-welcome-cards">
+            <div class="ai-welcome-card" onclick="aiSendMessage('What are the top 5 plans by overall star rating in 2026?')">Top plans by star rating</div>
+            <div class="ai-welcome-card" onclick="aiSendMessage('Show me HEDIS measures with the most open gaps')">HEDIS gap analysis</div>
+            <div class="ai-welcome-card" onclick="aiSendMessage('What is the average CAHPS score across all contracts?')">CAHPS performance</div>
+            <div class="ai-welcome-card" onclick="aiSendMessage('Which contracts have critical alerts?')">Critical alerts</div>
+          </div>
+        </div>
+      </div>
+      <div class="ai-input-area">
+        <div class="ai-suggestions" id="ai-suggestions"></div>
+        <div class="ai-input-row">
+          <textarea id="ai-input" placeholder="Message StarPulse AI..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();aiSend()}"></textarea>
+          <button class="ai-send-btn" id="ai-send-btn" onclick="aiSend()">&#9654;</button>
+        </div>
+      </div>
+    </div>
+    <!-- Orchestration Panel -->
+    <div class="ai-orch-panel" id="ai-orch-panel">
+      <div class="ai-orch-header">
+        <h4><span style="font-size:16px">&#9881;</span> Agent Orchestration</h4>
+        <button class="ai-topbar-btn" onclick="aiToggleOrch()" style="font-size:14px;padding:2px 8px">&times;</button>
+      </div>
+      <div class="ai-orch-body" id="ai-orch-body">
+        <p style="font-size:12px;color:#9ca3af;text-align:center;margin-top:40px">Send a message to see the agent pipeline</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Analytics Modal -->
+<div class="ai-analytics-modal" id="ai-analytics-modal">
+  <div class="ai-analytics-content">
+    <div class="ai-analytics-header">
+      <h3><span style="font-size:18px">&#128200;</span> Analytics</h3>
+      <button class="ai-analytics-close" onclick="aiToggleAnalytics()">&times;</button>
+    </div>
+    <div class="ai-stat-grid" id="ai-stats-grid"></div>
+    <div class="ai-analytics-section">
+      <h4>Agent Usage</h4>
+      <div id="ai-agent-usage"></div>
+    </div>
+    <div class="ai-analytics-section">
+      <h4>Cost Breakdown</h4>
+      <div id="ai-cost-breakdown"></div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 // ── NAV ──────────────────────────────────────────────────────
@@ -1682,7 +1999,6 @@ function renderCahpsLive(contractId, contractName){
               return `<div style="display:grid;grid-template-columns:2fr 1.5fr 120px 100px;padding:16px 20px;border-bottom:1px solid #f9fafb;cursor:pointer" onmouseover="this.style.background='#f9fafb'" onmouseout="this.style.background=''">
                 <div>
                   <div style="font-size:12px;color:#374151;line-height:1.5">${q.q}</div>
-                  <div style="display:none">↓ ${notTop} members did not give top-box — click to view</div>
                 </div>
                 <div style="font-size:12px;color:#9ca3af;padding-right:12px;align-self:center">${q.proxy}</div>
                 <div style="align-self:center"><span style="background:#f3f4f6;color:#374151;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:600">${q.rule}</span></div>
@@ -2260,6 +2576,7 @@ function showPage(id,el){
   if(id==='hos'&&typeof hosInitPage==='function')hosInitPage();
   if(id==='adherence'&&typeof adhInitPage==='function')adhInitPage();
   if(id==='agent'){if(typeof renderAgentQueue==='function')renderAgentQueue();}
+  if(id==='ai-assistant'&&typeof aiChatInit==='function')aiChatInit();
   if(id==='outreach-audit')oaLoadLogs();
 }
 window.showPage=showPage;
@@ -4590,7 +4907,7 @@ function maRenderAll(){
 // ── KPI Board ──
 function maRenderKPIs(){
   const filteredPlanData=MA_PLAN_STARS.filter(d=>maSelectedContracts.has(d.contract_id)&&d.overall_star!=null&&!isNaN(d.overall_star));
-  const latestYear=2026;
+  const latestYear=MA_YEARS.length?MA_YEARS[MA_YEARS.length-1]:null;
   const latestData=latestYear?filteredPlanData.filter(d=>d.year===latestYear):[];
 
   // Total Enrollment (sum latest year enrollment for selected contracts with valid data)
@@ -4658,7 +4975,7 @@ function maRenderPlanTable(){
     if(v!=null&&!isNaN(v))grouped[d.contract_id].stars[d.year]=v;
   });
   // Attach latest enrollment to each group
-  const latestYear=2026;
+  const latestYear=MA_YEARS.length?MA_YEARS[MA_YEARS.length-1]:null;
   Object.keys(grouped).forEach(cid=>{
     const eRow=MA_ENROLL.find(d=>d.contract_id===cid&&d.year===latestYear);
     grouped[cid].enrollment=eRow?eRow.enrollment:null;
@@ -5913,6 +6230,343 @@ window.adhInitPage=function(){
 // Initial render
 renderAdh();
 adhUpdateStats();
+
+})();
+
+// ── AI ASSISTANT ──────────────────────────────────────────────
+(function(){
+let aiConvId=null;
+let aiHistory=[];
+let aiConversations=[];
+let aiLoading=false;
+
+window.aiChatInit=function(){
+  aiLoadConversations();
+};
+
+window.aiNewChat=function(){
+  aiConvId=null;
+  aiHistory=[];
+  const msgs=document.getElementById('ai-messages');
+  msgs.innerHTML=`<div class="ai-welcome">
+    <h2>StarPulse AI Assistant</h2>
+    <p>Ask questions about star ratings, HEDIS measures, member gaps, CAHPS scores, and more.</p>
+    <div class="ai-welcome-cards">
+      <div class="ai-welcome-card" onclick="aiSendMessage('What are the top 5 plans by overall star rating in 2026?')">Top plans by star rating</div>
+      <div class="ai-welcome-card" onclick="aiSendMessage('Show me HEDIS measures with the most open gaps')">HEDIS gap analysis</div>
+      <div class="ai-welcome-card" onclick="aiSendMessage('What is the average CAHPS score across all contracts?')">CAHPS performance</div>
+      <div class="ai-welcome-card" onclick="aiSendMessage('Which contracts have critical alerts?')">Critical alerts</div>
+    </div>
+  </div>`;
+  document.getElementById('ai-suggestions').innerHTML='';
+  document.getElementById('ai-orch-body').innerHTML='<p style="font-size:12px;color:#9ca3af;text-align:center;margin-top:40px">Send a message to see the agent pipeline</p>';
+  aiHighlightConv(null);
+};
+
+window.aiSendMessage=function(msg){
+  document.getElementById('ai-input').value=msg;
+  aiSend();
+};
+
+window.aiSend=async function(){
+  const inp=document.getElementById('ai-input');
+  const msg=inp.value.trim();
+  if(!msg||aiLoading)return;
+  inp.value='';
+  inp.style.height='auto';
+  aiLoading=true;
+  document.getElementById('ai-send-btn').disabled=true;
+
+  // Clear welcome if first message
+  const msgs=document.getElementById('ai-messages');
+  const welcome=msgs.querySelector('.ai-welcome');
+  if(welcome)welcome.remove();
+
+  // Add user message
+  aiAddMessage('user',msg);
+  aiHistory.push({role:'user',content:msg});
+
+  // Show typing indicator
+  const typingEl=document.createElement('div');
+  typingEl.className='ai-msg assistant';
+  typingEl.id='ai-typing';
+  typingEl.innerHTML='<div class="ai-msg-bubble"><div class="ai-typing"><div class="ai-typing-dot"></div><div class="ai-typing-dot"></div><div class="ai-typing-dot"></div></div></div>';
+  msgs.appendChild(typingEl);
+  msgs.scrollTop=msgs.scrollHeight;
+
+  // Show running state in orchestration
+  aiShowOrchRunning();
+
+  try{
+    const BASE=window.location.origin;
+    const resp=await fetch(BASE+'/api/chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:msg,conversation_id:aiConvId})
+    });
+    const data=await resp.json();
+
+    // Remove typing
+    const t=document.getElementById('ai-typing');
+    if(t)t.remove();
+
+    aiConvId=data.conversation_id;
+    aiHistory.push({role:'assistant',content:data.response});
+
+    // Render response
+    aiAddAssistantMessage(data);
+
+    // Update orchestration panel
+    aiRenderOrchestration(data.orchestration);
+
+    // Update suggestions
+    aiRenderSuggestions(data.response);
+
+    // Refresh conversation list
+    aiLoadConversations();
+
+  }catch(err){
+    const t=document.getElementById('ai-typing');
+    if(t)t.remove();
+    aiAddMessage('assistant','Sorry, I encountered an error connecting to the AI service. Please check that the backend is running and Databricks is configured.\n\nError: '+err.message);
+    aiRenderOrchError(err.message);
+  }
+
+  aiLoading=false;
+  document.getElementById('ai-send-btn').disabled=false;
+  document.getElementById('ai-input').focus();
+};
+
+function aiAddMessage(role,content){
+  const msgs=document.getElementById('ai-messages');
+  const div=document.createElement('div');
+  div.className='ai-msg '+role;
+  const time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  div.innerHTML=`<div class="ai-msg-bubble">${escHtml(content)}</div><div class="ai-msg-time">${time}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function aiAddAssistantMessage(data){
+  const msgs=document.getElementById('ai-messages');
+  const div=document.createElement('div');
+  div.className='ai-msg assistant';
+  const time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+
+  let html=`<div class="ai-msg-bubble">${aiFormatMarkdown(data.response)}`;
+
+  // Add data table if rows returned
+  if(data.data&&data.data.length>0){
+    const cols=Object.keys(data.data[0]);
+    html+=`<div style="overflow-x:auto;margin-top:10px"><table class="ai-data-table"><thead><tr>`;
+    cols.forEach(c=>html+=`<th>${escHtml(c)}</th>`);
+    html+=`</tr></thead><tbody>`;
+    data.data.slice(0,20).forEach(row=>{
+      html+='<tr>';
+      cols.forEach(c=>html+=`<td>${escHtml(String(row[c]??''))}</td>`);
+      html+='</tr>';
+    });
+    html+=`</tbody></table></div>`;
+    if(data.data_count>20)html+=`<div style="font-size:10px;color:#9ca3af;margin-top:4px">Showing 20 of ${data.data_count} rows</div>`;
+  }
+
+  html+=`</div><div class="ai-msg-time">${time} &middot; ${(data.total_duration_ms/1000).toFixed(1)}s &middot; ${data.usage.total_tokens||0} tokens</div>`;
+  div.innerHTML=html;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function aiFormatMarkdown(text){
+  let html=escHtml(text);
+  html=html.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+  html=html.replace(/`([^`]+)`/g,'<code style="background:#f0fdf4;padding:1px 4px;border-radius:3px;font-size:11px">$1</code>');
+  html=html.replace(/^### (.+)$/gm,'<div style="font-size:13px;font-weight:700;margin:10px 0 4px">$1</div>');
+  html=html.replace(/^## (.+)$/gm,'<div style="font-size:14px;font-weight:700;margin:12px 0 6px">$1</div>');
+  html=html.replace(/^- (.+)$/gm,'<div style="padding-left:12px">&bull; $1</div>');
+  html=html.replace(/^\d+\.\s(.+)$/gm,'<div style="padding-left:12px">$&</div>');
+  html=html.replace(/\n/g,'<br>');
+  return html;
+}
+
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function aiShowOrchRunning(){
+  const body=document.getElementById('ai-orch-body');
+  body.innerHTML=`
+    <div class="ai-orch-step running"><div class="ai-orch-dot"></div>
+      <div class="ai-orch-step-title">Router Agent <span class="ai-orch-badge running">Running</span></div>
+      <div class="ai-orch-step-detail">Classifying query...</div>
+    </div>`;
+}
+
+function aiRenderOrchestration(steps){
+  const body=document.getElementById('ai-orch-body');
+  let html='';
+  (steps||[]).forEach(s=>{
+    const status=s.status||'done';
+    const badge=`<span class="ai-orch-badge ${status}">${status.charAt(0).toUpperCase()+status.slice(1)}</span>`;
+    let title='',detail='',extra='';
+    if(s.step==='router'){
+      title='Router Agent';
+      detail=`Classifies &amp; routes &middot; ${s.model||''}`;
+      if(s.category)extra=`<div class="ai-orch-tool">${s.category==='nl2sql'?'transfer_to_nl2sql':'direct_response'} <span style="margin-left:auto;font-size:9px">${s.duration_ms||0}ms</span></div>`;
+    }else if(s.step==='nl2sql'){
+      title='NL2SQL';
+      detail='SQL generation';
+      if(s.sql)extra=`<div class="ai-orch-tool">run_sql_query <span style="margin-left:auto;font-size:9px">${s.duration_ms||0}ms</span></div>`;
+    }else if(s.step==='databricks'){
+      title='Databricks';
+      detail=`Warehouse query &middot; ${s.row_count||0} rows`;
+      extra=`<div class="ai-orch-step-timing">${s.duration_ms||0}ms</div>`;
+    }else if(s.step==='response'){
+      title='Response';
+      detail='Final answer';
+    }else if(s.step==='judge'){
+      title='LLM Judge';
+      const overall=s.overall||0;
+      detail=`Quality evaluation &middot; ${s.duration_ms||0}ms`;
+      if(s.scores&&Object.keys(s.scores).length>0){
+        extra=aiRenderJudgeScores(s.scores,s.suggestions||[],overall);
+      }
+    }
+    html+=`<div class="ai-orch-step ${status}"><div class="ai-orch-dot"></div>
+      <div class="ai-orch-step-title">${title} ${badge}</div>
+      <div class="ai-orch-step-detail">${detail}</div>
+      ${extra}
+    </div>`;
+  });
+  body.innerHTML=html;
+}
+
+function aiRenderJudgeScores(scores,suggestions,overall){
+  const labels={groundedness:'Groundedness',accuracy:'Accuracy',completeness:'Completeness',clarity:'Clarity',clinical_relevance:'Clinical Relevance',actionability:'Actionability',conciseness:'Conciseness',sql_correctness:'SQL Correctness'};
+  const colors={1:'#ef4444',2:'#f59e0b',3:'#eab308',4:'#22c55e',5:'#10b981'};
+  let html=`<div class="ai-judge-section"><div class="ai-judge-title"><span style="color:${overall>=3.5?'#10b981':'#f59e0b'}">Score ${overall.toFixed(1)}</span></div>`;
+  Object.entries(labels).forEach(([k,v])=>{
+    const val=scores[k]||0;
+    const pct=(val/5)*100;
+    const color=colors[Math.round(val)]||'#9ca3af';
+    html+=`<div class="ai-judge-row"><span class="ai-judge-label">${v}</span><div class="ai-judge-bar"><div class="ai-judge-fill" style="width:${pct}%;background:${color}"></div></div><span class="ai-judge-score" style="color:${color}">${val}/5</span></div>`;
+  });
+  if(suggestions.length>0){
+    html+=`<div class="ai-judge-suggestions">`;
+    suggestions.forEach(s=>html+=`<p>&#128161; ${escHtml(s)}</p>`);
+    html+=`</div>`;
+  }
+  html+=`</div>`;
+  return html;
+}
+
+function aiRenderOrchError(errMsg){
+  const body=document.getElementById('ai-orch-body');
+  body.innerHTML=`<div class="ai-orch-step error"><div class="ai-orch-dot"></div>
+    <div class="ai-orch-step-title">Error <span class="ai-orch-badge error">Failed</span></div>
+    <div class="ai-orch-step-detail">${escHtml(errMsg)}</div>
+  </div>`;
+}
+
+function aiRenderSuggestions(response){
+  const el=document.getElementById('ai-suggestions');
+  const suggestions=[];
+  const lines=response.split('\n');
+  let inFollowUp=false;
+  lines.forEach(line=>{
+    if(/follow.?up|you (might|could|may) (also )?ask/i.test(line))inFollowUp=true;
+    if(inFollowUp&&/^\d+\.|^-/.test(line.trim())){
+      const q=line.replace(/^\d+\.\s*|^-\s*/,'').replace(/\*\*/g,'').replace(/\?.*$/,'?').trim();
+      if(q.length>10&&q.length<120)suggestions.push(q);
+    }
+  });
+  if(suggestions.length>0){
+    el.innerHTML=suggestions.slice(0,3).map(s=>`<button class="ai-suggestion-btn" onclick="aiSendMessage('${s.replace(/'/g,"\\'")}')">${escHtml(s)}</button>`).join('');
+  }else{
+    el.innerHTML='';
+  }
+}
+
+window.aiToggleOrch=function(){
+  document.getElementById('ai-orch-panel').classList.toggle('open');
+};
+
+window.aiToggleAnalytics=async function(){
+  const modal=document.getElementById('ai-analytics-modal');
+  if(modal.classList.contains('open')){modal.classList.remove('open');return;}
+  modal.classList.add('open');
+  try{
+    const BASE=window.location.origin;
+    const resp=await fetch(BASE+'/api/chat/analytics');
+    const data=await resp.json();
+    document.getElementById('ai-stats-grid').innerHTML=`
+      <div class="ai-stat-card"><div class="ai-stat-label">Tokens Used</div><div class="ai-stat-value">${(data.tokens_used/1000).toFixed(1)}K</div><div class="ai-stat-sub">${data.queries} queries</div></div>
+      <div class="ai-stat-card"><div class="ai-stat-label">Est. Cost</div><div class="ai-stat-value">$${data.est_cost.toFixed(2)}</div><div class="ai-stat-sub">$${data.cost_per_query.toFixed(4)} / query</div></div>
+      <div class="ai-stat-card"><div class="ai-stat-label">Queries</div><div class="ai-stat-value">${data.queries}</div><div class="ai-stat-sub">this period</div></div>
+    `;
+    const agentHtml=Object.entries(data.agent_usage||{}).map(([k,v])=>{
+      const maxV=Math.max(...Object.values(data.agent_usage));
+      const pct=(v/maxV)*100;
+      return`<div class="ai-agent-bar"><span class="ai-agent-bar-label">${k}</span><div class="ai-agent-bar-fill" style="width:${pct}%">${v}</div></div>`;
+    }).join('');
+    document.getElementById('ai-agent-usage').innerHTML=agentHtml||'<p style="font-size:12px;color:#9ca3af">No data yet</p>';
+    document.getElementById('ai-cost-breakdown').innerHTML=`
+      <div style="display:flex;gap:16px;font-size:13px">
+        <div><span style="color:#6366f1;font-size:10px">&#9679;</span> Input Tokens: <strong>$${data.input_cost.toFixed(4)}</strong></div>
+        <div><span style="color:#f472b6;font-size:10px">&#9679;</span> Output Tokens: <strong>$${data.output_cost.toFixed(4)}</strong></div>
+      </div>`;
+  }catch(e){
+    document.getElementById('ai-stats-grid').innerHTML='<p style="font-size:12px;color:#ef4444;grid-column:1/-1">Failed to load analytics</p>';
+  }
+};
+
+async function aiLoadConversations(){
+  try{
+    const BASE=window.location.origin;
+    const resp=await fetch(BASE+'/api/chat/history');
+    aiConversations=await resp.json();
+    aiRenderConvList();
+  }catch(e){}
+}
+
+function aiRenderConvList(){
+  const el=document.getElementById('ai-conv-list');
+  if(!aiConversations.length){el.innerHTML='<p style="font-size:11px;color:#9ca3af;text-align:center;padding:20px">No conversations yet</p>';return;}
+  el.innerHTML=aiConversations.map(c=>`<div class="ai-conv-item ${c.id===aiConvId?'active':''}" onclick="aiLoadConv('${c.id}')">${escHtml(c.title)}<div class="ai-conv-time">${c.message_count} messages</div></div>`).join('');
+}
+
+window.aiLoadConv=async function(id){
+  try{
+    const BASE=window.location.origin;
+    const resp=await fetch(BASE+'/api/chat/history/'+id);
+    const data=await resp.json();
+    aiConvId=id;
+    aiHistory=data.messages||[];
+    const msgs=document.getElementById('ai-messages');
+    msgs.innerHTML='';
+    aiHistory.forEach(m=>{
+      if(m.role==='user')aiAddMessage('user',m.content);
+      else if(m.role==='assistant'){
+        if(m.orchestration){
+          aiAddAssistantMessage({response:m.content,data:[],data_count:0,total_duration_ms:0,usage:{total_tokens:0}});
+          aiRenderOrchestration(m.orchestration);
+        }else{
+          aiAddMessage('assistant',m.content);
+        }
+      }
+    });
+    aiHighlightConv(id);
+  }catch(e){}
+};
+
+function aiHighlightConv(id){
+  document.querySelectorAll('.ai-conv-item').forEach(el=>{
+    el.classList.toggle('active',el.onclick.toString().includes(id));
+  });
+}
+
+window.aiFilterConvs=function(q){
+  const items=document.querySelectorAll('.ai-conv-item');
+  q=q.toLowerCase();
+  items.forEach(el=>{el.style.display=el.textContent.toLowerCase().includes(q)?'':'none';});
+};
 
 })();
 
