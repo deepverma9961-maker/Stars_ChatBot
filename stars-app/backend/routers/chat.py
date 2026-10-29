@@ -28,7 +28,7 @@ _PRICE_INPUT = 0.75
 _PRICE_OUTPUT = 2.10
 
 
-@router.post("/chat", response_model=ChatResponse)
+@router.post("/chat")
 def chat(req: ChatRequest):
     conv_id = req.conversation_id or str(uuid.uuid4())
     if conv_id not in _conversations:
@@ -41,7 +41,20 @@ def chat(req: ChatRequest):
         "timestamp": datetime.now(timezone.utc).isoformat(),
     })
 
-    result = run_pipeline(req.message, history)
+    try:
+        result = run_pipeline(req.message, history)
+    except Exception as e:
+        logger.error("Pipeline failed: %s", e)
+        return ChatResponse(
+            conversation_id=conv_id,
+            response=f"I encountered an error processing your request. Details: {str(e)[:200]}",
+            orchestration=[{"step": "error", "status": "error", "error": str(e)[:200], "duration_ms": 0}],
+            sql=None,
+            data=[],
+            data_count=0,
+            usage={"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0},
+            total_duration_ms=0,
+        )
 
     history.append({
         "role": "assistant",
