@@ -1,9 +1,11 @@
 """Chat API router for StarPulse AI Assistant."""
 
+from __future__ import annotations
 import uuid
 import time
 import logging
 from datetime import datetime, timezone
+from typing import Any, Dict, List
 from fastapi import APIRouter
 
 from ..models.chat import ChatRequest, ChatResponse
@@ -12,9 +14,8 @@ from ..services.chat_agent import run_pipeline
 logger = logging.getLogger("chat")
 router = APIRouter(tags=["chat"])
 
-# In-memory conversation store (replace with DB for production)
-_conversations: dict[str, list[dict]] = {}
-_analytics: dict = {
+_conversations: Dict[str, List[Dict[str, Any]]] = {}
+_analytics: Dict[str, Any] = {
     "total_queries": 0,
     "total_tokens": 0,
     "total_cost": 0.0,

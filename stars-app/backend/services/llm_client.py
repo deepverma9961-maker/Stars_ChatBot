@@ -1,5 +1,6 @@
 """Databricks Foundation Model API client (OpenAI-compatible)."""
 
+from __future__ import annotations
 import logging
 from ..config import settings
 

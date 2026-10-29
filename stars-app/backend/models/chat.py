@@ -1,7 +1,8 @@
 """Pydantic models for chat API."""
 
+from __future__ import annotations
 from pydantic import BaseModel
-from typing import Optional
+from typing import Any, Dict, List, Optional
 
 
 class ChatRequest(BaseModel):
@@ -25,9 +26,9 @@ class OrchestrationStep(BaseModel):
 class ChatResponse(BaseModel):
     conversation_id: str
     response: str
-    orchestration: list[dict]
+    orchestration: List[Dict[str, Any]]
     sql: Optional[str] = None
-    data: list[dict] = []
+    data: List[Dict[str, Any]] = []
     data_count: int = 0
-    usage: dict = {}
+    usage: Dict[str, Any] = {}
     total_duration_ms: int = 0

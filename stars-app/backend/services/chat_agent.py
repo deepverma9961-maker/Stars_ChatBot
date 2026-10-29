@@ -1,10 +1,11 @@
 """Agent orchestration pipeline for StarPulse AI Assistant."""
+from __future__ import annotations
 
 import json
 import time
 import logging
 import traceback
-from typing import Optional
+from typing import Optional, List, Dict
 
 try:
     from .llm_client import chat_completion, DEFAULT_MODEL
