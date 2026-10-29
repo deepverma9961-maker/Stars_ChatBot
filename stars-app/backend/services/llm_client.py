@@ -1,14 +1,16 @@
 """Databricks Foundation Model API client (OpenAI-compatible)."""
 
-from openai import OpenAI
+import logging
 from ..config import settings
 
+logger = logging.getLogger("llm_client")
 _client = None
 
 
-def get_client() -> OpenAI:
+def get_client():
     global _client
     if _client is None:
+        from openai import OpenAI
         host = settings.databricks_host.rstrip("/")
         _client = OpenAI(
             api_key=settings.databricks_token,
@@ -27,8 +29,6 @@ def chat_completion(
     temperature: float = 0.1,
     max_tokens: int = 2048,
 ) -> dict:
-    import logging
-    logger = logging.getLogger("llm_client")
     client = get_client()
     try:
         resp = client.chat.completions.create(

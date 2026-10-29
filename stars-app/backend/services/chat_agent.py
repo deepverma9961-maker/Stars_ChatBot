@@ -6,8 +6,17 @@ import logging
 import traceback
 from typing import Optional
 
-from .llm_client import chat_completion, DEFAULT_MODEL
-from ..db import query as db_query
+try:
+    from .llm_client import chat_completion, DEFAULT_MODEL
+except ImportError:
+    chat_completion = None
+    DEFAULT_MODEL = "databricks-meta-llama-3-3-70b-instruct"
+
+try:
+    from ..db import query as db_query
+except ImportError:
+    db_query = None
+
 from ..config import settings
 
 logger = logging.getLogger("chat_agent")
@@ -334,6 +343,8 @@ Data Returned: {json.dumps(rows[:10], default=str) if rows else 'None'}"""
 
 def run_pipeline(user_message: str, history: list[dict]) -> dict:
     """Run the full agent orchestration pipeline."""
+    if chat_completion is None:
+        raise RuntimeError("LLM client not available — openai package may not be installed")
     total_start = time.time()
     orchestration = []
     total_usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
