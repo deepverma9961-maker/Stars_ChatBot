@@ -23,79 +23,66 @@ from ..config import settings
 logger = logging.getLogger("chat_agent")
 
 TABLE_SCHEMAS = f"""
-Available tables in Databricks catalog '{settings.catalog}':
+Available tables in catalog '{settings.catalog}':
 
-1. {settings.gold}.gold_star_rating_summary
-   - contract_id (string): CMS contract ID e.g. H0001
-   - organization_name (string): Health plan organization name
-   - measurement_year (int): Year of measurement (2022-2027)
-   - overall_star_rating (float): Overall CMS star rating (1-5)
-   - part_c_star_rating (float): Part C star rating
-   - part_d_star_rating (float): Part D star rating
-   - domain_scores (string): JSON with domain-level scores
-   - total_enrollment (int): Total enrolled members
+IMPORTANT: Most gold tables JOIN to silver_plan via plan_key. To filter by contract_id, JOIN silver_plan.
+gold_measure_scorecard and gold_member_gap link measures via measure_key → silver_measure.
 
-2. {settings.gold}.gold_measure_scorecard
-   - contract_id (string): CMS contract ID
-   - measure_id (string): HEDIS measure ID e.g. C01, D01
-   - measure_name (string): Full measure name
-   - measurement_year (int): Year
-   - star_rating (int): Star rating for this measure (1-5)
-   - numerator (int): Numerator count
-   - denominator (int): Denominator count
-   - rate (float): Performance rate (0-100)
-   - domain (string): CMS domain category
-   - part (string): 'C' or 'D'
-   - weight (float): CMS weight for star calculation
+1. {settings.gold}.gold_star_rating_summary (14 rows)
+   star_summary_key (string), plan_key (string), contract_id (string),
+   measurement_year (int), prior_year_star_rating (double), projected_star_rating (double),
+   hedis_domain_rating (double), cahps_domain_rating (double), hos_domain_rating (double),
+   partd_domain_rating (double), bonus_eligible_flag (boolean), estimated_bonus_amount (double),
+   last_updated (string)
 
-3. {settings.gold}.gold_member_gap
-   - member_id (string): Member ID
-   - contract_id (string): CMS contract ID
-   - measure_id (string): HEDIS measure ID
-   - measure_name (string): Full measure name
-   - gap_status (string): 'open' or 'closed'
-   - days_remaining (int): Days remaining to close gap
-   - last_service_date (string): Date of last relevant service
-   - provider_name (string): Assigned provider
+2. {settings.gold}.gold_measure_scorecard (630 rows)
+   scorecard_key (string), plan_key (string), measure_key (string),
+   measurement_year (int), current_rate (double), open_gap_count (bigint),
+   measure_status (string), target_rate (double), projected_rate (double),
+   last_updated (string)
 
-4. {settings.gold}.gold_cahps_overview
-   - contract_id (string): CMS contract ID
-   - survey_category (string): CAHPS survey category
-   - score (float): Survey score (0-100)
-   - measurement_year (int): Year
-   - benchmark (float): National benchmark
-   - status (string): 'above', 'at', 'below' benchmark
+3. {settings.gold}.gold_member_gap (176377 rows)
+   member_gap_key (string), member_key (string), plan_key (string),
+   measure_key (string), measure_code (string), measurement_year (int),
+   gap_status (string), propensity_score (double), recommended_channel (string),
+   recommended_incentive (string), gap_open_date (string), last_outreach_date (string),
+   campaign_name (string), is_suppressed (boolean), days_open (int)
 
-5. {settings.gold}.gold_alert_priority
-   - contract_id (string): CMS contract ID
-   - alert_type (string): Type of alert
-   - severity (string): 'critical', 'warning', 'info'
-   - message (string): Alert description
-   - created_date (string): When alert was created
+4. {settings.gold}.gold_cahps_overview (14 rows)
+   cahps_key (string), plan_key (string), contract_id (string),
+   measurement_year (int), current_cahps_rating (double), projected_cahps_rating (double),
+   gap_to_4_star (double), days_remaining (int), qbp_at_stake_amount (double),
+   last_updated (string)
 
-6. {settings.silver}.silver_plan
-   - contract_id (string): CMS contract ID
-   - plan_name (string): Plan name
-   - organization_name (string): Organization name
-   - state (string): State abbreviation
-   - plan_type (string): HMO, PPO, etc.
-   - snp_type (string): Special Needs Plan type
+5. {settings.gold}.gold_alert_priority (24 rows)
+   alert_id (string), severity (string), alert_title (string), alert_body (string),
+   alert_meta (string), measure_code (string), cta_label (string), cta_page (string),
+   priority_score (int), is_active (boolean), measurement_year (int)
 
-7. {settings.silver}.silver_member
-   - member_id (string): Member ID
-   - contract_id (string): CMS contract ID
-   - first_name (string): First name
-   - last_name (string): Last name
-   - age (int): Member age
-   - gender (string): M/F
-   - risk_score (float): HCC risk score
+6. {settings.silver}.silver_plan (28 rows)
+   contract_id (string), enrollment_count (bigint), plan_key (string),
+   plan_name (string), product_type (string), state (string)
 
-8. {settings.silver}.silver_measure
-   - measure_id (string): Measure ID
-   - measure_name (string): Full measure name
-   - domain (string): CMS domain
-   - part (string): 'C' or 'D'
-   - description (string): Measure description
+7. {settings.silver}.silver_member (100000 rows)
+   member_key (string), member_id (string), display_name (string),
+   member_mbi_hash (string), phone_hash (string), email_hash (string),
+   age (int), gender (string), state (string), contract_id (string),
+   product_type (string), dual_eligible_flag (boolean), lis_flag (boolean),
+   utilization_segment (string), pcp_provider_key (string), effective_date (string)
+
+8. {settings.silver}.silver_measure (45 rows)
+   measure_key (string), measure_code (string), measure_name (string),
+   measure_category (string), part (string), measure_weight (bigint)
+
+QUERY PATTERNS:
+- Star ratings by plan: SELECT p.contract_id, p.plan_name, s.* FROM {settings.gold}.gold_star_rating_summary s JOIN {settings.silver}.silver_plan p ON s.plan_key = p.plan_key
+- Measure details: JOIN {settings.silver}.silver_measure m ON sc.measure_key = m.measure_key to get measure_name, measure_code
+- Enrollment: SELECT contract_id, plan_name, enrollment_count FROM {settings.silver}.silver_plan ORDER BY enrollment_count DESC
+- Member gaps: JOIN silver_plan ON plan_key and silver_measure ON measure_key for readable output
+- CAHPS has contract_id directly (no join needed)
+- gold_star_rating_summary also has contract_id directly
+- Default to latest measurement_year if not specified
+- LIMIT 50 unless user asks for more
 """
 
 ROUTER_SYSTEM = """You are a query router for StarPulse Medicare Stars platform.
