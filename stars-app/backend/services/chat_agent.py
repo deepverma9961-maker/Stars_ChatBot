@@ -83,6 +83,28 @@ QUERY PATTERNS:
 - gold_star_rating_summary also has contract_id directly
 - Default to latest measurement_year if not specified
 - LIMIT 50 unless user asks for more
+
+CMS MARKET ANALYSIS TABLES (historical CMS public data):
+
+9. {settings.gold}.cms_plan_enrollment_history (5989 rows)
+   measurement_year (int), contract_id (string), total_enrollment (int)
+
+10. {settings.gold}.cms_plan_star_history (7119 rows)
+    measurement_year (int), contract_id (string), plan_id (string),
+    org_name (string), plan_name (string), plan_type (string), state (string),
+    overall_star_rating (double), part_c_star_rating (double), part_d_star_rating (double),
+    total_enrollment (int)
+
+11. {settings.gold}.cms_measure_star_history (305100 rows)
+    measurement_year (int), contract_id (string), plan_id (string),
+    org_name (string), measure_id (string), measure_name (string),
+    domain (string), score (double), star_rating (double)
+
+CMS TABLE QUERY PATTERNS:
+- Enrollment trends: SELECT measurement_year, contract_id, total_enrollment FROM {settings.gold}.cms_plan_enrollment_history ORDER BY measurement_year
+- Star rating history: SELECT measurement_year, contract_id, org_name, overall_star_rating, part_c_star_rating, part_d_star_rating FROM {settings.gold}.cms_plan_star_history
+- Measure-level stars: SELECT measurement_year, contract_id, measure_name, domain, star_rating FROM {settings.gold}.cms_measure_star_history
+- Compare orgs: Use cms_plan_star_history with GROUP BY org_name
 """
 
 ROUTER_SYSTEM = """You are a query router for StarPulse Medicare Stars platform.
