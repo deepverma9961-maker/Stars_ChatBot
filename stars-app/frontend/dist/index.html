@@ -4906,9 +4906,9 @@ function maRenderKPIs(){
   const latestYear=MA_YEARS.length?MA_YEARS[MA_YEARS.length-1]:null;
   const latestData=latestYear?filteredPlanData.filter(d=>d.year===latestYear):[];
 
-  // Total Enrollment (sum latest year enrollment for selected contracts with valid data)
+  // Total Enrollment (hardcoded to 2026 — enrollment data only exists for 2026)
   const validContractIds=new Set(filteredPlanData.map(d=>d.contract_id));
-  const filteredEnroll=MA_ENROLL.filter(d=>validContractIds.has(d.contract_id)&&d.year===latestYear);
+  const filteredEnroll=MA_ENROLL.filter(d=>validContractIds.has(d.contract_id)&&d.year===2026);
   const totalEnroll=filteredEnroll.reduce((s,d)=>s+(d.enrollment||0),0);
   if(totalEnroll>0){
     const fmt=totalEnroll>=1e6?(totalEnroll/1e6).toFixed(1)+'M':totalEnroll>=1e3?(totalEnroll/1e3).toFixed(0)+'K':totalEnroll.toLocaleString();
@@ -4970,10 +4970,9 @@ function maRenderPlanTable(){
     const v=d.overall_star;
     if(v!=null&&!isNaN(v))grouped[d.contract_id].stars[d.year]=v;
   });
-  // Attach latest enrollment to each group
-  const latestYear=MA_YEARS.length?MA_YEARS[MA_YEARS.length-1]:null;
+  // Attach enrollment from 2026 (hardcoded — enrollment data only exists for 2026)
   Object.keys(grouped).forEach(cid=>{
-    const eRow=MA_ENROLL.find(d=>d.contract_id===cid&&d.year===latestYear);
+    const eRow=MA_ENROLL.find(d=>d.contract_id===cid&&d.year===2026);
     grouped[cid].enrollment=eRow?eRow.enrollment:null;
   });
   // Exclude rows where ALL yearly ratings are missing after filtering
