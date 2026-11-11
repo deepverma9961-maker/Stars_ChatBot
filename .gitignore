@@ -1,5 +1,7 @@
 # Secrets
+.env
 .env.local
+stars-app/.env
 stars-app/.env.local
 
 # Claude Code local settings

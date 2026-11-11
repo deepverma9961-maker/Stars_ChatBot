@@ -9,6 +9,12 @@ from .routers import (
     alerts, interventions, team_view, simulator, star_summary,
     market, hos, outreach, chat,
 )
+from .agents.routers import (
+    cohort as agent_cohort,
+    nba as agent_nba,
+    communication as agent_comm,
+    orchestration as agent_orch,
+)
 from .services.voice_agent import handle_voice_agent
 
 app = FastAPI(title="StarPulse API", version="1.0.0")
@@ -36,6 +42,12 @@ app.include_router(hos.router, prefix="/api")
 app.include_router(outreach.router, prefix="/api")
 app.include_router(chat.router, prefix="/api")
 
+# AI Agent add-ons
+app.include_router(agent_cohort.router, prefix="/api")
+app.include_router(agent_nba.router, prefix="/api")
+app.include_router(agent_comm.router, prefix="/api")
+app.include_router(agent_orch.router, prefix="/api")
+
 
 @app.on_event("startup")
 async def warmup_warehouse():
@@ -56,6 +68,7 @@ async def warmup_warehouse():
 @app.get("/api/health")
 def health():
     return {"status": "ok"}
+
 
 
 @app.get("/api/connection-status")

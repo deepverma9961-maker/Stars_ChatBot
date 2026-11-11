@@ -524,6 +524,53 @@
     .hos-score-val{font-size:22px;font-weight:800}
     .hos-score-sub{font-size:11px;margin-top:3px}
 
+    /* ── AI Agents Page ── */
+    .aia-config{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:12px 16px;background:#1e2130;border-radius:8px;margin-bottom:16px}
+    .aia-config label{display:flex;align-items:center;gap:6px;font-size:.78rem;color:#aab;white-space:nowrap}
+    .aia-config select,.aia-config input{background:#292d3e;border:1px solid #3a3f52;color:#e0e0e0;border-radius:4px;padding:4px 8px;font-size:.78rem}
+    .aia-grid{display:flex;flex-direction:column;gap:14px}
+    .aia-card{background:#1a1d2b;border:1px solid #2a2e3e;border-radius:10px;padding:16px 18px;transition:border-color .2s}
+    .aia-card:hover{border-color:#3a4055}
+    .aia-card-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+    .aia-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+    .aia-card-title{flex:1}
+    .aia-card-title .aia-num{font-size:.65rem;color:#888;text-transform:uppercase;letter-spacing:.06em}
+    .aia-card-title h3{font-size:.95rem;font-weight:600;margin:0;color:#e8e8ec}
+    .aia-status{font-size:.68rem;font-weight:600;padding:3px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;background:#222638;color:#888}
+    .aia-status.running{background:#1a2530;color:#38bdf8;animation:aiaFlash 1.2s infinite}
+    .aia-status.done{background:#0f2918;color:#4ade80}
+    .aia-status.error{background:#2e1212;color:#f87171}
+    @keyframes aiaFlash{0%,100%{opacity:1}50%{opacity:.5}}
+    .aia-desc{font-size:.8rem;color:#777;margin:0 0 10px;line-height:1.45}
+    .aia-actions{display:flex;align-items:center;gap:10px}
+    .aia-run-btn{background:#F26722;color:#fff;border:none;border-radius:6px;padding:7px 16px;font-size:.8rem;font-weight:600;cursor:pointer;transition:background .2s}
+    .aia-run-btn:hover:not(:disabled){background:#e05a1a}
+    .aia-run-btn:disabled{opacity:.4;cursor:not-allowed}
+    .aia-run-full{background:#16a34a}
+    .aia-run-full:hover:not(:disabled){background:#15803d}
+    .aia-timer{font-size:.75rem;color:#666;font-variant-numeric:tabular-nums}
+    .aia-result{margin-top:12px;background:#12141e;border:1px solid #252839;border-radius:8px;padding:14px;overflow-x:auto}
+    .aia-result h4{font-size:.78rem;color:#aab;margin:0 0 8px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+    .aia-tbl{width:100%;border-collapse:collapse;font-size:.78rem;font-variant-numeric:tabular-nums}
+    .aia-tbl th{text-align:left;font-size:.68rem;text-transform:uppercase;letter-spacing:.04em;color:#777;padding:6px 8px;border-bottom:2px solid #2a2e3e;white-space:nowrap}
+    .aia-tbl td{padding:6px 8px;border-bottom:1px solid #1e2130;color:#ccc;vertical-align:top}
+    .aia-tbl tr:last-child td{border-bottom:none}
+    .aia-bar{display:inline-block;height:5px;border-radius:3px;vertical-align:middle;margin-right:6px}
+    .aia-msg{background:#1a1d2b;border:1px solid #252839;border-radius:8px;padding:10px 12px;margin-bottom:8px}
+    .aia-msg-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+    .aia-msg-name{font-weight:600;font-size:.82rem;color:#e0e0e0}
+    .aia-msg-ch{font-size:.68rem;color:#888;text-transform:uppercase;letter-spacing:.04em}
+    .aia-msg-subject{font-weight:500;color:#F26722;font-size:.78rem;margin-bottom:2px}
+    .aia-msg-body{color:#999;font-size:.78rem;line-height:1.5;white-space:pre-wrap}
+    .aia-pipe{display:flex;align-items:center;gap:0;flex-wrap:wrap;margin-bottom:10px}
+    .aia-pipe-step{display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:6px;font-size:.75rem;font-weight:500;white-space:nowrap}
+    .aia-pipe-step.done{background:#0f2918;color:#4ade80}
+    .aia-pipe-step.active{background:#1a2530;color:#38bdf8}
+    .aia-pipe-step.pending{background:#222638;color:#666}
+    .aia-pipe-arrow{color:#555;font-size:.7rem;padding:0 4px}
+    .aia-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+    .aia-chip{font-size:.72rem;background:#222638;border:1px solid #2a2e3e;padding:2px 8px;border-radius:4px;color:#999}
+
     /* ── AI Assistant Page ── */
     .ai-chat-container{display:flex;height:100%;overflow:hidden;background:#f8fafc}
     .ai-sidebar{width:260px;background:#fff;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;flex-shrink:0}
@@ -664,6 +711,7 @@
       <div class="ntab" id="ntab-eho4all" data-page="eho4all" onclick="showPage('eho4all',this)">EHO4all</div>
       <div class="ntab" data-page="market" onclick="showPage('market',this)">Market Analysis</div>
       <div class="ntab" data-page="outreach-audit" onclick="showPage('outreach-audit',this)">Outreach Audit</div>
+      <div class="ntab" data-page="ai-agents" onclick="showPage('ai-agents',this)" style="border-left-color:#F26722">AI Agents</div>
       <div class="ntab" data-page="ai-assistant" onclick="showPage('ai-assistant',this)" style="border-left-color:#F26722">AI Assistant</div>
     </div>
     <div class="topbar-right">
@@ -1614,6 +1662,96 @@
       </div>
     </div>
   </div>
+  <!-- AI AGENTS -->
+  <div id="pg-ai-agents" class="page" style="display:none;flex-direction:column">
+    <h2 style="margin:0 0 4px;font-size:1.25rem">AI Agent Pipeline</h2>
+    <p style="color:#888;margin:0 0 16px;font-size:.85rem">Run each agent independently or execute the full orchestration pipeline. Results are fetched live from the backend.</p>
+
+    <!-- Config bar -->
+    <div class="aia-config">
+      <label>Contract <select id="aia-contract"><option value="H3312">H3312</option><option value="H4001">H4001</option><option value="H5521">H5521</option></select></label>
+      <label>Measure <select id="aia-measure"><option value="">All Measures</option><option value="HBD">HBD – Diabetes</option><option value="CBP">CBP – Blood Pressure</option><option value="BCS">BCS – Breast Cancer</option><option value="COL">COL – Colorectal</option><option value="SPC">SPC – Statin Therapy</option></select></label>
+      <label>Max Members <input type="number" id="aia-max" value="20" min="1" max="500" style="width:70px"></label>
+      <label>Mode <select id="aia-mode"><option value="human_in_loop">Human-in-Loop</option><option value="auto">Auto</option></select></label>
+    </div>
+
+    <!-- Agent cards -->
+    <div class="aia-grid">
+
+      <!-- Agent 1 -->
+      <div class="aia-card" id="aia-card-1">
+        <div class="aia-card-head">
+          <div class="aia-dot" style="background:#F26722"></div>
+          <div class="aia-card-title">
+            <span class="aia-num">Agent 1</span>
+            <h3>Cohort Prioritization</h3>
+          </div>
+          <span class="aia-status" id="aia-status-1">Ready</span>
+        </div>
+        <p class="aia-desc">Re-ranks members by composite priority score (propensity + urgency + measure weight + gap severity).</p>
+        <div class="aia-actions">
+          <button class="aia-run-btn" onclick="aiaRunCohort()">&#9654; Run Cohort Agent</button>
+          <span class="aia-timer" id="aia-timer-1"></span>
+        </div>
+        <div class="aia-result" id="aia-result-1" style="display:none"></div>
+      </div>
+
+      <!-- Agent 2 -->
+      <div class="aia-card" id="aia-card-2">
+        <div class="aia-card-head">
+          <div class="aia-dot" style="background:#2563eb"></div>
+          <div class="aia-card-title">
+            <span class="aia-num">Agent 2</span>
+            <h3>Next Best Action</h3>
+          </div>
+          <span class="aia-status" id="aia-status-2">Waiting</span>
+        </div>
+        <p class="aia-desc">Evaluates all 9 (channel × incentive) combos per member. Applies fatigue discount, ROI ranking, timing.</p>
+        <div class="aia-actions">
+          <button class="aia-run-btn" id="aia-btn-2" onclick="aiaRunNBA()" disabled>&#9654; Run NBA Agent</button>
+          <span class="aia-timer" id="aia-timer-2"></span>
+        </div>
+        <div class="aia-result" id="aia-result-2" style="display:none"></div>
+      </div>
+
+      <!-- Agent 3 -->
+      <div class="aia-card" id="aia-card-3">
+        <div class="aia-card-head">
+          <div class="aia-dot" style="background:#7c3aed"></div>
+          <div class="aia-card-title">
+            <span class="aia-num">Agent 3</span>
+            <h3>Communication</h3>
+          </div>
+          <span class="aia-status" id="aia-status-3">Waiting</span>
+        </div>
+        <p class="aia-desc">Generates personalized messages via Claude AI and delivers through SMS, Email, or Voice call.</p>
+        <div class="aia-actions">
+          <button class="aia-run-btn" id="aia-btn-3" onclick="aiaRunComm()" disabled>&#9654; Preview Messages</button>
+          <span class="aia-timer" id="aia-timer-3"></span>
+        </div>
+        <div class="aia-result" id="aia-result-3" style="display:none"></div>
+      </div>
+
+      <!-- Agent 4 -->
+      <div class="aia-card" id="aia-card-4">
+        <div class="aia-card-head">
+          <div class="aia-dot" style="background:#16a34a"></div>
+          <div class="aia-card-title">
+            <span class="aia-num">Agent 4</span>
+            <h3>Orchestration</h3>
+          </div>
+          <span class="aia-status" id="aia-status-4">Ready</span>
+        </div>
+        <p class="aia-desc">Chains all 3 agents into a single pipeline with optional human-in-loop approval gate.</p>
+        <div class="aia-actions">
+          <button class="aia-run-btn aia-run-full" onclick="aiaRunOrchestration()">&#9654; Run Full Pipeline</button>
+          <span class="aia-timer" id="aia-timer-4"></span>
+        </div>
+        <div class="aia-result" id="aia-result-4" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- AI ASSISTANT -->
   <div id="pg-ai-assistant" class="page" style="display:none;flex-direction:column;padding:0;overflow:hidden">
     <div class="ai-chat-container">
@@ -2574,6 +2712,7 @@ function showPage(id,el){
   if(id==='agent'){if(typeof renderAgentQueue==='function')renderAgentQueue();}
   if(id==='ai-assistant'&&typeof aiChatInit==='function')aiChatInit();
   if(id==='outreach-audit')oaLoadLogs();
+  if(id==='ai-agents'&&typeof aiaInit==='function')aiaInit();
 }
 window.showPage=showPage;
 // ── TEAM VIEW ────────────────────────────────────────────────
@@ -6227,6 +6366,145 @@ renderAdh();
 adhUpdateStats();
 
 })();
+
+// ── AI AGENTS PAGE ───────────────────────────────────────────
+let _aiaCohort=null, _aiaNBA=null;
+function aiaInit(){}
+function _aiaBase(){return location.origin;}
+function _aiaSetStatus(n,cls,text){const el=document.getElementById('aia-status-'+n);if(!el)return;el.className='aia-status'+(cls?' '+cls:'');el.textContent=text;}
+function _aiaTimer(n){const el=document.getElementById('aia-timer-'+n);const t0=Date.now();const iv=setInterval(()=>{const s=((Date.now()-t0)/1000).toFixed(1);el.textContent=s+'s';},100);return ()=>{clearInterval(iv);};}
+
+async function aiaRunCohort(){
+  const contract=document.getElementById('aia-contract').value;
+  const measure=document.getElementById('aia-measure').value;
+  const max=parseInt(document.getElementById('aia-max').value)||20;
+  _aiaSetStatus(1,'running','Running...');
+  const stop=_aiaTimer(1);
+  try{
+    const r=await fetch(_aiaBase()+'/api/agents/cohort/prioritize',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contract_id:contract,measure_code:measure||null,max_members:max})});
+    const d=await r.json();stop();
+    _aiaCohort=d;
+    _aiaSetStatus(1,'done','Done · '+d.source);
+    _aiaRenderCohort(d);
+    document.getElementById('aia-btn-2').disabled=false;
+    _aiaSetStatus(2,'','Ready');
+  }catch(e){stop();_aiaSetStatus(1,'error','Error');document.getElementById('aia-result-1').style.display='block';document.getElementById('aia-result-1').innerHTML='<h4>Error</h4><p style="color:#f87171;font-size:.8rem">'+e.message+'</p>';}
+}
+
+function _aiaRenderCohort(d){
+  const el=document.getElementById('aia-result-1');el.style.display='block';
+  const meta='<div class="aia-meta"><span class="aia-chip">'+d.total_eligible+' eligible</span><span class="aia-chip">'+d.total_scored+' scored</span><span class="aia-chip">source: '+d.source+'</span></div>';
+  let rows='';d.members.forEach(m=>{
+    const bw=Math.round(m.priority_score*100);
+    rows+='<tr><td>'+m.priority_rank+'</td><td>'+m.display_name+'</td><td>'+m.age+'</td><td>'+m.measure_code+'</td><td>'+m.gap_status+'</td><td>'+m.propensity_score.toFixed(1)+'</td><td>'+m.days_open+'</td><td><span class="aia-bar" style="width:'+bw+'px;background:#F26722"></span>'+m.priority_score.toFixed(3)+'</td><td>'+m.recommended_channel+'</td></tr>';
+  });
+  el.innerHTML=meta+'<h4>Ranked Members</h4><table class="aia-tbl"><thead><tr><th>#</th><th>Member</th><th>Age</th><th>Measure</th><th>Gap</th><th>Propensity</th><th>Days</th><th>Priority</th><th>Channel</th></tr></thead><tbody>'+rows+'</tbody></table>';
+}
+
+async function aiaRunNBA(){
+  if(!_aiaCohort||!_aiaCohort.members.length){alert('Run Cohort Agent first');return;}
+  _aiaSetStatus(2,'running','Running...');
+  const stop=_aiaTimer(2);
+  try{
+    const r=await fetch(_aiaBase()+'/api/agents/nba/recommend',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({members:_aiaCohort.members,contract_id:document.getElementById('aia-contract').value})});
+    const d=await r.json();stop();
+    _aiaNBA=d;
+    _aiaSetStatus(2,'done','Done · '+d.source);
+    _aiaRenderNBA(d);
+    document.getElementById('aia-btn-3').disabled=false;
+    _aiaSetStatus(3,'','Ready');
+  }catch(e){stop();_aiaSetStatus(2,'error','Error');document.getElementById('aia-result-2').style.display='block';document.getElementById('aia-result-2').innerHTML='<h4>Error</h4><p style="color:#f87171;font-size:.8rem">'+e.message+'</p>';}
+}
+
+function _aiaRenderNBA(d){
+  const el=document.getElementById('aia-result-2');el.style.display='block';
+  const meta='<div class="aia-meta"><span class="aia-chip">'+d.actions.length+' actions</span><span class="aia-chip">Budget: $'+d.total_budget_estimate.toFixed(2)+'</span><span class="aia-chip">Avg closure: '+(d.avg_predicted_closure*100).toFixed(1)+'%</span><span class="aia-chip">source: '+d.source+'</span></div>';
+  let rows='';d.actions.forEach(a=>{
+    rows+='<tr><td>'+a.display_name+'</td><td>'+a.measure_code+'</td><td>'+a.recommended_channel+'</td><td>'+a.recommended_incentive+'</td><td>'+a.recommended_timing+'</td><td>'+(a.predicted_closure_prob*100).toFixed(1)+'%</td><td>$'+a.cost_estimate+'</td><td>'+a.roi_score.toFixed(2)+'x</td></tr>';
+  });
+  el.innerHTML=meta+'<h4>Recommended Actions</h4><table class="aia-tbl"><thead><tr><th>Member</th><th>Measure</th><th>Channel</th><th>Incentive</th><th>Timing</th><th>Closure</th><th>Cost</th><th>ROI</th></tr></thead><tbody>'+rows+'</tbody></table>';
+  if(d.actions.length&&d.actions[0].reasoning){
+    el.innerHTML+='<div style="margin-top:8px;font-size:.75rem;color:#888;font-style:italic">Reasoning: "'+d.actions[0].reasoning+'"</div>';
+  }
+}
+
+async function aiaRunComm(){
+  if(!_aiaNBA||!_aiaNBA.actions.length){alert('Run NBA Agent first');return;}
+  _aiaSetStatus(3,'running','Running...');
+  const stop=_aiaTimer(3);
+  try{
+    const r=await fetch(_aiaBase()+'/api/agents/communication/preview',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({actions:_aiaNBA.actions,campaign_name:'Agent UI Preview',plan_name:'Health Plan Advantage Premier',dry_run:true})});
+    const d=await r.json();stop();
+    _aiaSetStatus(3,'done','Done · '+d.source);
+    _aiaRenderComm(d);
+  }catch(e){stop();_aiaSetStatus(3,'error','Error');document.getElementById('aia-result-3').style.display='block';document.getElementById('aia-result-3').innerHTML='<h4>Error</h4><p style="color:#f87171;font-size:.8rem">'+e.message+'</p>';}
+}
+
+function _aiaRenderComm(d){
+  const el=document.getElementById('aia-result-3');el.style.display='block';
+  const meta='<div class="aia-meta"><span class="aia-chip">'+d.total_dry_run+' messages</span><span class="aia-chip">source: '+d.source+'</span><span class="aia-chip">mode: dry_run (preview)</span></div>';
+  let msgs='';d.results.slice(0,8).forEach(r=>{
+    const subj=r.message_subject?'<div class="aia-msg-subject">'+r.message_subject+'</div>':'';
+    msgs+='<div class="aia-msg"><div class="aia-msg-head"><span class="aia-msg-name">'+r.display_name+'</span><span class="aia-msg-ch">'+r.channel+' · '+r.message_source+'</span></div>'+subj+'<div class="aia-msg-body">'+r.message_body.substring(0,250)+(r.message_body.length>250?'...':'')+'</div></div>';
+  });
+  el.innerHTML=meta+'<h4>AI-Generated Messages (Preview)</h4>'+msgs;
+}
+
+async function aiaRunOrchestration(){
+  const contract=document.getElementById('aia-contract').value;
+  const measure=document.getElementById('aia-measure').value;
+  const max=parseInt(document.getElementById('aia-max').value)||20;
+  const mode=document.getElementById('aia-mode').value;
+  _aiaSetStatus(4,'running','Running Pipeline...');
+  _aiaSetStatus(1,'running','...');_aiaSetStatus(2,'running','...');_aiaSetStatus(3,'running','...');
+  const stop=_aiaTimer(4);
+  try{
+    const r=await fetch(_aiaBase()+'/api/agents/orchestration/campaigns',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({campaign_name:'Pipeline Run '+(new Date()).toLocaleTimeString(),contract_id:contract,measure_code:measure||null,max_members:max,mode:mode})});
+    const d=await r.json();stop();
+    _aiaSetStatus(4,'done',d.stage);
+    if(d.cohort_result){_aiaCohort=d.cohort_result;_aiaSetStatus(1,'done','Done · '+d.cohort_result.source);_aiaRenderCohort(d.cohort_result);document.getElementById('aia-btn-2').disabled=false;}
+    if(d.nba_result){_aiaNBA=d.nba_result;_aiaSetStatus(2,'done','Done · '+d.nba_result.source);_aiaRenderNBA(d.nba_result);document.getElementById('aia-btn-3').disabled=false;}
+    if(d.communication_result){_aiaSetStatus(3,'done','Done · '+d.communication_result.source);_aiaRenderComm(d.communication_result);}else{_aiaSetStatus(3,'','Pending Approval');}
+    _aiaRenderPipeline(d);
+  }catch(e){stop();_aiaSetStatus(4,'error','Error');document.getElementById('aia-result-4').style.display='block';document.getElementById('aia-result-4').innerHTML='<h4>Error</h4><p style="color:#f87171;font-size:.8rem">'+e.message+'</p>';}
+}
+
+function _aiaRenderPipeline(d){
+  const el=document.getElementById('aia-result-4');el.style.display='block';
+  const stages=[
+    {name:'Cohort',done:!!d.cohort_result},
+    {name:'NBA',done:!!d.nba_result},
+    {name:'Approval',done:d.stage==='completed',active:d.stage==='awaiting_approval'},
+    {name:'Communication',done:!!d.communication_result},
+    {name:'Complete',done:d.stage==='completed'},
+  ];
+  let pipe='<div class="aia-pipe">';
+  stages.forEach((s,i)=>{
+    const cls=s.done?'done':(s.active?'active':'pending');
+    const icon=s.done?'✓':s.active?'●':'○';
+    pipe+='<div class="aia-pipe-step '+cls+'">'+icon+' '+s.name+'</div>';
+    if(i<stages.length-1)pipe+='<span class="aia-pipe-arrow">→</span>';
+  });
+  pipe+='</div>';
+  const meta='<div class="aia-meta"><span class="aia-chip">ID: '+d.campaign_id.substring(0,8)+'...</span><span class="aia-chip">Stage: '+d.stage+'</span>'+(d.cohort_result?'<span class="aia-chip">Members: '+d.cohort_result.total_scored+'</span>':'')+(d.nba_result?'<span class="aia-chip">Budget: $'+d.nba_result.total_budget_estimate.toFixed(2)+'</span>':'')+'</div>';
+  let approve='';
+  if(d.stage==='awaiting_approval'){
+    approve='<div style="margin-top:10px"><button class="aia-run-btn" onclick="aiaApprove(\''+d.campaign_id+'\',true)" style="margin-right:8px">✓ Approve & Execute</button><button class="aia-run-btn" onclick="aiaApprove(\''+d.campaign_id+'\',false)" style="background:#dc2626">✕ Reject</button></div>';
+  }
+  el.innerHTML='<h4>Pipeline Status</h4>'+pipe+meta+approve;
+}
+
+async function aiaApprove(id,approved){
+  _aiaSetStatus(4,'running','Executing...');
+  const stop=_aiaTimer(4);
+  try{
+    const r=await fetch(_aiaBase()+'/api/agents/orchestration/campaigns/'+id+'/approve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({approved:approved})});
+    const d=await r.json();stop();
+    _aiaSetStatus(4,'done',d.stage);
+    if(d.communication_result){_aiaSetStatus(3,'done','Done · '+d.communication_result.source);_aiaRenderComm(d.communication_result);}
+    _aiaRenderPipeline(d);
+  }catch(e){stop();_aiaSetStatus(4,'error','Error');}
+}
 
 // ── AI ASSISTANT ──────────────────────────────────────────────
 (function(){
