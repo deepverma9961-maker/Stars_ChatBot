@@ -141,11 +141,11 @@ class CohortPrioritizationAgent:
                     WHEN g.propensity_score > 40 THEN 'SMS'
                     ELSE 'Email'
                 END AS recommended_channel,
-                COALESCE(m.pcp_name, 'Unassigned') AS pcp_name
+                COALESCE(m.pcp_provider_key, 'Unassigned') AS pcp_name
             FROM {settings.gold}.gold_member_gap g
             JOIN {settings.silver}.silver_member m ON g.member_key = m.member_key
             JOIN {settings.silver}.silver_measure ms ON g.measure_code = ms.measure_code
-            WHERE g.contract_id = '{req.contract_id}'
+            WHERE m.contract_id = '{req.contract_id}'
               AND g.gap_status IN ({gap_list})
               AND ({prop_where})
               {measure_filter}
