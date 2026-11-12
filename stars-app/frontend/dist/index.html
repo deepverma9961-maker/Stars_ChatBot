@@ -6420,13 +6420,24 @@ async function aiaRunNBA(){
 
 function _aiaRenderNBA(d){
   const el=document.getElementById('aia-result-2');el.style.display='block';
-  const meta='<div class="aia-meta"><span class="aia-chip">'+d.actions.length+' actions</span><span class="aia-chip">Budget: $'+d.total_budget_estimate.toFixed(2)+'</span><span class="aia-chip">Avg closure: '+(d.avg_predicted_closure*100).toFixed(1)+'%</span><span class="aia-chip">source: '+d.source+'</span></div>';
+  const hasAI=d.actions.some(a=>a.ai_channel);
+  const aiLabel=hasAI?' · AI-Enhanced':'';
+  const meta='<div class="aia-meta"><span class="aia-chip">'+d.actions.length+' actions</span><span class="aia-chip">Budget: $'+d.total_budget_estimate.toFixed(2)+'</span><span class="aia-chip">Avg closure: '+(d.avg_predicted_closure*100).toFixed(1)+'%</span><span class="aia-chip">source: '+d.source+aiLabel+'</span></div>';
   let rows='';d.actions.forEach(a=>{
-    rows+='<tr><td>'+a.display_name+'</td><td>'+a.measure_code+'</td><td>'+a.recommended_channel+'</td><td>'+a.recommended_incentive+'</td><td>'+a.recommended_timing+'</td><td>'+(a.predicted_closure_prob*100).toFixed(1)+'%</td><td>$'+a.cost_estimate+'</td><td>'+a.roi_score.toFixed(2)+'x</td></tr>';
+    const aiTag=a.ai_channel?'<div style="font-size:.65rem;margin-top:2px"><span style="background:#F26722;color:#fff;padding:1px 5px;border-radius:3px;font-weight:600">AI</span> '+a.ai_channel+'</div>':'';
+    rows+='<tr><td>'+a.display_name+'</td><td>'+a.measure_code+'</td><td>'+a.recommended_channel+aiTag+'</td><td>'+a.recommended_incentive+'</td><td>'+a.recommended_timing+'</td><td>'+(a.predicted_closure_prob*100).toFixed(1)+'%</td><td>$'+a.cost_estimate+'</td><td>'+a.roi_score.toFixed(2)+'x</td></tr>';
   });
   el.innerHTML=meta+'<h4>Recommended Actions</h4><table class="aia-tbl"><thead><tr><th>Member</th><th>Measure</th><th>Channel</th><th>Incentive</th><th>Timing</th><th>Closure</th><th>Cost</th><th>ROI</th></tr></thead><tbody>'+rows+'</tbody></table>';
   if(d.actions.length&&d.actions[0].reasoning){
     el.innerHTML+='<div style="margin-top:8px;font-size:.75rem;color:#888;font-style:italic">Reasoning: "'+d.actions[0].reasoning+'"</div>';
+  }
+  if(hasAI){
+    let aiInsights='';d.actions.filter(a=>a.ai_reasoning).slice(0,5).forEach(a=>{
+      const match=a.ai_channel===a.recommended_channel;
+      const icon=match?'<span style="color:#22c55e">&#10003;</span>':'<span style="color:#F26722">&#9670;</span>';
+      aiInsights+='<div style="margin:6px 0;padding:8px 12px;background:rgba(242,103,34,.07);border-left:3px solid #F26722;border-radius:4px;font-size:.78rem"><strong>'+a.display_name+'</strong> '+icon+(match?' AI agrees: ':' AI suggests <b>'+a.ai_channel+'</b>: ')+'<span style="color:#ccc">'+a.ai_reasoning+'</span></div>';
+    });
+    el.innerHTML+='<h4 style="margin-top:14px"><span style="background:#F26722;color:#fff;padding:2px 8px;border-radius:4px;font-size:.75rem;margin-right:6px">AI</span>Channel Insights</h4>'+aiInsights;
   }
 }
 

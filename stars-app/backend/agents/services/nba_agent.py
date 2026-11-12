@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import logging
 from datetime import datetime, timezone, timedelta
 
@@ -17,6 +18,71 @@ logger = logging.getLogger("agent.nba")
 _CHANNELS = ["Call", "SMS", "Email"]
 _INCENTIVES = ["None", "$25 card", "$50 card"]
 
+_AI_CHANNEL_SYSTEM = (
+    "You are an AI outreach strategist for a Medicare Advantage health plan. "
+    "Given a member's profile and care gap details, recommend the single best "
+    "outreach channel (Call, SMS, or Email) and explain why in 2-3 sentences. "
+    "Consider: age (older members prefer calls), propensity score, days the gap "
+    "has been open (urgency), measure type, and gap severity. "
+    "Respond with strict JSON: {\"channel\": \"Call|SMS|Email\", \"reasoning\": \"...\"}"
+)
+
+
+def _ai_recommend_channel(members: list[PrioritizedMember]) -> dict[str, dict]:
+    """Call Claude to get AI channel recommendations for a batch of members."""
+    if not settings.anthropic_api_key:
+        return {}
+    try:
+        import anthropic
+    except Exception:
+        return {}
+
+    batch_context = []
+    for m in members[:20]:
+        batch_context.append({
+            "member_key": m.member_key,
+            "name": m.display_name,
+            "age": m.age,
+            "measure": m.measure_name,
+            "measure_code": m.measure_code,
+            "gap_status": m.gap_status,
+            "days_open": m.days_open,
+            "propensity_score": m.propensity_score,
+            "priority_score": m.priority_score,
+        })
+
+    user_msg = (
+        "Recommend the best outreach channel for each member below. "
+        "Return a JSON array with one object per member: "
+        '[{"member_key": "...", "channel": "Call|SMS|Email", "reasoning": "..."}]\n\n'
+        f"Members:\n{json.dumps(batch_context, indent=2)}"
+    )
+
+    try:
+        client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
+        model = settings.anthropic_model or "claude-haiku-4-5"
+        resp = client.messages.create(
+            model=model,
+            max_tokens=2000,
+            system=_AI_CHANNEL_SYSTEM,
+            messages=[{"role": "user", "content": user_msg}],
+        )
+        text = "".join(
+            block.text for block in resp.content
+            if getattr(block, "type", None) == "text"
+        )
+        start = text.find("[")
+        end = text.rfind("]")
+        if start >= 0 and end > start:
+            results = json.loads(text[start:end + 1])
+            return {
+                r["member_key"]: {"channel": r["channel"], "reasoning": r["reasoning"]}
+                for r in results if "member_key" in r
+            }
+    except Exception as exc:
+        logger.warning("AI channel recommendation failed: %s", exc)
+    return {}
+
 
 class NextBestActionAgent:
 
@@ -25,12 +91,18 @@ class NextBestActionAgent:
             [m.member_key for m in req.members]
         )
 
+        ai_recs = _ai_recommend_channel(req.members)
+
         actions: list[RecommendedAction] = []
         for member in req.members:
             action = self._recommend_for_member(
                 member, recent_outreach.get(member.member_key, []),
                 req.budget_per_member,
             )
+            ai_rec = ai_recs.get(member.member_key)
+            if ai_rec:
+                action.ai_channel = ai_rec.get("channel")
+                action.ai_reasoning = ai_rec.get("reasoning")
             actions.append(action)
 
         total_budget = sum(a.cost_estimate for a in actions)

@@ -35,6 +35,8 @@ class RecommendedAction(BaseModel):
     cost_estimate: float
     roi_score: float
     reasoning: str
+    ai_reasoning: Optional[str] = None
+    ai_channel: Optional[str] = None
     alternatives: list[ActionAlternative] = Field(default_factory=list)
 
 
